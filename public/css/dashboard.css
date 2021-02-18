@@ -1,0 +1,22 @@
+.box-header{
+	border-radius: 5px; 
+	height: 120px; 
+	display: flex; 
+	justify-content: space-around; 
+	align-items: center;
+}
+
+.qty-product{
+	font-size: 2.3em;
+	font-weight: bold;
+}
+
+.qty-description{
+	font-size: 0.8em;
+}
+
+.title-box{
+	font-size: 1em;
+	font-weight: bold;
+	color: #57575B;
+}

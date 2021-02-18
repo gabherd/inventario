@@ -1,0 +1,22 @@
+:root{
+	--main-color-bg: #2B417A;
+	--main-color-txt: #F1FC70;
+}
+
+body{
+	background: #DDDDDD;
+	font-family: arial;
+}
+
+.cursor{
+	cursor: pointer;
+}
+
+#myTable{
+	 margin: 0 auto;
+}
+
+.bg-lightRed{
+	background: #FFCCCB;
+}
+

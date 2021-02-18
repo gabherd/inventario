@@ -1,0 +1,39 @@
+.navbar{
+	background: var(--main-color-bg);
+	color: var(--main-color-txt);
+}
+
+.navbar-brand{
+	color: var(--main-color-txt) !important;
+}
+
+#img-user{
+	cursor: pointer;
+	position: absolute;
+	z-index: 1051;
+}
+
+.name-user{
+	color: white;
+}
+
+.box-conf_account{
+	background: #ECEBEB; 
+	border-radius: 5px;
+	color: black; 
+	cursor: pointer;
+	display: none;
+	margin-top: 4px;
+	padding: 5px 10px;
+	position: absolute; 
+	right: 0; 
+	z-index: 1060;
+}
+
+.containter-local{
+	float: right !important;
+}
+
+#btnMenu{
+	cursor: pointer;
+}
