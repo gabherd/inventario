@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
     	$productsStock = DB::table('products')->where('products.Stock', '>', 0)->count();
-    	$productsOut = DB::table('products')->where('stock', '=', 0)->count();
+    	$productsOut = DB::table('products')->where('products.Stock', '=', 0)->count();
      
         return view('dashboard', ['productsStock'=>$productsStock, 'productsOut'=>$productsOut]);
     }
