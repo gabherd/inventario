@@ -32,9 +32,13 @@
 						<div  class="cursor" id="aux-img-user" style="width: 30px; height: 30px; z-index: 1053; position: absolute; display: none; background: red"></div>
 					</div>
 					<div class="shadow box-conf_account">
-						<a href="{{ route('account-settings') }}">Configuracion</a>
-						<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesion</a>
-						<form  id="logout-form"  action="{{ route('logout') }}" method="POST">
+						<div class="option-user_account"> 
+							<a style="background: red" href="{{ route('account-settings') }}">Configuracion</a>
+						</div>
+						<div class="option-user_account"> 
+							<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar sesion</a>
+						</div>
+						<form  id="logout-form" class="d-none" action="{{ route('logout') }}" method="POST">
 							@csrf
 						</form>
 					</div>
@@ -121,10 +125,21 @@
 								<li class="full-width">
 									<a href="#" class="full-width">
 										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-store"></i>
+											<i class="zmdi zmdi-chart"></i>
 										</div>
 										<div class="navLateral-body-cr hide-on-tablet">
 											Historial
+										</div>
+									</a>
+								</li>
+								<li class="full-width divider-menu-h"></li>
+								<li class="full-width">
+									<a href="proveedores" class="full-width">
+										<div class="navLateral-body-cl">
+											<i class="zmdi zmdi-truck"></i>
+										</div>
+										<div class="navLateral-body-cr hide-on-tablet">
+											Proveedores
 										</div>
 									</a>
 								</li>
@@ -148,7 +163,9 @@
 
 			<!--========= inicio - contenido =========-->
 			<div class="page-container" style="padding: 5px; display: table-cell; position: relative;">
-				@yield('content')			
+				<div style="background: #fff; padding: 5px; height: 100%">
+					@yield('content')			
+				</div>
 			</div>
 			<!---------- fin - contenido   ---------->
 		</div>

@@ -7,7 +7,6 @@
 
 
 @section('content')
-	<div  style="background: #fff; padding:5px; height: 100%;">
 		<div class="" style="width: 70%; margin: auto;">
 				<form action="" method="POST">
 				    <div class="form-group d-flex align-items-center flex-column">
@@ -39,7 +38,6 @@
 					</div>
 				</form>
 		</div>
-	</div>
 @endsection
 
 

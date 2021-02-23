@@ -24,10 +24,14 @@
 	cursor: pointer;
 	display: none;
 	margin-top: 4px;
-	padding: 5px 10px;
+	padding: 5px 30px;
 	position: absolute; 
 	right: 0; 
 	z-index: 1060;
+}
+
+.option-user_account{
+	
 }
 
 .containter-local{

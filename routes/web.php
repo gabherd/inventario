@@ -11,6 +11,8 @@ Route::view("cuenta", 'account-settings')
 Route::view("usuarios", 'users')
 	->name('users')->middleware('auth');
 
+Route::view("proveedores", 'providers')
+	->name('providers')->middleware('auth');
 
 
 Route::resource("productos", '\App\Http\Controllers\ProductController')
