@@ -6,7 +6,7 @@ $(document).ready( function () {
 			    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 			    responsive: true,
 		        ajax: {
-                        url: 'http://localhost:8000/inventario/productos',
+                        url: '/inventario/productos',
                         dataSrc: '',
                     },
 		        columns: [
