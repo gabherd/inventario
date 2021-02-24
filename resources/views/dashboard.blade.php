@@ -9,7 +9,7 @@
 @section('content')
 	<div>
 		<div class="row text-white">
-			<div class="col">
+			<div class="col-md-4 col-sm-13 ">
 				<div style="background: #00C0EF; " class="box-header">
 					<div style="">
 						<div class="qty-product">150</div>
@@ -18,7 +18,7 @@
 					<img src="img/bolsa-de-la-compra.svg" height="80">
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-md-4 col-sm-6 ">
 				<div style="background: #00A65A;" class="box-header">
 					<div>
 						<div class="qty-product">{{ $productsStock }}</div> 
@@ -27,7 +27,7 @@
 					<img src="img/box.svg" alt="" height="80">
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-md-4 col-sm-6 ">
 				<div style="background: #DD4B39;" class="box-header">
 					<div>
 						<div class="qty-product">{{ $productsOut }}</div>

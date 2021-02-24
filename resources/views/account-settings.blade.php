@@ -6,12 +6,12 @@
 @endsection
 
 @section('content')
-		<div class="" style="width: 70%; margin: auto;">
+		<div class="content-info">
 			<form action="{{ route('account-settings.update',  Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				@method('PATCH')
 				<div class="form-group d-flex align-items-center flex-column">
-					<img id="img-img_user" src="data:image/*;base64,{{ base64_encode( Auth::user()->avatar ) }}" style="height: 150px; width: 150px; background: #aaf; border-radius: 150px; border:none;"></img>
+					<img id="img-img_user" src="data:image/*;base64,{{ base64_encode( Auth::user()->avatar ) }}" height="150" width="150"  class="rounded-circle"></img>
 					<input  class="d-none" id="inp-img_user" accept="image/*" type="file" name="user-img">
 					<div id="btn-img_change" class="btn btn-danger mt-1">Cambiar imagen</div>
 				</div>
@@ -32,7 +32,7 @@
 					<label for="inp-user_lname">Contraseña</label><br>
 					<div class="btn btn-danger">Cambiar contraseña</div>
 				</div>
-				<div class="d-flex justify-content-center" style="width: 100%;">
+				<div class="d-flex justify-content-center">
 					<button class="btn btn-success p-3" >Guardar</button>
 					
 				</div>

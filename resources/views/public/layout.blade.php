@@ -51,7 +51,7 @@
 			
 			<!--========= inicio - navLateral =========-->
 			<section class="full-width navLateral" style="display: table-cell;">
-				<div style="position: absolute; width: 20%; top: 10;">
+				<div style="position: absolute; width: 230px; top: 10;">
 					<div class="full-width navLateral-body" style="position: relative;">
 						<!--figure class="full-width" style="height: 77px;">
 							<div class="navLateral-body-cl">
@@ -76,7 +76,6 @@
 										</div>
 									</a>
 								</li>
-								<li class="full-width divider-menu-h"></li>
 								<li class="full-width" style="position: relative; padding-right: 2px">
 									<a href="#!" class="full-width btn-subMenu">
 										<div class="navLateral-body-cl">
@@ -110,7 +109,6 @@
 										</li>
 									</ul>
 								</li>
-								<li class="full-width divider-menu-h"></li>
 								<li class="full-width">
 									<a href="#" class="full-width">
 										<div class="navLateral-body-cl">
@@ -121,7 +119,6 @@
 										</div>
 									</a>
 								</li>
-								<li class="full-width divider-menu-h"></li>
 								<li class="full-width">
 									<a href="#" class="full-width">
 										<div class="navLateral-body-cl">
@@ -132,7 +129,6 @@
 										</div>
 									</a>
 								</li>
-								<li class="full-width divider-menu-h"></li>
 								<li class="full-width">
 									<a href="proveedores" class="full-width">
 										<div class="navLateral-body-cl">
@@ -143,7 +139,6 @@
 										</div>
 									</a>
 								</li>
-								<li class="full-width divider-menu-h"></li>
 								<li class="full-width">
 									<a href="{{ route('users') }}" class="full-width">
 										<div class="navLateral-body-cl">

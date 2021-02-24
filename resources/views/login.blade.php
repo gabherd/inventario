@@ -16,7 +16,7 @@
 			</div>
 			<div>
 				<form>
-					<div class="text-center" style="margin: 10px 0; color: #afafaf">Iniciar sesion</div>
+					<div class="text-center my-10" style="color: #afafaf">Iniciar sesion</div>
 					<div>
 						<div class="form-group">
 							<label for="inp-user_name"></label>
@@ -27,7 +27,7 @@
 							<input id="inp-user_name" class="form-control" type="password" name="user-name" placeholder="Contraseña">
 						</div>
 					</div>
-					<button class="btn btn-success" style="width: 100%;">Entrar</button>
+					<button class="btn btn-success w-100">Entrar</button>
 				</form>
 			</div>
 		</div>

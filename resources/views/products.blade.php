@@ -7,7 +7,7 @@
 @section('content')
 	<div>
 		<h4>Productos en inventario</h4>
-		<button type="button" style="float: right;" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary">Agregar</button>
+		<button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right">Agregar</button>
 		<br>
 		<br>
 		<br>
@@ -40,7 +40,7 @@
 		      <div class="modal-body">
 		      	<form id="create-product" action="{{ route('products.store') }}" method="POST">
 					@csrf
-			      	<div style="padding: 30px;">
+			      	<div class="p-30">
 				      	<div class="form-group">
 					      	<label for="">Id</label>
 					        <input id="inp-id" name="id" class="form-control" type="text">
