@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+	<h4>Lista de proveedores</h4>
 	<table id="myTable" class="table table-bordered">
 			<thead class="thead-light">
 				<tr>

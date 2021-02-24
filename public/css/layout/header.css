@@ -7,6 +7,7 @@
 	color: var(--main-color-txt) !important;
 }
 
+
 #img-user{
 	cursor: pointer;
 	position: absolute;
@@ -24,14 +25,37 @@
 	cursor: pointer;
 	display: none;
 	margin-top: 4px;
-	padding: 5px 30px;
 	position: absolute; 
 	right: 0; 
 	z-index: 1060;
+	width: 200px;
+	text-align: center;
+}
+
+.box-conf_account a{
+	text-decoration: none;
+	color: #2D2D2D;
+}
+
+.box-conf_account a:hover{
+	text-decoration: none;
+}
+
+.txt-conf_account{
+	padding: 8px 0px;
+}
+
+.txt-conf_account:hover{
+	background: #E4E4E4;
+	border-radius: 5px;
 }
 
 .option-user_account{
-	
+	padding: 5px 30px;
+}
+
+.option-user_account a{
+	background: red;
 }
 
 .containter-local{

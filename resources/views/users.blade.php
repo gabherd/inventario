@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-	
+	<h4>Usuarios registrados</h4>
 @endsection
 
 @section('scripts')

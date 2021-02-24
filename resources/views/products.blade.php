@@ -6,6 +6,7 @@
 
 @section('content')
 	<div>
+		<h4>Productos en inventario</h4>
 		<button type="button" style="float: right;" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary">Agregar</button>
 		<br>
 		<br>

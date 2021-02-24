@@ -10,7 +10,7 @@
 	<title>Login</title>
 </head>
 	<body>
-		<div class="login shadow">
+		<div class="login shadow-sm">
 			<div class="d-flex justify-content-center">
 				<img src="img/user.svg" height="100">
 			</div>
