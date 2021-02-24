@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+	<div class="content-page">
 		<div class="content-info">
 			<form action="{{ route('account-settings.update',  Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
 				@csrf
@@ -38,6 +39,7 @@
 				</div>
 			</form>
 		</div>
+	</div>
 @endsection
 
 

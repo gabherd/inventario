@@ -158,9 +158,7 @@
 
 			<!--========= inicio - contenido =========-->
 			<div class="page-container" style="padding: 5px; display: table-cell; position: relative;">
-				<div style="background: #fff; padding: 5px; height: 100%">
-					@yield('content')			
-				</div>
+				@yield('content')			
 			</div>
 			<!---------- fin - contenido   ---------->
 		</div>

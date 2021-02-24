@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-	<div>
+	<div class="content-page">
 		<h4>Productos en inventario</h4>
 		<button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right">Agregar</button>
 		<br>

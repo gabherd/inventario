@@ -4,7 +4,10 @@
 @endsection
 
 @section('content')
-	<h4>Usuarios registrados</h4>
+	<div class="content-page">
+		<h4>Usuarios registrados</h4>
+		
+	</div>
 @endsection
 
 @section('scripts')
