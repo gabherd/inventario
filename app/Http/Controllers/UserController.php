@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $user->save();
 
-          return redirect()->route('projects.index');
+        return redirect()->route('account-settings.index');
     }
 
     public function destroy($id)
