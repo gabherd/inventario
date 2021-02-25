@@ -32,6 +32,9 @@
 						<div  class="cursor" id="aux-img-user" style="width: 30px; height: 30px; z-index: 1053; position: absolute; display: none; background: red"></div>
 					</div>
 					<div class="shadow box-conf_account">
+						<a class="full-width" style="background: red" href="#">
+							<div class="txt-conf_account">Ayuda</div>
+						</a>
 						<a class="full-width" style="background: red" href="{{ route('account-settings.index') }}">
 							<div class="txt-conf_account">Configuracion</div>
 						</a>

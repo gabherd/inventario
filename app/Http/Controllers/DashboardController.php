@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class DashboardController extends Controller
 {
@@ -27,17 +28,34 @@ class DashboardController extends Controller
     }
 
     public function getSales(){
-        $sql = "SELECT measure, sale from products 
+        $sql = "SELECT brand, measure, sale from products 
         		WHERE sale in ( 
 		        	SELECT Sale FROM (
 		        		SELECT DISTINCT sale from products 
 		        		ORDER BY sale DESC 
 		        		limit 2)
 			        AS t) 
+                GROUP by Measure 
 		        ORDER BY sale";
         $productsSales = DB::select($sql);
 
         return $productsSales;
+
+        /*
+        ejemplo de una subconsulta
+        Example query
+        Products::whereIn('id', function($query){
+            $query->select('paper_type_id')
+            ->from(with(new ProductCategory)->getTable())
+            ->whereIn('category_id', ['223', '15'])
+            ->where('active', 1);
+        })->get();*/
+
+       //$sales = Product::whereIn('id', function($query){
+       //    $query->select('id')
+       //    ->from(with(new Product)->getTable());
+       //})->get();
+
     }
 
     public function store(ProductRequest $request)

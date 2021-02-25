@@ -8,7 +8,7 @@
 
 @section('content')
 	<div class="content-page">
-		<h4>Productos en inventario</h4>
+		<div style="color: #A1A1A1">Productos en inventario</div>
 		<button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right">Agregar</button>
 		<br>
 		<br>
