@@ -7,7 +7,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/login.css">
-	<title>Login</title>
+	<title>Zone of tires | Iniciar sesion</title>
 </head>
 	<body>
 		<div class="login shadow-sm">
@@ -38,7 +38,7 @@
 							@enderror
 						</div>
 					</div>
-					<button class="btn btn-success" style="width: 100%;" type="submit">Entrar</button>
+					<button class="btn btn-success w-100" type="submit">Entrar</button>
 				</form>
 			</div>
 		</div>

@@ -1,5 +1,6 @@
 @extends('public/layout')
 
+@section('title') Cuenta @endsection
 
 @section('resources-page')
 	<link rel="stylesheet" href="css/account-settings.css">

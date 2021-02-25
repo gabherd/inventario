@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>@yield('title', 'Zone of tires')</title>
+		<title>Zone of tires | @yield('title', 'Zone of tires')</title>
 		<!--icon ionic-->
 		<link rel="stylesheet" href="css/normalize.css">
 		<link rel="stylesheet" href="css/material.min.css">

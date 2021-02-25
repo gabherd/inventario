@@ -1,5 +1,8 @@
 @extends('public/layout')
 
+@section('title') Proveedores @endsection
+
+
 @section('resources-page')
 @endsection
 

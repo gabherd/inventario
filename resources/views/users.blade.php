@@ -1,5 +1,8 @@
 @extends('public/layout')
 
+@section('title') Usuarios @endsection
+
+
 @section('resources-page')
 @endsection
 

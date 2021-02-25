@@ -1,5 +1,7 @@
 @extends('public/layout')
 
+@section('title') Productos @endsection
+
 @section('resources-page')
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 @endsection
