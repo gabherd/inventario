@@ -62,10 +62,18 @@ $(document).ready( function () {
           $(row).addClass('bg-lightRed');
         }
       },
-      columns: [
-          {data: 'measure'},
-          {data: 'stock'},
-      ]
+      aoColumns: [
+            { data: "measure" },
+            {
+                mData: "stock",
+                mRender: function (data, type, row) {
+                  if (data == 0) {
+                    return 'Agotado';
+                  }
+                  return data;
+                }
+            }
+        ]
     });
 } );
 

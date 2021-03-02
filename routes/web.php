@@ -18,8 +18,6 @@ Route::resource("productos", '\App\Http\Controllers\ProductController')
 Route::resource('cuenta', '\App\Http\Controllers\UserController')
 	->names('account-settings')->middleware('auth');
 
-
-
 Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getProducts')
 	->name('products')->middleware('auth');
 
