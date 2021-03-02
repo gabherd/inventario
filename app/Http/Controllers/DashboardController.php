@@ -28,21 +28,10 @@ class DashboardController extends Controller
     }
 
     public function getSales(){
-        $sql = "SELECT brand, measure, sale from products 
-        		WHERE sale in ( 
-		        	SELECT Sale FROM (
-		        		SELECT DISTINCT sale from products 
-		        		ORDER BY sale DESC 
-		        		limit 2)
-			        AS t) 
-                GROUP by Measure 
-		        ORDER BY sale";
+        $sql = "SELECT brand, measure, SUM(sale) AS sales from products GROUP BY Measure having sales >= (SELECT min(TopSales) as total from (SELECT SUM(sale) as TopSales from products GROUP BY Measure ORDER by TopSales desc limit 3) t) and sales <= (SELECT max(TopSales) as total from (SELECT SUM(sale) as TopSales from products GROUP BY Measure ORDER by TopSales desc limit 3) t)";
         $productsSales = DB::select($sql);
 
-        return $productsSales;
-
         /*
-        ejemplo de una subconsulta
         Example query
         Products::whereIn('id', function($query){
             $query->select('paper_type_id')
@@ -51,11 +40,12 @@ class DashboardController extends Controller
             ->where('active', 1);
         })->get();*/
 
-       //$sales = Product::whereIn('id', function($query){
-       //    $query->select('id')
-       //    ->from(with(new Product)->getTable());
-       //})->get();
+        //$sales = Product::whereIn('id', function($query){
+        //    $query->select('id')
+        //    ->from(with(new Product)->getTable());
+        //})->get();
 
+        return $productsSales;
     }
 
     public function store(ProductRequest $request)

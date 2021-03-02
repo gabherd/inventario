@@ -9,7 +9,7 @@ function drawChart() {
     var sales = [['Modelo', 'Venta']];
 
     var r = data.map(function(a){
-      sales.push([a.measure, a.sale]);
+      sales.push([a.brand + ' - ' +a.measure, parseInt(a.sales)]);
     });
 
     var data = google.visualization.arrayToDataTable(sales);
@@ -39,7 +39,7 @@ function drawChart2() {
   var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
   chart.draw(data, options);
 }
-//ffd6d6
+
 //table of stock
 $(document).ready( function () {
     $('#tbl-emty-stock').DataTable({
@@ -68,3 +68,6 @@ $(document).ready( function () {
       ]
     });
 } );
+
+
+//ffd6d6
