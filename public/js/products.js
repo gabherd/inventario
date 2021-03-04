@@ -21,3 +21,25 @@ $(document).ready( function () {
 		        ]
 		    });
 		} );
+
+$("#btn-save").on('click', function(){
+	$.ajax({
+		url: "productos",
+		method:"POST",
+		data:$("#create-product").serialize(),
+		success: function(res){
+			if (res.status) {
+				Swal.fire({
+				  position: 'top-end',
+				  icon: 'success',
+				  title: 'Producto guardado',
+				  showConfirmButton: false,
+				  timer: 800
+				});
+
+				$("#create-product").trigger("reset");
+				$('#mdl-AddProduct').modal('hide');
+			}
+		}
+	});	
+});
