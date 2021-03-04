@@ -37,19 +37,28 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $file = $request->file('user-img');
+        $this->validate([
+            'user-name' => ['required', 'string'],
+            'user-apellido' => ['required', 'string']
+        ]);
+
+        Form::update($request->all());
+
+        return back()->with('success', 'Your form has been submitted.');
+
+        //$file = $request->file('user-img');
         
-        //user-name
-        // Get the contents of the file
-        $contents = $file->openFile()->fread($file->getSize());
+        ////user-name
+        //// Get the contents of the file
+        //$contents = $file->openFile()->fread($file->getSize());
 
-        // Store the contents to the database
-        $user = User::find($id);
-        $user->avatar = $contents;
+        //// Store the contents to the database
+        //$user = User::find($id);
+        //$user->avatar = $contents;
 
-        $user->save();
+        //$user->save();
 
-        return redirect()->route('account-settings.index');
+        //return redirect()->route('account-settings.index');
     }
 
     public function destroy($id)

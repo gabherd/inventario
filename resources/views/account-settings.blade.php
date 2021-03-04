@@ -9,6 +9,15 @@
 @section('content')
 	<div class="content-page">
 		<div class="content-info">
+			<div>
+				    <!-- Success message -->
+				        @if(Session::has('success'))
+				        <div class="alert alert-success">
+				            {{Session::get('success')}}
+				        </div>
+				        @endif
+			</div>
+
 			<form action="{{ route('account-settings.update',  Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				@method('PATCH')
@@ -28,7 +37,7 @@
 				<hr>
 				<div class="form-group">
 					<label for="inp-user_name">Correo</label>
-					<input id="inp-user_name" class="form-control" type="text" name="user-correo" value="{{ Auth::user()->email }}" placeholder="Correo">
+					<input id="inp-user_name" class="form-control" type="text" name="user-correo" value="{{ Auth::user()->email }}" placeholder="Correo" readonly>
 				</div>
 				<div class="form-group">
 					<label for="inp-user_lname">Contraseña</label><br>
