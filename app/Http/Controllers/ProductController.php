@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
@@ -15,7 +16,12 @@ class ProductController extends Controller
     }
 
     public function getProducts(){
-        $product = Product::get();
+        $query = 'SELECT products.id, Measure.name as Measure, Brand.name as Brand, Model.name as Model, Stock, Sale, Price 
+                  FROM products JOIN Measure on Measure = id_measure
+                          JOIN brand ON brand = id_brand
+                          JOIN model ON model = id_model';
+
+        $product = DB::select($query);
         return $product;
     }
     
