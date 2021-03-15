@@ -13,11 +13,11 @@
 @section('content')
 	<div class="content-page">
 		<div style="color: #A1A1A1">Productos en inventario</div>
-		<button type="button" data-toggle="modal" data-target="#mdl-AddProduct" class="btn btn-primary float-right">Agregar</button>
+		<button id="btn-mdlAddProduct" type="button" data-toggle="modal" data-target="#mdl-AddProduct" class="btn btn-primary float-right">Agregar</button>
 		<br>
 		<br>
 		<br>
-		<table id="myTable" class="table table-bordered">
+		<table id="tbl-product" class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
 					<th>Codigo</th>
@@ -43,41 +43,44 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
-		      <div class="modal-body">
+		      <div class="modal-body">@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 		      	<form id="create-product">
 					@csrf
 			      	<div class="p-30">
 				      	<div class="form-group">
-					      	<label for="">Id</label>
-					        <input id="inp-id" name="id" class="form-control" type="text">
-		   					<span class="text-danger"> {!! $errors->first('id', ':message') !!} </span>
+					      	<label for="inp-id">Id</label>
+					        <input id="inp-id" name="id" class="form-control" type="text" >
 				      	</div>
 				      	<div class="form-group">
-					        <label for="">Marca</label>
+					        <label for="measure">Marca</label>
 					        <input id="inp-Measure" name="measure" class="form-control" type="text">
-		   					<span class="text-danger"> {!! $errors->first('measure', ':message') !!} </span>
 				      	</div>
 				      	<div class="form-group">
-					        <label for="">Modelo</label>
+					        <label for="model">Modelo</label>
 					        <input id="inp-Model" name="model" class="form-control" type="text">
-		   					<span class="text-danger"> {!! $errors->first('model', ':message') !!} </span>
 				      	</div>
 				      	<div class="form-group">
 					        <label for="">Medida</label>
 					        <input id="inp-brand" name="brand" class="form-control" type="text">
-		   					<span class="text-danger"> {!! $errors->first('brand', ':message') !!} </span>
 				      	</div>
 				      	<div class="form-group">
 					        <label for="">Precio</label>
 					        <input id="inp-price" name="price" class="form-control" type="text">
-		   					<span class="text-danger"> {!! $errors->first('price', ':message') !!} </span>
 				      	</div>
 				      	<div class="form-group">
 					        <label for="">Existencia</label>
 					        <input id="inp-stock" name="stock" class="form-control" type="text">
-		   					<span class="text-danger"> {!! $errors->first('stock', ':message') !!} </span>
 				      	</div>
 				    </div>
+				    <button id="submit-createProduct" class="d-none"></button>
 		      	</form>
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
@@ -92,8 +95,7 @@
 @section('scripts')
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="js/products.js"></script>
-	
-	>
 @endsection
 																														

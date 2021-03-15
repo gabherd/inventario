@@ -30,3 +30,7 @@ body{
 	height: 100%;
 	padding: 5px;
 }
+
+.error{
+	color: red;
+}

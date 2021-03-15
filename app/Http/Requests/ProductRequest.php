@@ -6,21 +6,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+   
     public function rules()
     {
        return [
@@ -33,14 +25,14 @@ class ProductRequest extends FormRequest
         ];
     }
 
-    public function message(){
+    public function messages(){
         return [
-            'id.required' => 'El id es obligatorio',
+            'id.required'      => 'El id es obligatorio',
             'measure.required' => 'Ingresa la medida',
-            'model.required' => 'Ingresa el modelo',
-            'brand.required' => 'Ingresa la marca',
-            'price.required' => 'Ingresa el precio',
-            'stock.required' => 'Ingresa la cantidad',
+            'model.required'   => 'Ingresa el modelo',
+            'brand.required'   => 'Ingresa la marca',
+            'price.required'   => 'Ingresa el precio',
+            'stock.required'   => 'Ingresa la cantidad',
         ];
     }
 }
