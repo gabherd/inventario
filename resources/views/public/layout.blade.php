@@ -53,117 +53,12 @@
 		<div style="display:table; position: relative; width: 100%; height: 100vh">
 			
 			<!--========= inicio - navLateral =========-->
-			<section class="full-width navLateral" style="display: table-cell;">
-				<div style="position: absolute; width: 230px; top: 10;">
-					<div class="full-width navLateral-body" style="position: relative;">
-						<!--figure class="full-width" style="height: 77px;">
-							<div class="navLateral-body-cl">
-								<img src="/img/user.svg" alt="Avatar" class="img-responsive">
-							</div>
-							<figcaption class="navLateral-body-cr hide-on-tablet">
-								<span>
-									Full Name Admin<br>
-									<small>Admin</small>
-								</span>
-							</figcaption>
-						</figure-->
-						<nav class="full-width">
-							<ul class="full-width list-unstyle menu-principal" style="">
-								<li class="full-width">
-									<a href="/" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-view-dashboard"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Dashboard
-										</div>
-									</a>
-								</li>
-								<li class="full-width" style="position: relative; padding-right: 2px">
-									<a href="#!" class="full-width btn-subMenu">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-case"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Inventario
-										</div>
-										<span class="zmdi zmdi-chevron-left"></span>
-									</a>
-									<ul class="full-width menu-principal sub-menu-options">
-										<li class="full-width">
-											<a href="{{ route('products.index') }}" class="full-width">
-												<div class="navLateral-body-cl">
-													<i class="zmdi zmdi-balance"></i>
-												</div>
-												<div class="navLateral-body-cr hide-on-tablet">
-													Zone of tires
-												</div>
-											</a>
-										</li>
-										<li class="full-width">
-											<a href="#" class="full-width">
-												<div class="navLateral-body-cl">
-													<i class="zmdi zmdi-truck"></i>
-												</div>
-												<div class="navLateral-body-cr hide-on-tablet">
-													Oversa
-												</div>
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li class="full-width">
-									<a href="#" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-shopping-cart"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Ventas
-										</div>
-									</a>
-								</li>
-								<li class="full-width">
-									<a href="#" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-chart"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Historial
-										</div>
-									</a>
-								</li>
-								<li class="full-width">
-									<a href="proveedores" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-truck"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Proveedores
-										</div>
-									</a>
-								</li>
-								<li class="full-width">
-									<a href="{{ route('users') }}" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-accounts"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Usuarios
-										</div>
-									</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</section>
-			<!---------- fin - inicio ------------>
+			@include('sidebar')
 
 			<!--========= inicio - contenido =========-->
 			<div class="page-container" style="padding: 5px; display: table-cell; position: relative;">
 				@yield('content')			
 			</div>
-			<!---------- fin - contenido   ---------->
 		</div>
 
 		<script type="text/javascript" src="js/layout/script.js"></script>

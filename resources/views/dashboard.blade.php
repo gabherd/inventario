@@ -2,7 +2,6 @@
 
 @section('title') Dashboard @endsection
 
-
 @section('resources-page')
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
