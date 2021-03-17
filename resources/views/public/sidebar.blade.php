@@ -1,6 +1,4 @@
-@include('public/layout')
 
-@section('sidebar')
 	<div class="full-width navLateral" style="display: table-cell;">
 		<div style="position: absolute; width: 230px; top: 10;">
 			<div class="full-width navLateral-body" style="position: relative;">
@@ -16,38 +14,15 @@
 								</div>
 							</a>
 						</li>
-						<li class="full-width" style="position: relative; padding-right: 2px">
-							<a href="#!" class="full-width btn-subMenu">
+						<li class="full-width">
+							<a href="{{ route('products.index') }}" class="full-width">
 								<div class="navLateral-body-cl">
-									<i class="zmdi zmdi-case"></i>
+									<i class="zmdi zmdi-assignment"></i>
 								</div>
 								<div class="navLateral-body-cr hide-on-tablet">
 									Inventario
 								</div>
-								<span class="zmdi zmdi-chevron-left"></span>
 							</a>
-							<ul class="full-width menu-principal sub-menu-options">
-								<li class="full-width">
-									<a href="{{ route('products.index') }}" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-balance"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Zone of tires
-										</div>
-									</a>
-								</li>
-								<li class="full-width">
-									<a href="#" class="full-width">
-										<div class="navLateral-body-cl">
-											<i class="zmdi zmdi-truck"></i>
-										</div>
-										<div class="navLateral-body-cr hide-on-tablet">
-											Oversa
-										</div>
-									</a>
-								</li>
-							</ul>
 						</li>
 						<li class="full-width">
 							<a href="#" class="full-width">
@@ -80,7 +55,7 @@
 							</a>
 						</li>
 						<li class="full-width">
-							<a href="{{ route('users') }}" class="full-width">
+							<a href="{{ route('users.index') }}" class="full-width">
 								<div class="navLateral-body-cl">
 									<i class="zmdi zmdi-accounts"></i>
 								</div>
@@ -94,4 +69,3 @@
 			</div>
 		</div>
 	</div>
-@endsection
