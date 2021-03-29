@@ -93,6 +93,8 @@ $("#tbl-users").delegate('.btn-delete', "click", function(){
 });
 
 $("#tbl-users").delegate('.btn-edit', "click", function(){
+	clearValidationError('#create-user');
+
 	var id = $(this).attr('data-edtId');
 	var name = $(".tr-"+id).find('.name').text();
 	var last_name = $(".tr-"+id).find('.last_name').text();
@@ -119,8 +121,8 @@ $("#btn-save").on('click', function(){
 	
 	$("#submit-createUser").click();
 
-
-	if ($(this).data("submit") == "create"){
+	if ($(this).attr("data-submit") == "create"){
+		console.log('creando');
 		$.ajax({
 			url: "/usuarios",
 			method:"POST",
@@ -139,9 +141,14 @@ $("#btn-save").on('click', function(){
 					$('#tbl-users').DataTable().ajax.reload();
 					$('#mdl-user').modal('hide');
 				}
-			}
+			},
+			error: function(xhr) {
+		        var errors = JSON.parse(xhr.responseText);
+		        console.log(errors)
+		    }
 		});	
 	}else{
+		console.log('editando');
 		
 		var id = $("#btn-save").attr("data-id");
 
@@ -149,7 +156,6 @@ $("#btn-save").on('click', function(){
 			url: "/usuarios/"+id,
 			type: 'PUT', 
 			dataType: "JSON",
-			
 			data: $("#create-user").serialize()  + '&_method=' + "PUT",
 			success: function(res){
 				console.log(res);
@@ -173,3 +179,9 @@ $("#btn-save").on('click', function(){
 		});	
 	}
 });
+
+
+function clearValidationError(idForm){
+	$(idForm).data('validator').resetForm();
+	$(idForm).find('.form-control').removeClass('error');
+}
