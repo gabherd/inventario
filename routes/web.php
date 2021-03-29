@@ -21,6 +21,9 @@ Route::resource("productos", '\App\Http\Controllers\ProductController')
 Route::resource('cuenta', '\App\Http\Controllers\UserController')
 	->names('account-settings')->middleware('auth');
 
+// obtine lista de usuarios
+Route::get('registros/usuarios', '\App\Http\Controllers\UsersController@getUsers')
+	->name('usuarios_lista')->middleware('auth');
 
 // obtine lista de productos
 Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getProducts')
@@ -33,6 +36,7 @@ Route::get('dashboard/stock', '\App\Http\Controllers\DashboardController@getStoc
 // obtine cantidad de ventas
 Route::get('dashboard/sales', '\App\Http\Controllers\DashboardController@getSales')
 	->name('sales')->middleware('auth');
+
 
 
 

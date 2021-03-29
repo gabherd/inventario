@@ -30,7 +30,7 @@ $(document).ready( function () {
 		 	    ajax: {
          	            url: '/inventario/productos',
          	            dataSrc: '',
-         	        },
+         	    },
 		 	    columns: [
 		 	        {data: 'id'},
 		 	        {data: 'Measure'},

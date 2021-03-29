@@ -10,6 +10,8 @@
 	<!--Sweetalert-->
 	<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+	<!--Validator-->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 @endsection
 
 @section('content')
@@ -46,14 +48,14 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+			    <div class="alert alert-danger">
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+				@endif
 		      	<form id="create-product">
 					@csrf
 			      	<div class="p-30">
@@ -95,7 +97,6 @@
 @endsection
 
 @section('scripts')
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="js/products.js"></script>
 @endsection
 																														

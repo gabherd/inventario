@@ -25,6 +25,11 @@ body{
 	align-items: center;
 }
 
+.center-x{
+	display: flex;
+	justify-content: center;
+}
+
 .content-page{
 	background: #fff;
 	height: 100%;
