@@ -18,13 +18,9 @@ class DashboardController extends Controller
     }
 
     public function getStockQty(){
-    	$stock = DB::table('products')
-    		->select('measure', 'stock')
-    		->whereBetween('stock', array(0, 10))
-    		->orderBy('stock', 'asc')
-    		->get();
-
-		return $stock;
+    	$query = "SELECT me.number AS measure, stock FROM products AS pro JOIN measure AS me ON me.id_measure = pro.id_measure";
+       
+		return DB::select($query);
     }
 
     public function getSales(){
