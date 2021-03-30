@@ -24,7 +24,6 @@
 		<table id="tbl-product" class="table table-bordered">
 			<thead class="thead-light">
 				<tr>
-					<th>Codigo</th>
 					<th>Medida</th>
 					<th>Marca</th>
 					<th>Modelo</th>

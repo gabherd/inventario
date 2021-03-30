@@ -32,7 +32,6 @@ $(document).ready( function () {
          	            dataSrc: '',
          	    },
 		 	    columns: [
-		 	        {data: 'id'},
 		 	        {data: 'Measure'},
 		 	        {data: 'Brand'},
 		 	        {data: 'Model'},
