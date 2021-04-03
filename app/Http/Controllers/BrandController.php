@@ -24,7 +24,7 @@ class BrandController extends Controller
         $values = $request->validated();
 
         $request = DB::table('brand')
-                    ->insert(['name' => $values['brand']]);
+                    ->insert(['name' => $values['nameBrand']]);
 
         if($request){
             $response = array('status'=>1, 'msg'=>'Created successfully');
@@ -35,14 +35,19 @@ class BrandController extends Controller
         return Response()->json($response);  
     }
 
-    public function show($id)
+    public function update(BrandRequest $request, $id)
     {
-        //
-    }
+        $values = $request->validated();
 
-    public function update(Request $request, $id)
-    {
-        //
+        $request = DB::table('brand')->where('id_brand', (int)$id)->update(['name' => $values['nameBrand']]);
+        
+        if($request){
+            $response = array('status'=>1, 'msg'=>'Created updated');
+        }else{
+            $response = array('status'=>0, 'msg'=> 'Data not updated');
+        }
+
+        return $response;
     }
 
     public function destroy($id)

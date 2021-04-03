@@ -15,14 +15,13 @@ class BrandRequest extends FormRequest
     function rules()
     {
         return [
-            'brand' => ['required', 'regex:/^[\pL\s\-]+$/u']
+            'nameBrand' => ['required']
         ];
     }
 
     public function messages(){
         return [
-            'brand.required' => 'El nombre es requerido',
-            'brand.regex' => 'Solo letras',
+            'nameBrand.required' => 'El nombre es requerido',
         ];
     }
 }

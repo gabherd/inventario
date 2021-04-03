@@ -147,7 +147,7 @@
 			      	<div class="p-30">
 				      	<div class="form-group">
 					        <label for="measure">Nombre</label>
-					        <input id="inp-brandBrand" name="brand" class="form-control" type="text" placeholder="Nombre de la marca">
+					        <input id="inp-brandBrand" name="nameBrand" class="form-control" type="text" placeholder="Nombre de la marca">
 				      	</div>
 				    </div>
 				    <button id="submit-brand" class="d-none"></button>
@@ -155,7 +155,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-saveBrand" class="btn btn-primary">Guardar</button>
+		        <button id="btn-saveBrand" data-submit="create"  data-id="" class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>

@@ -183,15 +183,6 @@ $(document).ready( function () {
 		});	
 	});
 
-	$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
-		$("#titleModalBrand").text('Editar marca');
-		$("#btn-saveBrand").text('Actualizar');
-
-		var id = $(this).attr('data-brandId');
-		var name = $(this).attr('data-name');
-
-		$("#inp-brandBrand").val(name);
-	});
 
 	$('#inp-Measure').on('change', function(e){
 		var model = this.value;
@@ -217,45 +208,77 @@ $(document).ready( function () {
 	$("#btn-mdlSaveBrand").on('click', function(){
 		$("#titleModalBrand").text('Agregar marca')
 		$("#btn-saveBrand").text('Guardar');
+		$("#btn-saveBrand").attr('data-submit', 'create');
 
 		$("#create-brand").trigger("reset");
 	});
 
-
 	$("#btn-saveBrand").on('click', function(){
 		$("#submit-brand").click();
 
-		$.ajax({
-			url: "marca",
-			method:"POST",
-			data: $("#create-brand").serialize(),
-			success: function(res){
-				if (res.status) {
-					Swal.fire({
-					  position: 'top-end',
-					  icon: 'success',
-					  title: 'Producto guardado',
-					  showConfirmButton: false,
-					  timer: 900
-					});
-
-					$('#tbl-brand').DataTable().ajax.reload();
-
-					$("#create-brand").trigger("reset");
-					$('#mdl-saveBrand').modal('hide');
+		if ($(this).attr("data-submit") == "create"){
+			$.ajax({
+				url: "marca",
+				method:"POST",
+				data: $("#create-brand").serialize(),
+				success: function(res){
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Marca agregada',
+						  showConfirmButton: false,
+						  timer: 900
+						});
+						
+						$('#mdl-saveBrand').modal('hide');
+						$('#tbl-brand').DataTable().ajax.reload();
+						$("#create-brand").trigger("reset");
+					}
 				}
-			}
-		});		
+			});	
+		}else{
+			var id = $("#btn-saveBrand").attr("data-id");
+
+			$.ajax({
+				url: "/marca/"+id,
+				type: 'PUT', 
+				dataType: "JSON",
+				data: $("#create-brand").serialize()  + '&_method=' + "PUT",
+				success: function(res){
+					console.log(res);
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Marca actualizada',
+						  showConfirmButton: false,
+						  timer: 900
+						});
+
+						$('#mdl-saveBrand').modal('hide');
+						$('#tbl-brand').DataTable().ajax.reload();
+						$('#tbl-brand').DataTable().ajax.reload();
+					}
+				},
+				error: function(xhr) {
+			        var errors = JSON.parse(xhr.responseText);
+			        console.log(errors)
+			    }
+			});	
+		}
 	});
 
 	$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
 		$("#titleModalBrand").text('Editar marca');
 		$("#btn-saveBrand").text('Actualizar');
+		$("#btn-saveBrand").attr('data-submit', 'update');
 
 		var id = $(this).attr('data-brandId');
 		var name = $(this).attr('data-name');
 
 		$("#inp-brandBrand").val(name);
+		$("#btn-saveBrand").attr('data-id', id);
 	});
 
 	$("#tbl-brand").delegate('.btn-deleteBrand', 'click', function(){
