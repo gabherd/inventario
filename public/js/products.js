@@ -136,170 +136,171 @@ $(document).ready( function () {
 });//documentReady
 
 
-//------------------- Model -------------------------------
-$("#btn-save").on('click', function(){
-	$.ajax({
-		url: "productos",
-		method:"POST",
-		data: $("#create-product").serialize(),
-		success: function(res){
-			if (res.status) {
-				Swal.fire({
-				  position: 'top-end',
-				  icon: 'success',
-				  title: 'Producto guardado',
-				  showConfirmButton: false,
-				  timer: 900
-				});
+//------------------- Prpductd -------------------------------
+	$("#btn-save").on('click', function(){
+		$.ajax({
+			url: "productos",
+			method:"POST",
+			data: $("#create-product").serialize(),
+			success: function(res){
+				if (res.status) {
+					Swal.fire({
+					  position: 'top-end',
+					  icon: 'success',
+					  title: 'Producto guardado',
+					  showConfirmButton: false,
+					  timer: 900
+					});
 
-				$('#tbl-product').DataTable().ajax.reload();
+					$('#tbl-product').DataTable().ajax.reload();
 
-				$("#create-product").trigger("reset");
-				$('#mdl-AddProduct').modal('hide');
+					$("#create-product").trigger("reset");
+					$('#mdl-AddProduct').modal('hide');
+				}
 			}
-		}
-	});	
-});
-
-$("#btn-mdlAddProduct").on('click', function(){
-	$("#create-product").trigger("reset");
-	$("#create-product").validate().resetForm();
-	$.ajax({
-		url: "inventario/marcas",
-		success: function(res){
-			for(item in res){
-				$("#inp-Measure").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-			}
-		}
-	});	
-
-	$.ajax({
-		url: "inventario/measure",
-		success: function(res){
-			for(item in res){
-				$("#inp-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].number+'</option>');
-			}
-		}
-	});	
-});
-
-$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
-	$("#titleModalBrand").text('Editar marca');
-	$("#btn-saveBrand").text('Actualizar');
-
-	var id = $(this).attr('data-brandId');
-	var name = $(this).attr('data-name');
-
-	$("#inp-brandBrand").val(name);
-});
-
-$('#inp-Measure').on('change', function(e){
-	var model = this.value;
-	
-	$("#inp-Model").empty();
-
-	$("#inp-Model").append('<option value="0" id="inp-Measure">Cargando...</option>');
-
-	$.ajax({
-		url: "inventario/model/"+model,
-		success: function(res){
-			$("#inp-Model").empty();
-			for(item in res){
-				$("#inp-Model").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-			}
-		}
+		});	
 	});
-});
-//------------------- end Model -------------------------------
+
+	$("#btn-mdlAddProduct").on('click', function(){
+		$("#create-product").trigger("reset");
+		$("#create-product").validate().resetForm();
+		$.ajax({
+			url: "inventario/marcas",
+			success: function(res){
+				for(item in res){
+					$("#inp-Measure").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+				}
+			}
+		});	
+
+		$.ajax({
+			url: "inventario/measure",
+			success: function(res){
+				for(item in res){
+					$("#inp-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].number+'</option>');
+				}
+			}
+		});	
+	});
+
+	$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
+		$("#titleModalBrand").text('Editar marca');
+		$("#btn-saveBrand").text('Actualizar');
+
+		var id = $(this).attr('data-brandId');
+		var name = $(this).attr('data-name');
+
+		$("#inp-brandBrand").val(name);
+	});
+
+	$('#inp-Measure').on('change', function(e){
+		var model = this.value;
+		
+		$("#inp-Model").empty();
+
+		$("#inp-Model").append('<option value="0" id="inp-Measure">Cargando...</option>');
+
+		$.ajax({
+			url: "inventario/model/"+model,
+			success: function(res){
+				$("#inp-Model").empty();
+				for(item in res){
+					$("#inp-Model").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+				}
+			}
+		});
+	});
+//------------------- end Prpductd -------------------------------
 
 
 //------------------- Brand-------------------------------
-$("#btn-mdlSaveBrand").on('click', function(){
-	$("#titleModalBrand").text('Agregar marca')
-	$("#btn-saveBrand").text('Guardar');
+	$("#btn-mdlSaveBrand").on('click', function(){
+		$("#titleModalBrand").text('Agregar marca')
+		$("#btn-saveBrand").text('Guardar');
 
-	$("#create-brand").trigger("reset");
-});
-
-
-$("#btn-saveBrand").on('click', function(){
-	$("#submit-brand").click();
-
-	$.ajax({
-		url: "marca",
-		method:"POST",
-		data: $("#create-brand").serialize(),
-		success: function(res){
-			if (res.status) {
-				Swal.fire({
-				  position: 'top-end',
-				  icon: 'success',
-				  title: 'Producto guardado',
-				  showConfirmButton: false,
-				  timer: 900
-				});
-
-				$('#tbl-brand').DataTable().ajax.reload();
-
-				$("#create-brand").trigger("reset");
-				$('#mdl-saveBrand').modal('hide');
-			}
-		}
-	});		
-});
-
-$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
-	$("#titleModalBrand").text('Editar marca');
-	$("#btn-saveBrand").text('Actualizar');
-
-	var id = $(this).attr('data-brandId');
-	var name = $(this).attr('data-name');
-
-	$("#inp-brandBrand").val(name);
-});
-
-$("#tbl-brand").delegate('.btn-deleteBrand', 'click', function(){
-	var id = $(this).attr('data-brandId');
-	var name = $(this).attr('data-name');
-	
-	Swal.fire({
-		title: '¿Estas seguro?',
-		text: "Eliminar a " + name,
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Sí, eliminar',
-		cancelButtonText: 'Cancelar'
-	}).then((result) => {
-	  	if (result.isConfirmed) {
-			$.ajax({
-				url: "usuarios/"+id,
-				type: 'DELETE', 
-				dataType: "JSON",
-				headers: {
-			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		    	},
-				data: { 
-						"id": id, 
-				 		"_method": 'DELETE', 
-				},
-				success: function(res){
-					if (res.status) {
-						Swal.fire({
-							position: 'center',
-							icon: 'success',
-							title: 'Usuario eliminado',
-							showConfirmButton: false,
-							timer: 900
-						});
-						$('#tbl-users').DataTable().ajax.reload();
-					}
-				}
-			});	
-	  	}
+		$("#create-brand").trigger("reset");
 	});
-});
+
+
+	$("#btn-saveBrand").on('click', function(){
+		$("#submit-brand").click();
+
+		$.ajax({
+			url: "marca",
+			method:"POST",
+			data: $("#create-brand").serialize(),
+			success: function(res){
+				if (res.status) {
+					Swal.fire({
+					  position: 'top-end',
+					  icon: 'success',
+					  title: 'Producto guardado',
+					  showConfirmButton: false,
+					  timer: 900
+					});
+
+					$('#tbl-brand').DataTable().ajax.reload();
+
+					$("#create-brand").trigger("reset");
+					$('#mdl-saveBrand').modal('hide');
+				}
+			}
+		});		
+	});
+
+	$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
+		$("#titleModalBrand").text('Editar marca');
+		$("#btn-saveBrand").text('Actualizar');
+
+		var id = $(this).attr('data-brandId');
+		var name = $(this).attr('data-name');
+
+		$("#inp-brandBrand").val(name);
+	});
+
+	$("#tbl-brand").delegate('.btn-deleteBrand', 'click', function(){
+		var id = $(this).attr('data-brandId');
+		var name = $(this).attr('data-name');
+		
+		Swal.fire({
+			title: '¿Estas seguro?',
+			text: "Eliminar a " + name,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  	if (result.isConfirmed) {
+				$.ajax({
+					url: "marca/"+id,
+					type: 'DELETE', 
+					dataType: "JSON",
+					headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    	},
+					data: { 
+							"id": id, 
+					 		"_method": 'DELETE', 
+					},
+					success: function(res){
+						if (res.status) {
+							Swal.fire({
+								position: 'center',
+								icon: 'success',
+								title: 'Marca eliminada',
+								showConfirmButton: false,
+								timer: 900
+							});
+							$('#tbl-brand').DataTable().ajax.reload();
+						}
+					}
+				});	
+		  	}
+		});
+	});
+
 //-------------------end brand-------------------------------
 
 

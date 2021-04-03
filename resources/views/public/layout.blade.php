@@ -13,6 +13,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 		<!--Validator-->
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+		<script src="js/validatorString.js"></script>
 		<!--Estilos personales-->
 		<link rel="stylesheet" href="css/general.css">
 		<link rel="stylesheet" href="css/layout/header.css">

@@ -10,8 +10,8 @@
 	<!--Sweetalert-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.6/sweetalert2.min.css"/>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
-	<!--Validator-->
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+	<!--Token-->
+	<meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('content')

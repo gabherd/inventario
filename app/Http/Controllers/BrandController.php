@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BrandRequest;
+use App\Models\Brand;
 
 class BrandController extends Controller
 {
@@ -46,6 +47,14 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        //
+        $query = DB::table('brand')->where('id_brand', $id)->delete(); 
+
+        if($query){
+            $response = array('status' => 1, 'msg'=>'Deleted');
+        }else{
+            $response = array('status' => 0, 'msg'=>'Fail');
+        }
+        
+        return Response()->json($response);  
     }
 }
