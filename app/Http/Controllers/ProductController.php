@@ -16,19 +16,55 @@ class ProductController extends Controller
     }
 
     public function getProducts(){
-        $query = 'SELECT Measure.number as Measure, brand.name as Brand, brand.name as Model, Stock, Sale, Price 
-                  FROM products as pro JOIN Measure on Measure.id_measure = pro.id_measure
-                          JOIN model ON model.id_model = pro.id_model
-                          JOIN brand ON brand.id_brand = brand.id_brand';
+        $query = 'SELECT Measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price 
+                  FROM products JOIN Measure on Measure.id_measure = products.id_measure
+                          JOIN model ON model.id_model = products.id_model
+                          JOIN brand ON brand.id_brand = model.id_brand';
 
         $product = DB::select($query);
         return $product;
     }
-    
+
+    public function getModel($id){
+        $model = DB::table('model')
+                    ->select('id_model AS id', 'name')
+                    ->where('id_brand', $id)
+                    ->get(
+        );
+                    
+        return $model;
+    }
+
+    public function getAllModels(){
+        $models = DB::table('model')
+                    ->join('brand', 'brand.id_brand', '=', 'model.id_brand')
+                    ->select('model.id_model AS idModel', 'brand.id_brand AS idBrand', 'brand.name AS brand', 'model.name AS model')
+                    ->get();
+
+        return $models;
+    }
+
+    public function getMeasure(){
+        $measure = DB::table('measure')
+                    ->select('id_measure AS id', 'number')
+                    ->orderBy('number')
+                    ->get();
+
+        return $measure;
+    }
+
     public function store(ProductRequest $request)
     {
-        $request = Product::create($request->validated());
-        
+        $values = $request->validated();
+
+        $request = DB::table('products')
+                    ->insert([
+                        'id_model' => $values['model'],
+                        'id_measure' => $values['measure'],
+                        'price' => $values['price'],
+                        'stock' => $values['stock']
+                    ]);
+
         if($request){
             $response = array('status'=>1, 'msg'=>'Created successfully');
         }else{
@@ -38,10 +74,6 @@ class ProductController extends Controller
         return Response()->json($response);  
     }
 
-    public function show($id)
-    {
-        //
-    }
 
     public function update(Request $request, $id)
     {

@@ -17,17 +17,43 @@ Route::resource("usuarios", '\App\Http\Controllers\UsersController')
 Route::resource("productos", '\App\Http\Controllers\ProductController')
 	->names('products')->middleware('auth');
 
+//obtiene lista de marcas
+Route::resource('marca', '\App\Http\Controllers\BrandController')
+	->names('brands')->middleware('auth');
+
 # Cuenta de usuario 
 Route::resource('cuenta', '\App\Http\Controllers\UserController')
 	->names('account-settings')->middleware('auth');
 
+#-----------------------------------consulta individuales---------------------------------------------------------------#
 // obtine lista de usuarios
 Route::get('registros/usuarios', '\App\Http\Controllers\UsersController@getUsers')
 	->name('usuarios_lista')->middleware('auth');
 
+//--------------PRODUCTS--------------
+
 // obtine lista de productos
 Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getProducts')
 	->name('products')->middleware('auth');
+
+
+
+//obtiene lista de modelos por marca
+Route::get('inventario/model/{marca}', '\App\Http\Controllers\ProductController@getModel')
+	->name('model')->middleware('auth');
+
+
+//obtiene lista de modelos 
+Route::get('inventario/modelos', '\App\Http\Controllers\ProductController@getAllModels')
+	->name('models')->middleware('auth');
+
+//obtiene lista de medidas
+Route::get('inventario/measure', '\App\Http\Controllers\ProductController@getMeasure')
+	->name('measure')->middleware('auth');
+
+
+
+//--------------DASHBOARD--------------
 
 // obtine cantidad de productos
 Route::get('dashboard/stock', '\App\Http\Controllers\DashboardController@getStockQty')
@@ -36,6 +62,7 @@ Route::get('dashboard/stock', '\App\Http\Controllers\DashboardController@getStoc
 // obtine cantidad de ventas
 Route::get('dashboard/sales', '\App\Http\Controllers\DashboardController@getSales')
 	->name('sales')->middleware('auth');
+
 
 
 

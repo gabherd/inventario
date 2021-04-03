@@ -39,3 +39,14 @@ body{
 .error{
 	color: red;
 }
+
+.btn-add{
+	background: #3ac47d; 
+	color: #ffffff; 
+	font-weight: bold;
+}
+
+.btn-add:hover{
+	color: #EBE2DE;
+}
+
