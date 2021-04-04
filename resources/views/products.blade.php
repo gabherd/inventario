@@ -173,7 +173,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<button id="btn-mdlAddModel" type="button" data-toggle="modal" data-target="#mdl-SaveModel" class="btn btn-add mb-3">
+		      	<button id="open-modal-SaveModel" type="button" data-toggle="modal" data-target="#mdl-saveModel" class="btn btn-add mb-3">
 					<i class="zmdi zmdi-plus"></i>
 					Agregar modelo
 				</button>
@@ -194,7 +194,7 @@
 	</div>
 
 	<!--Modal save Model-->
-	<div class="modal fade" id="mdl-SaveModel"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdl-saveModel"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -204,26 +204,26 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<form id="create-Model">
+		      	<form id="create-model">
 					@csrf
 			      	<div class="p-30">
 				      	<div class="form-group">
 					        <label for="measure">Modelo</label>
-					        <input id="nameModel" name="model" class="form-control" type="text" placeholder="Nombre del modelo">
+					        <input id="nameModel" name="nameModel" class="form-control" type="text" placeholder="Nombre del modelo">
 				      	</div>
 				      	<div class="form-group">
 					        <label for="measure">Marca</label>
-					        <select id="model-nameBrand"  class="form-control" name="model" id="inp-Model">
+					        <select id="model-nameBrand"  class="form-control" name="id_brand" id="inp-Model">
 					        	<option value="0" selected>Selecciona una marca</option>
 					        </select>
 				      	</div>
 				    </div>
-				    <button id="submit-saveModel" class="d-none"></button>
+				    <button id="submit-model" class="d-none"></button>
 		      	</form>
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-save" class="btn btn-primary"><span id="submitModalModel">Guardar</span></button>
+		        <button id="btn-saveModel" data-submit="create" class="btn btn-primary"><span id="submitModalModel">Guardar</span></button>
 		      </div>
 		    </div>
 		  </div>

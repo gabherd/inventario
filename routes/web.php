@@ -17,9 +17,13 @@ Route::resource("usuarios", '\App\Http\Controllers\UsersController')
 Route::resource("productos", '\App\Http\Controllers\ProductController')
 	->names('products')->middleware('auth');
 
-//obtiene lista de marcas
+# Marcas
 Route::resource('marca', '\App\Http\Controllers\BrandController')
 	->names('brands')->middleware('auth');
+
+# Modelos
+Route::resource('modelo', '\App\Http\Controllers\ModelController')
+	->names('models')->middleware('auth');
 
 # Cuenta de usuario 
 Route::resource('cuenta', '\App\Http\Controllers\UserController')
@@ -36,16 +40,14 @@ Route::get('registros/usuarios', '\App\Http\Controllers\UsersController@getUsers
 Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getProducts')
 	->name('products')->middleware('auth');
 
-
-
 //obtiene lista de modelos por marca
 Route::get('inventario/model/{marca}', '\App\Http\Controllers\ProductController@getModel')
 	->name('model')->middleware('auth');
 
 
-//obtiene lista de modelos 
-Route::get('inventario/modelos', '\App\Http\Controllers\ProductController@getAllModels')
-	->name('models')->middleware('auth');
+// //obtiene lista de modelos 
+// Route::get('inventario/modelos', '\App\Http\Controllers\ProductController@getAllModels')
+// 	->name('models')->middleware('auth');
 
 //obtiene lista de medidas
 Route::get('inventario/measure', '\App\Http\Controllers\ProductController@getMeasure')

@@ -36,12 +36,7 @@ class ProductController extends Controller
     }
 
     public function getAllModels(){
-        $models = DB::table('model')
-                    ->join('brand', 'brand.id_brand', '=', 'model.id_brand')
-                    ->select('model.id_model AS idModel', 'brand.id_brand AS idBrand', 'brand.name AS brand', 'model.name AS model')
-                    ->get();
-
-        return $models;
+        
     }
 
     public function getMeasure(){

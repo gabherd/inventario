@@ -19,6 +19,7 @@ $(document).ready( function () {
 		}
 	});//validation
 
+
 	$("#create-brand").validate({
 		rules: {
 			'brand': { required: true, lettersonly: true }
@@ -30,6 +31,23 @@ $(document).ready( function () {
 		    event.preventDefault();
 		}
 	});//validation
+
+
+	$("#create-model").validate({
+		rules: {
+			'nameModel': { required: true },
+			'id_Brand' : { required: true }
+
+		},
+		messages: {
+      		'nameModel': { required: "El nombre del modelo es requerido" },
+			'id_Brand' : { required: "Selecciona una marca" }
+      	},
+		submitHandler: function(form, event){ 
+		    event.preventDefault();
+		}
+	});//validation
+
 
 	$('#tbl-product').DataTable({
 	    language: {
@@ -98,7 +116,7 @@ $(document).ready( function () {
 	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 	    responsive: true,
 		ajax: {
-                url: '/inventario/modelos',
+                url: '/modelo',
                 dataSrc: '',
         },
         createdRow: function( row, data, dataIndex ) {
@@ -125,15 +143,15 @@ $(document).ready( function () {
 	}); //dataTable
 
 	$.ajax({
-		url: "inventario/marcas",
+		url: "marca",
 		success: function(res){
 			for(item in res){
 				$("#model-nameBrand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
 			}
 		}
 	});
-
 });//documentReady
+
 
 
 //------------------- Prpductd -------------------------------
@@ -165,7 +183,7 @@ $(document).ready( function () {
 		$("#create-product").trigger("reset");
 		$("#create-product").validate().resetForm();
 		$.ajax({
-			url: "inventario/marcas",
+			url: "marca",
 			success: function(res){
 				for(item in res){
 					$("#inp-Measure").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
@@ -183,7 +201,6 @@ $(document).ready( function () {
 		});	
 	});
 
-
 	$('#inp-Measure').on('change', function(e){
 		var model = this.value;
 		
@@ -192,7 +209,7 @@ $(document).ready( function () {
 		$("#inp-Model").append('<option value="0" id="inp-Measure">Cargando...</option>');
 
 		$.ajax({
-			url: "inventario/model/"+model,
+			url: "modelo/"+model,
 			success: function(res){
 				$("#inp-Model").empty();
 				for(item in res){
@@ -230,7 +247,7 @@ $(document).ready( function () {
 						  showConfirmButton: false,
 						  timer: 900
 						});
-						
+
 						$('#mdl-saveBrand').modal('hide');
 						$('#tbl-brand').DataTable().ajax.reload();
 						$("#create-brand").trigger("reset");
@@ -329,74 +346,136 @@ $(document).ready( function () {
 
 //------------------- Model-------------------------------
 
-$("#btn-mdlAddModel").on('click', function(){
-	$("#create-Model").trigger("reset");
-	
-	$("#titleModalModel").text('Agregar modelo');
-	$("#submitModalModel").text('Guardar');
+	$("#open-modal-SaveModel").on('click', function(){
+		$("#create-Model").trigger("reset");
+		
+		$("#titleModalModel").text('Agregar modelo');
+		$("#submitModalModel").text('Guardar');
 
-	$("#model-nameBrand option:selected").attr('selected', false);
-	$("#model-nameBrand option[value='0']").attr('selected', true);
-});
+		$("#btn-saveModel").attr('data-submit', 'create');
 
-$("#tbl-model").delegate('.btn-editModel', 'click', function(){
-	$("#titleModalModel").text('Editar modelo');
-	$("#submitModalModel").text('Actualizar');
+		$("#model-nameBrand option:selected").attr('selected', false);
+		$("#model-nameBrand option[value='0']").attr('selected', true);
+	});
 
-	var id = $(this).attr('data-idBrand');
-	var name = $(this).attr('data-nameModel');
+	$("#tbl-model").delegate('.btn-editModel', 'click', function(){
+		$("#titleModalModel").text('Editar modelo');
+		$("#submitModalModel").text('Actualizar');
 
-	$("#model-nameBrand option:selected").attr('selected', false);
-	
-	$("#nameModel").val(name);
-	$("#model-nameBrand option[value='"+id+"']").attr('selected', true);
-});
+		var id_brand = $(this).attr('data-idBrand');
+		var id_model = $(this).attr('data-modelId');
+		var name = $(this).attr('data-nameModel');
 
-$("#tbl-model").delegate('.btn-deleteModel', 'click', function(){
-	var id = $(this).attr('data-brandId');
-	var name = $(this).attr('data-name');
-	
-	Swal.fire({
-		title: '¿Estas seguro?',
-		text: "Eliminar " + name,
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Sí, eliminar',
-		cancelButtonText: 'Cancelar'
-	}).then((result) => {
-	  	if (result.isConfirmed) {
+		$("#btn-saveModel").attr('data-submit', 'update');
+
+		$("#model-nameBrand option:selected").attr('selected', false);
+		
+		$("#nameModel").val(name);
+		$("#model-nameBrand option[value='"+id_brand+"']").attr('selected', true);
+
+		$("#btn-saveBrand").attr('data-id', id_model);
+	});
+
+	$("#btn-saveModel").on('click', function(){
+		$("#submit-model").click();
+
+		if ($(this).attr("data-submit") == "create"){
 			$.ajax({
-				url: "usuarios/"+id,
-				type: 'DELETE', 
-				dataType: "JSON",
-				headers: {
-			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		    	},
-				data: { 
-						"id": id, 
-				 		"_method": 'DELETE', 
-				},
+				url: "modelo",
+				method:"POST",
+				data: $("#create-model").serialize(),
 				success: function(res){
 					if (res.status) {
 						Swal.fire({
-							position: 'center',
-							icon: 'success',
-							title: 'Usuario eliminado',
-							showConfirmButton: false,
-							timer: 900
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Modelo agregado',
+						  showConfirmButton: false,
+						  timer: 900
 						});
-						$('#tbl-users').DataTable().ajax.reload();
+
+						$('#mdl-saveModel').modal('hide');
+						$('#tbl-model').DataTable().ajax.reload();
+						$("#create-model").trigger("reset");
 					}
 				}
 			});	
-	  	}
+		}else{
+			var id = $("#btn-saveBrand").attr("data-id");
+
+			$.ajax({
+				url: "/modelo/"+id,
+				type: 'PUT', 
+				dataType: "JSON",
+				data: $("#create-model").serialize()  + '&_method=' + "PUT",
+				success: function(res){
+					console.log(res);
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Modelo actualizado',
+						  showConfirmButton: false,
+						  timer: 900
+						});
+
+						$('#mdl-saveModel').modal('hide');
+						$('#tbl-model').DataTable().ajax.reload();
+						$("#create-model").trigger("reset");
+					}
+				},
+				error: function(xhr) {
+			        var errors = JSON.parse(xhr.responseText);
+			        console.log(errors)
+			    }
+			});	
+		}
 	});
-});
+
+	$("#tbl-model").delegate('.btn-deleteModel', 'click', function(){
+		var id = $(this).attr('data-modelId');
+		var name = $(this).attr('data-name');
+		
+		Swal.fire({
+			title: '¿Estas seguro?',
+			text: "Eliminar " + name,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  	if (result.isConfirmed) {
+				$.ajax({
+					url: "modelo/"+id,
+					type: 'DELETE', 
+					dataType: "JSON",
+					headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    	},
+					data: { 
+							"id": id, 
+					 		"_method": 'DELETE', 
+					},
+					success: function(res){
+						if (res.status) {
+							Swal.fire({
+								position: 'center',
+								icon: 'success',
+								title: 'Modelo eliminado',
+								showConfirmButton: false,
+								timer: 900
+							});
+							$('#tbl-model').DataTable().ajax.reload();
+						}
+					}
+				});	
+		  	}
+		});
+	});
 
 //-------------------end model-------------------------------
-
 
 
 $(document).on('show.bs.modal', '.modal', function (event) {
