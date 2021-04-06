@@ -19,7 +19,6 @@ $(document).ready( function () {
 		}
 	});//validation
 
-
 	$("#create-brand").validate({
 		rules: {
 			'brand': { required: true, lettersonly: true }
@@ -31,7 +30,6 @@ $(document).ready( function () {
 		    event.preventDefault();
 		}
 	});//validation
-
 
 	$("#create-model").validate({
 		rules: {
@@ -47,7 +45,6 @@ $(document).ready( function () {
 		    event.preventDefault();
 		}
 	});//validation
-
 
 	$('#tbl-product').DataTable({
 	    language: {
@@ -69,11 +66,14 @@ $(document).ready( function () {
 		    {data: null,
                 render: function (data, type, row) {
                 	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button class='btn btn-info btn-edit' "+
+		                   		"<button class='btn btn-info btn-editProduct' "+
 		                   		"data-toggle='modal' "+
-		                   		"data-edtId='"+data.id+"' "+
+		                   		"data-id='"+data.id+"' "+
 		                   		"data-target='#mdl-user'>Editar</button>" + 
-						   		"<button type='submit' id='"+data.id+"' class='btn btn-danger btn-delete' data-token='{{ csrf_token() }}' data-name='"+data.name+"'>Borrar</button>"+
+						   		"<button type='submit' id='"+data.id+"' class='btn btn-danger btn-deleteProduct' "+
+						   			"data-token='{{ csrf_token() }}' "+
+						   			"data-id='"+data.id+"' "+
+						   			"data-name='"+data.Measure+" - "+data.Brand+" - "+data.Measure+"'>Borrar</button>"+
 						   	"</div>";
 					;
                 }
@@ -150,75 +150,209 @@ $(document).ready( function () {
 			}
 		}
 	});
+
+	$.ajax({
+		url: "marca",
+		success: function(res){
+			for(item in res){
+				$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
+			}
+		}
+	});	
+		
+	$.ajax({
+		url: "inventario/measure",
+		success: function(res){
+			for(item in res){
+				$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
+			}
+		}
+	});	
 });//documentReady
 
 
+//------------------- Product -------------------------------
+	$("#btn-saveProduct").on('click', function(){
+		$("#submit-product").click();
 
-//------------------- Prpductd -------------------------------
-	$("#btn-save").on('click', function(){
-		$.ajax({
-			url: "productos",
-			method:"POST",
-			data: $("#create-product").serialize(),
-			success: function(res){
-				if (res.status) {
-					Swal.fire({
-					  position: 'top-end',
-					  icon: 'success',
-					  title: 'Producto guardado',
-					  showConfirmButton: false,
-					  timer: 900
-					});
+		var id = $("#btn-saveProduct").attr('data-id');
 
-					$('#tbl-product').DataTable().ajax.reload();
+		if ($(this).attr("data-submit") == "create"){
+			$.ajax({
+				url: "productos",
+				method:"POST",
+				data: $("#create-product").serialize(),
+				success: function(res){
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Producto guardado',
+						  showConfirmButton: false,
+						  timer: 900
+						});
 
-					$("#create-product").trigger("reset");
-					$('#mdl-AddProduct').modal('hide');
+						$('#tbl-product').DataTable().ajax.reload();
+
+						$("#create-product").trigger("reset");
+						$('#mdl-saveProduct').modal('hide');
+					}
 				}
-			}
-		});	
+			});	
+		}else{
+			$.ajax({
+				url: "/productos/"+id,
+				type: 'PUT', 
+				dataType: "JSON",
+				data: $("#create-product").serialize()  + '&_method=' + "PUT",
+				success: function(res){
+					console.log(res);
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Producto actualizado',
+						  showConfirmButton: false,
+						  timer: 900
+						});
+
+						$('#tbl-product').DataTable().ajax.reload();
+						$('#mdl-saveProduct').modal('hide');
+					}
+				},
+				error: function(xhr) {
+			        var errors = JSON.parse(xhr.responseText);
+			        console.log(errors)
+			    }
+			});	
+		}
 	});
 
-	$("#btn-mdlAddProduct").on('click', function(){
+	$("#open-modal-saveProduct").on('click', function(){
+		$("#titleModalProduct").text('Agregar producto');
+		$("#btn-saveModel").text('Guardar');
+		$("#btn-saveModel").attr('data-submit', 'create');
+
+		$("option:selected").removeAttr("selected");
 		$("#create-product").trigger("reset");
 		$("#create-product").validate().resetForm();
-		$.ajax({
-			url: "marca",
-			success: function(res){
-				for(item in res){
-					$("#inp-Measure").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-				}
-			}
-		});	
 
-		$.ajax({
-			url: "inventario/measure",
-			success: function(res){
-				for(item in res){
-					$("#inp-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].number+'</option>');
-				}
-			}
-		});	
+		$("#inp-model").empty();
+		$("#inp-model").append('<option value="0">Selecciona una opcion...</option>');
 	});
 
-	$('#inp-Measure').on('change', function(e){
-		var model = this.value;
+	$("#tbl-product").delegate('.btn-deleteProduct', 'click', function(){
+		var id = $(this).attr('data-id');
+		var name = $(this).attr('data-name');
 		
-		$("#inp-Model").empty();
-
-		$("#inp-Model").append('<option value="0" id="inp-Measure">Cargando...</option>');
-
-		$.ajax({
-			url: "modelo/"+model,
-			success: function(res){
-				$("#inp-Model").empty();
-				for(item in res){
-					$("#inp-Model").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-				}
-			}
+		Swal.fire({
+			title: '¿Estas seguro?',
+			text: "Eliminar " + name,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  	if (result.isConfirmed) {
+				$.ajax({
+					url: "productos/"+id,
+					type: 'DELETE', 
+					dataType: "JSON",
+					headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    	},
+					data: { 
+							"id": id, 
+					 		"_method": 'DELETE', 
+					},
+					success: function(res){
+						if (res.status) {
+							Swal.fire({
+								position: 'center',
+								icon: 'success',
+								title: 'Producto eliminado',
+								showConfirmButton: false,
+								timer: 900
+							});
+							$('#tbl-product').DataTable().ajax.reload();
+						}
+					}
+				});	
+		  	}
 		});
 	});
-//------------------- end Prpductd -------------------------------
+
+	$("#tbl-product").delegate('.btn-editProduct', 'click', function(){
+		var id = $(this).attr('data-id');
+		$(".content-loading").css('display', 'block');
+
+		$.ajax({
+			url: "productos/"+id,
+			success: function(res){
+				var res = res[0];
+				console.log(res)
+				$("#create-product").trigger("reset");
+				
+				$("option:selected").removeAttr("selected");
+
+				$("#inp-brand option[value='"+res.idBrand+"']").attr('selected', true);
+				$("#inp-measure option[value='"+res.idMeasure+"']").attr('selected', true);
+
+				$.ajax({
+					url: "modelo/"+res.idBrand,
+					success: function(response){
+						var selected = "";
+						
+
+						for(item in response){
+							console.log(response[item].id + " - " + res.idModel);
+							if (response[item].id == res.idModel) {
+								selected = 'selected';
+							}else{
+								selected = '';
+							}
+
+							$("#inp-model").append('<option value="'+response[item].id+'" id="inp-Measure" '+ selected +'>'+response[item].name+'</option>');
+						}
+
+						$(".content-loading").css('display', 'none');
+					}
+				});
+
+				$("#inp-price").val(res.price);
+				$("#inp-stock").val(res.stock);
+			}
+		});
+
+		$("#mdl-saveProduct").modal('show');
+
+		$("#titleModalProduct").text('Editar producto');
+		$("#btn-saveProduct").attr('data-id', id);
+		$("#btn-saveProduct").text('Actualizar');
+		$("#btn-saveProduct").attr('data-submit', 'update');
+	});
+
+	$('#inp-brand').on('change', function(e){
+		var model = this.value;
+		
+		$("#inp-model").empty();
+		$("#inp-model").append('<option value="0" id="inp-Measure">Cargando...</option>');
+
+		if (model != 0) {
+			$.ajax({
+				url: "modelo/"+model,
+				success: function(res){
+					$("#inp-model").empty();
+					for(item in res){
+						$("#inp-model").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+					}
+				}
+			});
+		}
+	});
+//------------------- end Product -------------------------------
 
 
 //------------------- Brand-------------------------------
@@ -274,7 +408,6 @@ $(document).ready( function () {
 						});
 
 						$('#mdl-saveBrand').modal('hide');
-						$('#tbl-brand').DataTable().ajax.reload();
 						$('#tbl-brand').DataTable().ajax.reload();
 					}
 				},

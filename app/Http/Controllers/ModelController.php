@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ModelRequest;
+use App\Models\Product;
 
 class ModelController extends Controller
 {
@@ -53,6 +54,16 @@ class ModelController extends Controller
         }
 
         return $response;
+    }
+
+    public function show($id)
+    {
+         $model = DB::table('model')
+                    ->select('id_model AS id', 'name')
+                    ->where('id_brand', $id)
+                    ->get();
+                    
+        return $model;
     }
 
     public function destroy($id)

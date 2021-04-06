@@ -11,14 +11,15 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.6/sweetalert2.min.css"/>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
 	<!--Token-->
-	<meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
+	<meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
+	<link rel="stylesheet" href="css/products.css">
 @endsection
 
 @section('content')
 	<div class="content-page">
 		<div style="color: #A1A1A1">Productos en inventario</div>
 		<div style="margin: 25px 0">
-			<button id="btn-mdlAddProduct" type="button" data-toggle="modal" data-target="#mdl-AddProduct" class="btn btn-add">
+			<button id="open-modal-saveProduct" type="button" data-toggle="modal" data-target="#mdl-saveProduct" class="btn btn-add">
 				<i class="zmdi zmdi-plus"></i>
 				Agregar producto
 			</button>
@@ -47,37 +48,40 @@
 
 	</div>
 	<!--Modal product-->
-	<div class="modal fade" id="mdl-AddProduct"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdl-saveProduct"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+		        <h5 class="modal-title" id="titleModalProduct">Agregar producto</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
+		      	<div class="content-loading">
+		      		<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+		      	</div>
 		      	<form id="create-product">
 					@csrf
 			      	<div class="p-30">
 				      	<div class="form-group">
 					        <label for="brand">Marca</label>
-					        <select class="form-control" name="brand" id="inp-Measure">
-					        	<option  value="0" selected>Selecciona una opcion</option>
+					        <select class="form-control" name="brand" id="inp-brand">
+					        	<option  value="0" selected>Selecciona una opcion...</option>
 					        </select>
 				      	</div>
 				      	<div class="form-group">
 					        <label for="model">Modelo</label>
 					        <!--input id="inp-Model" name="model" class="form-control" type="text"-->
-					        <select class="form-control" name="model" id="inp-Model">
-					        	<option  value="0" selected>Selecciona una opcion</option>
+					        <select class="form-control" name="model" id="inp-model">
+					        	<option  value="0" selected>Selecciona una opcion...</option>
 					        </select>
 				      	</div>
 				      	<div class="form-group">
 					        <label for="measure">Medida</label>
 					        <!--input id="inp-brand" name="brand" class="form-control" type="text"-->
-					         <select class="form-control" name="measure" id="inp-brand">
-					        	<option  value="0" selected>Selecciona una opcion</option>
+					         <select class="form-control" name="measure" id="inp-measure">
+					        	<option  value="0" selected>Selecciona una opcion...</option>
 					        </select>
 				      	</div>
 				      	<div class="form-group">
@@ -89,12 +93,12 @@
 					        <input id="inp-stock" name="stock" class="form-control" type="number">
 				      	</div>
 				    </div>
-				    <button id="submit-createProduct" class="d-none"></button>
+				    <button id="submit-product" class="d-none"></button>
 		      	</form>
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-save" class="btn btn-primary">Guardar</button>
+		        <button id="btn-saveProduct" data-submit="create" class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -214,7 +218,7 @@
 				      	<div class="form-group">
 					        <label for="measure">Marca</label>
 					        <select id="model-nameBrand"  class="form-control" name="id_brand" id="inp-Model">
-					        	<option value="0" selected>Selecciona una marca</option>
+					        	<option value="0" selected>Selecciona una marca...</option>
 					        </select>
 				      	</div>
 				    </div>

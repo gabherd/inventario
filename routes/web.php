@@ -54,7 +54,6 @@ Route::get('inventario/measure', '\App\Http\Controllers\ProductController@getMea
 	->name('measure')->middleware('auth');
 
 
-
 //--------------DASHBOARD--------------
 
 // obtine cantidad de productos
