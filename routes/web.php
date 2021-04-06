@@ -25,6 +25,10 @@ Route::resource('marca', '\App\Http\Controllers\BrandController')
 Route::resource('modelo', '\App\Http\Controllers\ModelController')
 	->names('models')->middleware('auth');
 
+# Medidas
+Route::resource('medida', '\App\Http\Controllers\MeasureController')
+	->names('measures')->middleware('auth');	
+
 # Cuenta de usuario 
 Route::resource('cuenta', '\App\Http\Controllers\UserController')
 	->names('account-settings')->middleware('auth');

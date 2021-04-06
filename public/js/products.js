@@ -46,6 +46,18 @@ $(document).ready( function () {
 		}
 	});//validation
 
+	$("#create-measure").validate({
+		rules: {
+			'measure': { required: true}
+		},
+		messages: {
+      		'measure': { required:"La medida es requerida"}
+      	},
+		submitHandler: function(form, event){ 
+		    event.preventDefault();
+		}
+	});//validation
+
 	$('#tbl-product').DataTable({
 	    language: {
 	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
@@ -135,6 +147,37 @@ $(document).ready( function () {
 		                   			"data-nameModel='"+data.model+"'"+
 		                   			"data-idBrand='"+data.idBrand+"'> Editar </button>" + 
 						   		"<button class='btn btn-danger btn-deleteModel' data-modelId='"+data.idModel+"' data-token='{{ csrf_token() }}' data-name='"+data.model+"'>Borrar</button>"+
+						   	"</div>";
+					;
+                }
+            }
+		]
+	}); //dataTable
+
+	$('#tbl-measure').DataTable({
+	    language: {
+	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+	    },
+	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+	    responsive: true,
+		ajax: {
+                url: '/medida',
+                dataSrc: '',
+        },
+		columns: [
+			{ data: 'number', "width": "70%" },
+			{ data: null,   "width": "30%",
+                render: function (data, type, row) {
+                	return "<div class='d-flex justify-content-around'>" +
+		                   		"<button class='btn btn-info btn-editMeasure'" +
+			                   		"data-toggle='modal'"+
+			                   		"data-target='#mdl-saveMeasure'" +
+			                   		"data-MeasureId='"+data.id+"'" + 
+			                   		"data-name='"+data.number+"'>Editar</button>" + 
+						   		"<button class='btn btn-danger btn-deleteMeasure' "+
+						   			"data-measureId='"+data.id+"' " + 
+						   			"data-token='{{ csrf_token() }}' "+
+						   			"data-name='"+data.number+"'>Borrar</button>"+
 						   	"</div>";
 					;
                 }
@@ -473,7 +516,6 @@ $(document).ready( function () {
 		  	}
 		});
 	});
-
 //-------------------end brand-------------------------------
 
 
@@ -609,6 +651,127 @@ $(document).ready( function () {
 	});
 
 //-------------------end model-------------------------------
+
+
+//------------------- Measure-------------------------------
+	$("#btn-mdlSaveMeasure").on('click', function(){
+		$("#titleModalMeasure").text('Agregar medida')
+		$("#btn-saveMeasure").text('Guardar');
+		$("#btn-saveMeasure").attr('data-submit', 'create');
+
+		$("#create-measure").trigger("reset");
+	});
+
+	$("#btn-saveMeasure").on('click', function(){
+		$("#submit-measure").click();
+
+		if ($(this).attr("data-submit") == "create"){
+			$.ajax({
+				url: "medida",
+				method:"POST",
+				data: $("#create-measure").serialize(),
+				success: function(res){
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Medida agregada',
+						  showConfirmButton: false,
+						  timer: 900
+						});
+
+						$('#mdl-saveMeasure').modal('hide');
+						$('#tbl-measure').DataTable().ajax.reload();
+						$("#create-measure").trigger("reset");
+					}
+				}
+			});	
+		}else{
+			var id = $("#btn-saveMeasure").attr("data-id");
+
+			$.ajax({
+				url: "/medida/"+id,
+				type: 'PUT', 
+				dataType: "JSON",
+				data: $("#create-measure").serialize()  + '&_method=' + "PUT",
+				success: function(res){
+					console.log(res);
+					if (res.status) {
+						Swal.fire({
+						  position: 'top-end',
+						  icon: 'success',
+						  title: 'Medida actualizada',
+						  showConfirmButton: false,
+						  timer: 900
+						});
+
+						$('#mdl-saveMeasure').modal('hide');
+						$('#tbl-measure').DataTable().ajax.reload();
+					}
+				},
+				error: function(xhr) {
+			        var errors = JSON.parse(xhr.responseText);
+			        console.log(errors)
+			    }
+			});	
+		}
+	});
+
+	$("#tbl-measure").delegate('.btn-editMeasure', 'click', function(){
+		$("#titleModalMeasure").text('Editar medida');
+		$("#btn-saveMeasure").text('Actualizar');
+		$("#btn-saveMeasure").attr('data-submit', 'update');
+
+		var id = $(this).attr('data-measureId');
+		var name = $(this).attr('data-name');
+
+		$("#inp-numberMeasure").val(name);
+		$("#btn-saveMeasure").attr('data-id', id);
+	});
+
+	$("#tbl-measure").delegate('.btn-deleteMeasure', 'click', function(){
+		var id = $(this).attr('data-measureId');
+		var name = $(this).attr('data-name');
+		
+		Swal.fire({
+			title: '¿Estas seguro?',
+			text: "Eliminar " + name,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  	if (result.isConfirmed) {
+				$.ajax({
+					url: "medida/"+id,
+					type: 'DELETE', 
+					dataType: "JSON",
+					headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    	},
+					data: { 
+							"id": id, 
+					 		"_method": 'DELETE', 
+					},
+					success: function(res){
+						if (res.status) {
+							Swal.fire({
+								position: 'center',
+								icon: 'success',
+								title: 'Medida eliminada',
+								showConfirmButton: false,
+								timer: 900
+							});
+							$('#tbl-measure').DataTable().ajax.reload();
+						}
+					}
+				});	
+		  	}
+		});
+	});
+//-------------------end brand-------------------------------
 
 
 $(document).on('show.bs.modal', '.modal', function (event) {

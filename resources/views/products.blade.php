@@ -23,7 +23,10 @@
 				<i class="zmdi zmdi-plus"></i>
 				Agregar producto
 			</button>
-			<button class="btn btn-secondary float-right" data-toggle="modal" data-target="#mdl-model">
+			<button class="btn btn-secondary float-right" data-toggle="modal" data-target="#mdl-measure">
+				Medidas
+			</button>
+			<button class="btn btn-secondary float-right mx-1" data-toggle="modal" data-target="#mdl-model">
 				Modelos
 			</button>
 			<button class="btn btn-secondary float-right" data-toggle="modal" data-target="#mdl-brand">
@@ -104,7 +107,7 @@
 		  </div>
 	</div>
 
-	<!----------------- brand ----------------->
+	<!----------------- Brand ----------------->
 	<!--Modal brand-->
 	<div class="modal fade" id="mdl-brand"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -233,6 +236,67 @@
 		  </div>
 	</div>
 	
+	<!----------------- Measure ----------------->
+	<!--Modal measure-->
+	<div class="modal fade" id="mdl-measure"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Medidas</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<button id="btn-mdlSaveMeasure" type="button" data-toggle="modal" data-target="#mdl-saveMeasure" class="btn btn-add mb-3">
+					<i class="zmdi zmdi-plus"></i>
+					Agregar Medidas
+				</button>
+			  	<table id="tbl-measure" class="table table-bordered" width=100%>
+					<thead class="thead-light">
+						<tr>
+							<th>Nombre</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+		      </div>
+		    </div>
+		  </div>
+	</div>
+
+	<!--Modal save measure-->
+	<div class="modal fade" id="mdl-saveMeasure"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="titleModalMeasure">Agregar marca</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form id="create-measure">
+					@csrf
+			      	<div class="p-30">
+				      	<div class="form-group">
+					        <label for="measure">Medida</label>
+					        <input id="inp-numberMeasure" name="measure" class="form-control" type="text" placeholder="Introduce la medida">
+				      	</div>
+				    </div>
+				    <button id="submit-measure" class="d-none"></button>
+		      	</form>
+		      </div>
+		      <div class="modal-footer d-flex justify-content-around">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		        <button id="btn-saveMeasure" data-submit="create"  data-id="" class="btn btn-primary">Guardar</button>
+		      </div>
+		    </div>
+		  </div>
+	</div>
+
 @endsection
 
 @section('scripts')
