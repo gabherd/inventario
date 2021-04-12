@@ -11,52 +11,54 @@ class DashboardController extends Controller
     
     public function index()
     {
-    	$productsStock = DB::table('products')->where('products.Stock', '>', 0)->count();
-    	$productsOut = DB::table('products')->where('products.Stock', '=', 0)->count();
+        $productsSale = DB::table('sale_detail')->sum('quantity');
+    	$productsStock = Product::where('products.Stock', '>', 0)->count();
+        $productsOut = Product::where('products.Stock', '=', 0)->count();
      
-        return view('dashboard', ['productsStock'=>$productsStock, 'productsOut'=>$productsOut]);
+        return view('dashboard', ['productsStock'=>$productsStock, 'productsOut'=>$productsOut, 'productsSale'=>$productsSale]);
     }
 
     public function getStockQty(){
-    	$query = "SELECT me.number AS measure, stock FROM products AS pro JOIN measure AS me ON me.id_measure = pro.id_measure";
+    	$query = "SELECT me.number AS measure, stock FROM products AS pro JOIN measure AS me ON me.id_measure = pro.id_measure ORDER BY stock";
        
 		return DB::select($query);
     }
 
     public function getSales(){
-        $sql = "SELECT brand, measure, SUM(sale) AS sales from products GROUP BY Measure having sales >= (SELECT min(TopSales) as total from (SELECT SUM(sale) as TopSales from products GROUP BY Measure ORDER by TopSales desc limit 3) t) and sales <= (SELECT max(TopSales) as total from (SELECT SUM(sale) as TopSales from products GROUP BY Measure ORDER by TopSales desc limit 3) t)";
-        $productsSales = DB::select($sql);
+        $query = "SELECT model.name, SUM(quantity) as sales FROM sale_detail JOIN products on sale_detail.id_products = products.id_products join model on products.id_model = model.id_model
+                GROUP BY sale_detail.id_products 
+                HAVING sales >= (SELECT min(TopSales) as total 
+                            from (SELECT SUM(quantity) as TopSales 
+                                from sale_detail 
+                                GROUP BY sale_detail.id_products 
+                                ORDER by TopSales 
+                                desc limit 2) t) 
+                        and sales <= (SELECT max(TopSales) as total 
+                                     from (
+                                        SELECT SUM(quantity) as TopSales 
+                                        from sale_detail 
+                                        GROUP BY sale_detail.id_products 
+                                        ORDER by TopSales 
+                                        desc limit 2) t)";
 
-        /*
-        Example query
-        Products::whereIn('id', function($query){
-            $query->select('paper_type_id')
-            ->from(with(new ProductCategory)->getTable())
-            ->whereIn('category_id', ['223', '15'])
-            ->where('active', 1);
-        })->get();*/
-
-        //$sales = Product::whereIn('id', function($query){
-        //    $query->select('id')
-        //    ->from(with(new Product)->getTable());
-        //})->get();
+        $productsSales = DB::select($query);
 
         return $productsSales;
     }
 
-    public function store(ProductRequest $request)
-    {
+    public function qtySalesProduct(){
+        $query = "SELECT SUM(quantity) AS total FROM sale_detail";
+        
+        return DB::select($query);
     }
 
-    public function show($id)
-    {
-    }
-
-    public function update(Request $request, $id)
-    {
-    }
-
-    public function destroy($id)
-    {
+    public function salesPerDay(){
+        $query = "SELECT DAYNAME(date_exit) AS day, SUM(quantity) AS sales 
+                    FROM sale_detail
+                    WHERE date_exit 
+                        between '2021-04-04' AND '2021-04-10' 
+                    GROUP BY date_exit";
+        
+        return DB::select($query);
     }
 }

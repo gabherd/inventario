@@ -1,15 +1,15 @@
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-google.charts.setOnLoadCallback(drawChart2);
+google.charts.setOnLoadCallback(chartMoreSales);
+google.charts.setOnLoadCallback(chartSalesDay);
 
 //chart of product whit more sales
-function drawChart() {
+function chartMoreSales() {
   $.get( "dashboard/sales", function( data ) {
     
     var sales = [['Modelo', 'Venta']];
 
     var r = data.map(function(a){
-      sales.push([a.brand + ' - ' +a.measure, parseInt(a.sales)]);
+      sales.push([a.name, parseInt(a.sales)]);
     });
 
     var data = google.visualization.arrayToDataTable(sales);
@@ -22,22 +22,25 @@ function drawChart() {
 }
 
 //chart of sales per day
-function drawChart2() {
-  var data = google.visualization.arrayToDataTable([
-    ['Year', 'Sales'],
-    ['2013',  1000],
-    ['2014',  1170],
-    ['2015',  660 ],
-    ['2016',  1030]
-  ]);
+function chartSalesDay() {
+  $.get( "dashboard/sales-day", function( res ) {
+    var sales = [['Dia', 'Ventas']];
 
-  var options = {
-    hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-    vAxis: {minValue: 0}
-  };
+    for(index in res){
+      sales.push([dayName(res[index].day), parseInt(res[index].sales)]);
+      
+    }
 
-  var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
+    var data = google.visualization.arrayToDataTable(sales);
+
+    var options = {
+      hAxis: {title: 'Dias',  titleTextStyle: {color: '#333'}},
+      vAxis: {minValue: 0}
+    };
+
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  });
 }
 
 //table of stock
@@ -75,7 +78,32 @@ $(document).ready( function () {
             }
         ]
     });
-} );
+});
 
+function dayName(day){
+  switch(day){
+    case 'Sunday':
+      return 'Domingo'
+      break;
+    case 'Monday':
+      return 'Lunes'
+      break;
+    case 'Tuesday':
+      return 'Martes'
+      break;
+    case 'Wednesday':
+      return 'Miercoles'
+      break;
+    case 'Thursday':
+      return 'Jueves'
+      break;
+    case 'Friday':
+      return 'Viernes'
+      break;
+    case 'Saturday':
+      return 'Sabado'
+      break;
+  }
+}
 
 //ffd6d6

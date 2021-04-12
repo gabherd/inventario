@@ -34,7 +34,7 @@
 								</div>
 							</a>
 						</li>
-						<li class="full-width">
+						<!--li class="full-width">
 							<a href="#" class="full-width">
 								<div class="navLateral-body-cl">
 									<i class="zmdi zmdi-chart"></i>
@@ -43,8 +43,8 @@
 									Historial
 								</div>
 							</a>
-						</li>
-						<li class="full-width">
+						</li-->
+						<!--li class="full-width">
 							<a href="proveedores" class="full-width">
 								<div class="navLateral-body-cl">
 									<i class="zmdi zmdi-truck"></i>
@@ -53,7 +53,7 @@
 									Proveedores
 								</div>
 							</a>
-						</li>
+						</li-->
 						<li class="full-width">
 							<a href="{{ route('users.index') }}" class="full-width">
 								<div class="navLateral-body-cl">

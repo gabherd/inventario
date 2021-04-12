@@ -48,11 +48,6 @@ Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getP
 Route::get('inventario/model/{marca}', '\App\Http\Controllers\ProductController@getModel')
 	->name('model')->middleware('auth');
 
-
-// //obtiene lista de modelos 
-// Route::get('inventario/modelos', '\App\Http\Controllers\ProductController@getAllModels')
-// 	->name('models')->middleware('auth');
-
 //obtiene lista de medidas
 Route::get('inventario/measure', '\App\Http\Controllers\ProductController@getMeasure')
 	->name('measure')->middleware('auth');
@@ -67,6 +62,13 @@ Route::get('dashboard/stock', '\App\Http\Controllers\DashboardController@getStoc
 // obtine cantidad de ventas
 Route::get('dashboard/sales', '\App\Http\Controllers\DashboardController@getSales')
 	->name('sales')->middleware('auth');
+
+// obtine total de productos vendidos
+Route::get('dashboard/sales-products', '\App\Http\Controllers\DashboardController@qtySalesProduct')
+	->name('sales-products')->middleware('auth');
+
+Route::get('dashboard/sales-day', '\App\Http\Controllers\DashboardController@salesPerDay')
+	->name('sales-day')->middleware('auth');
 
 
 

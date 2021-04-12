@@ -14,8 +14,8 @@
 			<div class="col-md-4 col-sm-13 ">
 				<div style="background: #00C0EF; " class="box-header">
 					<div style="">
-						<div class="qty-product">150</div>
-						<div class="qty-description">Ventas</div>
+						<div id="product-sales" class="qty-product">{{ $productsSale }}</div>
+						<div class="qty-description">Productos vendidos</div>
 					</div>
 					<img src="img/bolsa-de-la-compra.svg" height="80">
 				</div>
@@ -24,7 +24,7 @@
 				<div style="background: #00A65A;" class="box-header">
 					<div>
 						<div class="qty-product">{{ $productsStock }}</div> 
-						<div class="qty-description">productos en stock</div>
+						<div class="qty-description">Productos en stock</div>
 					</div>
 					<img src="img/box.svg" alt="" height="80">
 				</div>
