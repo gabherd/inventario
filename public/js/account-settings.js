@@ -118,7 +118,7 @@ $("#btn-changePassword").on('click', function(){
                 password2 = $('input[name = confirm_password]').val();
   
                 // If Not same return False.    
-                else if (password1 != password2) {
+                if (password1 != password2) {
                     alert ("\nLas contraseñas no coinciden...")
                     return false;
                 }
