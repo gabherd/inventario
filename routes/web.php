@@ -36,7 +36,11 @@ Route::resource('cuenta', '\App\Http\Controllers\UserController')
 #-----------------------------------consulta individuales---------------------------------------------------------------#
 // obtine lista de usuarios
 Route::get('registros/usuarios', '\App\Http\Controllers\UsersController@getUsers')
-	->name('usuarios_lista')->middleware('auth');
+	->name('user-list')->middleware('auth');
+
+//cambio de contraseña
+Route::put('password', '\App\Http\Controllers\UserController@changePassword')
+	->name('password')->middleware('auth');
 
 //--------------PRODUCTS--------------
 

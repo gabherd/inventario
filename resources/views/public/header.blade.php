@@ -4,10 +4,10 @@
 		  		<a class="navbar-brand pl-2" href="/">Zone of tires</a>
 			</div>
 			<div class="center-y">
-				<div class="name-user pr-2">{{ Auth::user()->name }}</div>
+				<div id="main-nameUser" class="name-user pr-2">{{ Auth::user()->name }}</div>
 				<div style="position: relative;">
 					<div style="height: 30px; width: 30px; display: block;">
-						<img id="img-user" src="data:image/*;base64,{{ base64_encode( Auth::user()->avatar ) }}" width="30" height="30" alt="user" style="border-radius: 30px">
+						<img id="img-user" src="img/user.svg" width="30" height="30" alt="user" style="border-radius: 30px">
 						<div  class="cursor" id="aux-img-user" style="width: 30px; height: 30px; z-index: 1053; position: absolute; display: none; background: red"></div>
 					</div>
 					<div class="shadow box-conf_account">

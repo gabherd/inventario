@@ -24,7 +24,7 @@
 								</div>
 							</a>
 						</li>
-						<li class="full-width">
+						<!--li class="full-width">
 							<a href="#" class="full-width">
 								<div class="navLateral-body-cl">
 									<i class="zmdi zmdi-shopping-cart"></i>
@@ -33,7 +33,7 @@
 									Ventas
 								</div>
 							</a>
-						</li>
+						</li-->
 						<!--li class="full-width">
 							<a href="#" class="full-width">
 								<div class="navLateral-body-cl">

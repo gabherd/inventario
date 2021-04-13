@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UserRequest;
 use finfo;
+use Hash;
+use Auth;
+
 //use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -24,9 +27,6 @@ class UserController extends Controller
         return view('account-settings', ["values" => $img]);
     }
 
-    public function store(ProductRequest $request)
-    {
-    }
 
     public function edit(Account $account)
     {
@@ -35,16 +35,22 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $this->validate([
-            'user-name' => ['required', 'string'],
-            'user-apellido' => ['required', 'string']
-        ]);
+        $data = $request->validated();
 
-        Form::update($request->all());
+        $request = User::where('id', (int)$id)
+                 ->update(['name'     => $data['name'],
+                           'last_name' => $data['last_name']
+                         ]);
 
-        return back()->with('success', 'Your form has been submitted.');
+        if($request){
+            $response = array('status'=>1, 'msg'=>'Created successfully');
+        }else{
+            $response = array('status'=>0, 'msg'=> 'Data not created');
+        }
+
+        return $response;
 
         //$file = $request->file('user-img');
         
@@ -61,7 +67,30 @@ class UserController extends Controller
         //return redirect()->route('account-settings.index');
     }
 
-    public function destroy($id)
-    {
+    public function changePassword(Request $request){
+
+        $request->validate([
+            'current_password'     => ['required'],
+            'new_password'         => ['required', 'string', 'min:6'],
+            'new_confirm_password' => ['same:new_password']
+        ]);
+
+        if(!Hash::check($request->current_password, Auth::user()->password)){
+            $response = array('status'=>0, 'msg'=>'Current password not match');
+            return  Response()->json($response);
+        }
+
+        if (!Hash::check($request->new_password, $request->new_confirm_password)) {
+            $response = array('status'=>0, 'msg'=>'New passwods not match');
+            return  Response()->json($response);
+        }else{
+            $user_id = Auth::User()->id;                       
+            $obj_user = User::find($user_id);
+            $obj_user->password = Hash::make($request_data['password']);
+            $obj_user->save();
+
+            $response = array('status'=>1, 'msg'=>'Password changed');
+            return  Response()->json($response);
+        }
     }
 }
