@@ -46,7 +46,7 @@
 			<hr>
 			<div class="form-group">
 				<label for="inp-user_lname">Contraseña</label><br>
-				<div class="btn btn-danger" data-toggle="modal" data-target="#mdl-user">Cambiar contraseña</div>
+				<div id="open-modal-password" class="btn btn-danger" data-toggle="modal" data-target="#mdl-user">Cambiar contraseña</div>
 			</div>
 		</div>
 

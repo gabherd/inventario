@@ -1,13 +1,13 @@
 $("#change-password").validate({
 	rules: {
 		'current_password': { required: true},
-		'new_password': 	{ required: true, min:6},
-		'confirm_password':	{ required: true, min:6}
+		'new_password': 	{ required: true, minlength:6},
+		'confirm_password':	{ required: true, minlength:6}
 	},
 	messages : {
   		'current_password': { required: "Introduce la contraseña actual"},
-  		'new_password': 	{ required: "Introduce la nueva contraseña", min: "Deben ser minimo 6 caracteres"},
-  		'confirm_password': { required: "Confirma la nueva contraseña",  min: "Deben ser minimo 6 caracteres"}
+  		'new_password': 	{ required: "Introduce la nueva contraseña", minlength: "Deben ser minimo 6 caracteres"},
+  		'confirm_password': { required: "Confirma la nueva contraseña",  minlength: "Deben ser minimo 6 caracteres"}
   	},
 	submitHandler: function(form, event){ 
 	    event.preventDefault();
@@ -84,8 +84,6 @@ $("#btn-changePassword").on('click', function(){
 	
 	$("#submit-changePassword").click();
 
-	console.log( $("#change-password").serialize())
-
 	if (checkPassword("#change-password")) {
 		$.ajax({
 			url: "password",
@@ -112,8 +110,12 @@ $("#btn-changePassword").on('click', function(){
 	}
 });
 
+$("#open-modal-password").on('click', function(){
+	$("#change-password").trigger("reset");
+	$("#change-password").validate().resetForm();
+});
 
- function checkPassword(form) {
+function checkPassword(form) {
                 password1 = $('input[name = new_password]').val();
                 password2 = $('input[name = confirm_password]').val();
   
