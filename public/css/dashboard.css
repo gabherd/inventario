@@ -15,8 +15,77 @@
 	font-size: 0.8em;
 }
 
+
+.description-sales{
+	color: #DFDFDF;
+}
+
 .title-box{
 	font-size: 1em;
 	font-weight: bold;
 	color: #57575B;
+}
+
+
+
+.img-gear{
+	opacity: .2;
+}
+
+.content-total-sales{
+	position: absolute;
+	z-index: 1;
+	top: 5;
+	right: 20;
+	border-radius: 5px;
+}
+
+#btn-conf-summary-sales{
+	position: absolute;
+	right: 25;
+	top: 10;
+	z-index: 1;
+}
+
+#option-summary-sales{
+	right: 30;
+	top: 30;
+}
+
+#option-chart-sales{
+	right: 30;
+}
+
+
+#option-total-sales{
+	right: 5;
+}
+
+
+/*contenedores*/
+.container-period{
+	background: #ECEBEB;
+	border-radius: 5px;
+	display: none;
+	position: absolute;
+	width: 100px;
+	z-index: 1;
+}
+
+.option-period{
+	width: 100%;
+	color: #808080;
+}
+
+.option-period-title{
+	color: #585757;
+}
+
+.option-period, .option-period-title{
+	padding: 0 8px;
+}
+
+.option-period:hover{
+	background: #E4E4E4;
+	border-radius: 5px;
 }

@@ -17,9 +17,10 @@
 
 @section('content')
 	<div class="content-page">
+		
 		<div style="color: #A1A1A1">Productos en inventario</div>
 		<div style="margin: 25px 0">
-			<button id="open-modal-saveProduct" type="button" data-toggle="modal" data-target="#mdl-saveProduct" class="btn btn-add">
+			<button id="open-modal-saveProduct" type="button" data-toggle="modal" data-target="#mdl-save-product" class="btn btn-add">
 				<i class="zmdi zmdi-plus"></i>
 				Agregar producto
 			</button>
@@ -51,11 +52,11 @@
 
 	</div>
 	<!--Modal product-->
-	<div class="modal fade" id="mdl-saveProduct"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdl-save-product"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="titleModalProduct">Agregar producto</h5>
+		        <h5 class="modal-title" id="title-modal-product">Agregar producto</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -101,7 +102,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-saveProduct" data-submit="create" class="btn btn-primary">Guardar</button>
+		        <button id="btn-save-product" data-submit="create" class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -119,7 +120,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<button id="btn-mdlSaveBrand" type="button" data-toggle="modal" data-target="#mdl-saveBrand" class="btn btn-add mb-3">
+		      	<button id="open-modal-saveBrand" type="button" data-toggle="modal" data-target="#mdl-save-brand" class="btn btn-add mb-3">
 					<i class="zmdi zmdi-plus"></i>
 					Agregar Marca
 				</button>
@@ -139,16 +140,19 @@
 	</div>
 
 	<!--Modal save brand-->
-	<div class="modal fade" id="mdl-saveBrand"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdl-save-brand"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="titleModalBrand">Agregar marca</h5>
+		        <h5 class="modal-title" id="title-modal-brand">Agregar marca</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
+		      	<div class="content-loading">
+		      		<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+		      	</div>
 		      	<form id="create-brand">
 					@csrf
 			      	<div class="p-30">
@@ -162,7 +166,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-saveBrand" data-submit="create"  data-id="" class="btn btn-primary">Guardar</button>
+		        <button id="btn-save-brand" data-submit="create"  data-id="" class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -180,7 +184,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<button id="open-modal-SaveModel" type="button" data-toggle="modal" data-target="#mdl-saveModel" class="btn btn-add mb-3">
+		      	<button id="open-modal-SaveModel" type="button" data-toggle="modal" data-target="#mdl-save-model" class="btn btn-add mb-3">
 					<i class="zmdi zmdi-plus"></i>
 					Agregar modelo
 				</button>
@@ -201,11 +205,11 @@
 	</div>
 
 	<!--Modal save Model-->
-	<div class="modal fade" id="mdl-saveModel"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdl-save-model"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel"><span id="titleModalModel">Agregar modelo</span></h5>
+		        <h5 class="modal-title" id="exampleModalLabel"><span id="title-modal-model">Agregar modelo</span></h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -220,7 +224,7 @@
 				      	</div>
 				      	<div class="form-group">
 					        <label for="measure">Marca</label>
-					        <select id="model-nameBrand"  class="form-control" name="id_brand" id="inp-Model">
+					        <select id="model-name-brand"  class="form-control" name="id_brand" id="inp-Model">
 					        	<option value="0" selected>Selecciona una marca...</option>
 					        </select>
 				      	</div>
@@ -230,7 +234,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-saveModel" data-submit="create" class="btn btn-primary"><span id="submitModalModel">Guardar</span></button>
+		        <button id="btn-save-model" data-submit="create" class="btn btn-primary"><span id="btn-save-model">Guardar</span></button>
 		      </div>
 		    </div>
 		  </div>
@@ -248,7 +252,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<button id="btn-mdlSaveMeasure" type="button" data-toggle="modal" data-target="#mdl-saveMeasure" class="btn btn-add mb-3">
+		      	<button id="open-modal-saveMeasure" type="button" data-toggle="modal" data-target="#mdl-save-measure" class="btn btn-add mb-3">
 					<i class="zmdi zmdi-plus"></i>
 					Agregar Medidas
 				</button>
@@ -268,22 +272,25 @@
 	</div>
 
 	<!--Modal save measure-->
-	<div class="modal fade" id="mdl-saveMeasure"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdl-save-measure"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="titleModalMeasure">Agregar marca</h5>
+		        <h5 class="modal-title" id="title-modal-measure">Agregar medida</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
+		      	<div class="content-loading">
+		      		<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+		      	</div>
 		      	<form id="create-measure">
 					@csrf
 			      	<div class="p-30">
 				      	<div class="form-group">
 					        <label for="measure">Medida</label>
-					        <input id="inp-numberMeasure" name="measure" class="form-control" type="text" placeholder="Introduce la medida">
+					        <input id="inp-number-measure" name="measure" class="form-control" type="text" placeholder="Introduce la medida">
 				      	</div>
 				    </div>
 				    <button id="submit-measure" class="d-none"></button>
@@ -291,7 +298,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-saveMeasure" data-submit="create"  data-id="" class="btn btn-primary">Guardar</button>
+		        <button id="btn-save-measure" data-submit="create"  data-id="" class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>

@@ -78,14 +78,16 @@ $(document).ready( function () {
 		    {data: null,
                 render: function (data, type, row) {
                 	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button class='btn btn-info btn-editProduct' "+
-		                   		"data-toggle='modal' "+
-		                   		"data-id='"+data.id+"' "+
-		                   		"data-target='#mdl-user'>Editar</button>" + 
-						   		"<button type='submit' id='"+data.id+"' class='btn btn-danger btn-deleteProduct' "+
+		                   		"<button "+
+		                   			"class='btn btn-info btn-editProduct' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-target='#mdl-user'>Editar</button>" + 
+						   		"<button type='submit' id='"+data.id+"' "+
+						   			"class='btn btn-danger btn-deleteProduct' "+
 						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-id='"+data.id+"' "+
-						   			"data-name='"+data.Measure+" - "+data.Brand+" - "+data.Measure+"'>Borrar</button>"+
+						   			"data-id-product='"+data.id+"' "+
+						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
 						   	"</div>";
 					;
                 }
@@ -110,10 +112,10 @@ $(document).ready( function () {
                 	return "<div class='d-flex justify-content-around'>" +
 		                   		"<button class='btn btn-info btn-editBrand'" +
 		                   		"data-toggle='modal'"+
-		                   		"data-target='#mdl-saveBrand'" +
-		                   		"data-brandId='"+data.id+"'" + 
+		                   		"data-target='#mdl-save-brand'" +
+		                   		"data-id-brand='"+data.id+"'" + 
 		                   		"data-name='"+data.name+"'>Editar</button>" + 
-						   		"<button class='btn btn-danger btn-deleteBrand' data-brandId='"+data.id+"' data-token='{{ csrf_token() }}' data-name='"+data.name+"'>Borrar</button>"+
+						   		"<button class='btn btn-danger btn-deleteBrand' data-id-brand='"+data.id+"' data-token='{{ csrf_token() }}' data-name='"+data.name+"'>Borrar</button>"+
 						   	"</div>";
 					;
                 }
@@ -141,12 +143,15 @@ $(document).ready( function () {
                 render: function (data, type, row) {
                 	return "<div class='d-flex justify-content-around'>" +
 		                   		"<button class='btn btn-info btn-editModel' " + 
-		                   			"data-modelId='"+data.idModel+"' " +
+		                   			"data-id-model='"+data.idModel+"' " +
 		                   			"data-toggle='modal' "+
-		                   			"data-target='#mdl-saveModel' " + 
+		                   			"data-target='#mdl-save-model' " + 
 		                   			"data-nameModel='"+data.model+"'"+
 		                   			"data-idBrand='"+data.idBrand+"'> Editar </button>" + 
-						   		"<button class='btn btn-danger btn-deleteModel' data-modelId='"+data.idModel+"' data-token='{{ csrf_token() }}' data-name='"+data.model+"'>Borrar</button>"+
+						   		"<button class='btn btn-danger btn-deleteModel' "+
+						   			"data-id-model='"+data.idModel+"' "+
+						   			"data-token='{{ csrf_token() }}' "+
+						   			"data-name='"+data.model+"'>Borrar</button>"+
 						   	"</div>";
 					;
                 }
@@ -171,11 +176,11 @@ $(document).ready( function () {
                 	return "<div class='d-flex justify-content-around'>" +
 		                   		"<button class='btn btn-info btn-editMeasure'" +
 			                   		"data-toggle='modal'"+
-			                   		"data-target='#mdl-saveMeasure'" +
-			                   		"data-MeasureId='"+data.id+"'" + 
+			                   		"data-target='#mdl-save-measure'" +
+			                   		"data-id-measure='"+data.id+"'" + 
 			                   		"data-name='"+data.number+"'>Editar</button>" + 
 						   		"<button class='btn btn-danger btn-deleteMeasure' "+
-						   			"data-measureId='"+data.id+"' " + 
+						   			"data-id-measure='"+data.id+"' " + 
 						   			"data-token='{{ csrf_token() }}' "+
 						   			"data-name='"+data.number+"'>Borrar</button>"+
 						   	"</div>";
@@ -185,20 +190,18 @@ $(document).ready( function () {
 		]
 	}); //dataTable
 
-	$.ajax({
-		url: "marca",
-		success: function(res){
-			for(item in res){
-				$("#model-nameBrand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-			}
-		}
-	});
 
 	$.ajax({
 		url: "marca",
 		success: function(res){
+			//lista agregar producto
 			for(item in res){
 				$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
+			}
+			
+			//lista agregar modelo
+			for(item in res){
+				$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
 			}
 		}
 	});	
@@ -215,121 +218,43 @@ $(document).ready( function () {
 
 
 //------------------- Product -------------------------------
-	$("#btn-saveProduct").on('click', function(){
+	$("#btn-save-product").on('click', function(){
 		$("#submit-product").click();
 
-		var id = $("#btn-saveProduct").attr('data-id');
 
 		if ($(this).attr("data-submit") == "create"){
-			$.ajax({
-				url: "productos",
-				method:"POST",
-				data: $("#create-product").serialize(),
-				success: function(res){
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Producto guardado',
-						  showConfirmButton: false,
-						  timer: 900
-						});
-
-						$('#tbl-product').DataTable().ajax.reload();
-
-						$("#create-product").trigger("reset");
-						$('#mdl-saveProduct').modal('hide');
-					}
-				}
-			});	
+			ajaxSave('product', 'productos', 'Producto guardado');
 		}else{
-			$.ajax({
-				url: "/productos/"+id,
-				type: 'PUT', 
-				dataType: "JSON",
-				data: $("#create-product").serialize()  + '&_method=' + "PUT",
-				success: function(res){
-					console.log(res);
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Producto actualizado',
-						  showConfirmButton: false,
-						  timer: 900
-						});
+			ajaxUpdate('product', 'productos', 'Producto actualizado');
 
-						$('#tbl-product').DataTable().ajax.reload();
-						$('#mdl-saveProduct').modal('hide');
-					}
-				},
-				error: function(xhr) {
-			        var errors = JSON.parse(xhr.responseText);
-			        console.log(errors)
-			    }
-			});	
 		}
 	});
 
 	$("#open-modal-saveProduct").on('click', function(){
-		$("#titleModalProduct").text('Agregar producto');
-		$("#btn-saveModel").text('Guardar');
-		$("#btn-saveModel").attr('data-submit', 'create');
+		openModalSave('product', 'producto');
 
 		$("option:selected").removeAttr("selected");
-		$("#create-product").trigger("reset");
-		$("#create-product").validate().resetForm();
 
 		$("#inp-model").empty();
 		$("#inp-model").append('<option value="0">Selecciona una opcion...</option>');
 	});
 
+
 	$("#tbl-product").delegate('.btn-deleteProduct', 'click', function(){
-		var id = $(this).attr('data-id');
-		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id-product');
+		var itemName = $(this).attr('data-name');
+		console.log(itemName)
+		deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product');
 		
-		Swal.fire({
-			title: '¿Estas seguro?',
-			text: "Eliminar " + name,
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar'
-		}).then((result) => {
-		  	if (result.isConfirmed) {
-				$.ajax({
-					url: "productos/"+id,
-					type: 'DELETE', 
-					dataType: "JSON",
-					headers: {
-				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			    	},
-					data: { 
-							"id": id, 
-					 		"_method": 'DELETE', 
-					},
-					success: function(res){
-						if (res.status) {
-							Swal.fire({
-								position: 'center',
-								icon: 'success',
-								title: 'Producto eliminado',
-								showConfirmButton: false,
-								timer: 900
-							});
-							$('#tbl-product').DataTable().ajax.reload();
-						}
-					}
-				});	
-		  	}
-		});
 	});
 
 	$("#tbl-product").delegate('.btn-editProduct', 'click', function(){
-		var id = $(this).attr('data-id');
+		openModalUpdate('product', 'producto');
+		
+		var id = $(this).attr('data-id-product');
 		$(".content-loading").css('display', 'block');
+		$("#mdl-save-product").modal('show');
+		$("#btn-save-product").attr('data-id', id);
 
 		$.ajax({
 			url: "productos/"+id,
@@ -368,13 +293,6 @@ $(document).ready( function () {
 				$("#inp-stock").val(res.stock);
 			}
 		});
-
-		$("#mdl-saveProduct").modal('show');
-
-		$("#titleModalProduct").text('Editar producto');
-		$("#btn-saveProduct").attr('data-id', id);
-		$("#btn-saveProduct").text('Actualizar');
-		$("#btn-saveProduct").attr('data-submit', 'update');
 	});
 
 	$('#inp-brand').on('change', function(e){
@@ -397,355 +315,210 @@ $(document).ready( function () {
 	});
 //------------------- end Product -------------------------------
 
-
 //------------------- Brand-------------------------------
-	$("#btn-mdlSaveBrand").on('click', function(){
-		$("#titleModalBrand").text('Agregar marca')
-		$("#btn-saveBrand").text('Guardar');
-		$("#btn-saveBrand").attr('data-submit', 'create');
-
-		$("#create-brand").trigger("reset");
+	$("#open-modal-saveBrand").on('click', function(){
+		openModalSave('brand', 'marca');
 	});
 
-	$("#btn-saveBrand").on('click', function(){
+	$("#btn-save-brand").on('click', function(){
 		$("#submit-brand").click();
 
 		if ($(this).attr("data-submit") == "create"){
-			$.ajax({
-				url: "marca",
-				method:"POST",
-				data: $("#create-brand").serialize(),
-				success: function(res){
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Marca agregada',
-						  showConfirmButton: false,
-						  timer: 900
-						});
-
-						$('#mdl-saveBrand').modal('hide');
-						$('#tbl-brand').DataTable().ajax.reload();
-						$("#create-brand").trigger("reset");
-					}
-				}
-			});	
+			ajaxSave('brand', 'marca', 'Marca agregada');
 		}else{
-			var id = $("#btn-saveBrand").attr("data-id");
+			ajaxUpdate('brand', 'marca', 'Marca actualizada');
 
-			$.ajax({
-				url: "/marca/"+id,
-				type: 'PUT', 
-				dataType: "JSON",
-				data: $("#create-brand").serialize()  + '&_method=' + "PUT",
-				success: function(res){
-					console.log(res);
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Marca actualizada',
-						  showConfirmButton: false,
-						  timer: 900
-						});
-
-						$('#mdl-saveBrand').modal('hide');
-						$('#tbl-brand').DataTable().ajax.reload();
-					}
-				},
-				error: function(xhr) {
-			        var errors = JSON.parse(xhr.responseText);
-			        console.log(errors)
-			    }
-			});	
 		}
 	});
 
 	$("#tbl-brand").delegate('.btn-editBrand', 'click', function(){
-		$("#titleModalBrand").text('Editar marca');
-		$("#btn-saveBrand").text('Actualizar');
-		$("#btn-saveBrand").attr('data-submit', 'update');
+		openModalUpdate('brand', 'marca');
 
-		var id = $(this).attr('data-brandId');
+		var id = $(this).attr('data-id-brand');
 		var name = $(this).attr('data-name');
 
 		$("#inp-brandBrand").val(name);
-		$("#btn-saveBrand").attr('data-id', id);
+		$("#btn-save-brand").attr('data-id', id);
 	});
 
 	$("#tbl-brand").delegate('.btn-deleteBrand', 'click', function(){
-		var id = $(this).attr('data-brandId');
-		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id-brand');
+		var itemName = $(this).attr('data-name');
 		
-		Swal.fire({
-			title: '¿Estas seguro?',
-			text: "Eliminar a " + name,
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar'
-		}).then((result) => {
-		  	if (result.isConfirmed) {
-				$.ajax({
-					url: "marca/"+id,
-					type: 'DELETE', 
-					dataType: "JSON",
-					headers: {
-				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			    	},
-					data: { 
-							"id": id, 
-					 		"_method": 'DELETE', 
-					},
-					success: function(res){
-						if (res.status) {
-							Swal.fire({
-								position: 'center',
-								icon: 'success',
-								title: 'Marca eliminada',
-								showConfirmButton: false,
-								timer: 900
-							});
-							$('#tbl-brand').DataTable().ajax.reload();
-						}
-					}
-				});	
-		  	}
-		});
+		deleteItem(id, itemName, 'marca', 'Marca eliminada', '#tbl-brand');
+
 	});
 //-------------------end brand-------------------------------
-
 
 //------------------- Model-------------------------------
 
 	$("#open-modal-SaveModel").on('click', function(){
-		$("#create-Model").trigger("reset");
-		
-		$("#titleModalModel").text('Agregar modelo');
-		$("#submitModalModel").text('Guardar');
+		openModalSave('model', 'modelo');
 
-		$("#btn-saveModel").attr('data-submit', 'create');
-
-		$("#model-nameBrand option:selected").attr('selected', false);
-		$("#model-nameBrand option[value='0']").attr('selected', true);
+		$("#model-name-brand option:selected").attr('selected', false);
+		$("#model-name-brand option[value='0']").attr('selected', true);
 	});
 
 	$("#tbl-model").delegate('.btn-editModel', 'click', function(){
-		$("#titleModalModel").text('Editar modelo');
-		$("#submitModalModel").text('Actualizar');
+		openModalUpdate('model', 'modelo');
 
 		var id_brand = $(this).attr('data-idBrand');
-		var id_model = $(this).attr('data-modelId');
+		var id_model = $(this).attr('data-id-model');
 		var name = $(this).attr('data-nameModel');
 
-		$("#btn-saveModel").attr('data-submit', 'update');
+		$("#btn-save-model").attr('data-submit', 'update');
 
-		$("#model-nameBrand option:selected").attr('selected', false);
+		$("#model-name-brand option:selected").attr('selected', false);
 		
 		$("#nameModel").val(name);
-		$("#model-nameBrand option[value='"+id_brand+"']").attr('selected', true);
+		$("#model-name-brand option[value='"+id_brand+"']").attr('selected', true);
 
-		$("#btn-saveBrand").attr('data-id', id_model);
+		$("#btn-save-model").attr('data-id', id_model);
 	});
 
-	$("#btn-saveModel").on('click', function(){
+	$("#btn-save-model").on('click', function(){
 		$("#submit-model").click();
 
 		if ($(this).attr("data-submit") == "create"){
-			$.ajax({
-				url: "modelo",
-				method:"POST",
-				data: $("#create-model").serialize(),
-				success: function(res){
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Modelo agregado',
-						  showConfirmButton: false,
-						  timer: 900
-						});
+			
+			ajaxSave('model', 'modelo', 'Modelo agregado');
 
-						$('#mdl-saveModel').modal('hide');
-						$('#tbl-model').DataTable().ajax.reload();
-						$("#create-model").trigger("reset");
-					}
-				}
-			});	
 		}else{
-			var id = $("#btn-saveBrand").attr("data-id");
+			ajaxUpdate('model', 'modelo', 'Modelo actualizado');
 
-			$.ajax({
-				url: "/modelo/"+id,
-				type: 'PUT', 
-				dataType: "JSON",
-				data: $("#create-model").serialize()  + '&_method=' + "PUT",
-				success: function(res){
-					console.log(res);
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Modelo actualizado',
-						  showConfirmButton: false,
-						  timer: 900
-						});
-
-						$('#mdl-saveModel').modal('hide');
-						$('#tbl-model').DataTable().ajax.reload();
-						$("#create-model").trigger("reset");
-					}
-				},
-				error: function(xhr) {
-			        var errors = JSON.parse(xhr.responseText);
-			        console.log(errors)
-			    }
-			});	
 		}
 	});
 
 	$("#tbl-model").delegate('.btn-deleteModel', 'click', function(){
-		var id = $(this).attr('data-modelId');
-		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id-model');
+		var itemName = $(this).attr('data-name');
 		
-		Swal.fire({
-			title: '¿Estas seguro?',
-			text: "Eliminar " + name,
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar'
-		}).then((result) => {
-		  	if (result.isConfirmed) {
-				$.ajax({
-					url: "modelo/"+id,
-					type: 'DELETE', 
-					dataType: "JSON",
-					headers: {
-				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			    	},
-					data: { 
-							"id": id, 
-					 		"_method": 'DELETE', 
-					},
-					success: function(res){
-						if (res.status) {
-							Swal.fire({
-								position: 'center',
-								icon: 'success',
-								title: 'Modelo eliminado',
-								showConfirmButton: false,
-								timer: 900
-							});
-							$('#tbl-model').DataTable().ajax.reload();
-						}
-					}
-				});	
-		  	}
-		});
-	});
+		deleteItem(id, itemName, 'modelo', 'Modelo eliminado', '#tbl-model');
 
+	});
 //-------------------end model-------------------------------
 
-
 //------------------- Measure-------------------------------
-	$("#btn-mdlSaveMeasure").on('click', function(){
-		$("#titleModalMeasure").text('Agregar medida')
-		$("#btn-saveMeasure").text('Guardar');
-		$("#btn-saveMeasure").attr('data-submit', 'create');
-
-		$("#create-measure").trigger("reset");
+	$("#open-modal-saveMeasure").on('click', function(){
+		openModalSave('measure', 'medida');
 	});
 
-	$("#btn-saveMeasure").on('click', function(){
+	$("#btn-save-measure").on('click', function(){
 		$("#submit-measure").click();
 
 		if ($(this).attr("data-submit") == "create"){
-			$.ajax({
-				url: "medida",
-				method:"POST",
-				data: $("#create-measure").serialize(),
-				success: function(res){
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Medida agregada',
-						  showConfirmButton: false,
-						  timer: 900
-						});
-
-						$('#mdl-saveMeasure').modal('hide');
-						$('#tbl-measure').DataTable().ajax.reload();
-						$("#create-measure").trigger("reset");
-					}
-				}
-			});	
+			ajaxSave('measure', 'medida', 'Medida agregada');
+	
 		}else{
-			var id = $("#btn-saveMeasure").attr("data-id");
-
-			$.ajax({
-				url: "/medida/"+id,
-				type: 'PUT', 
-				dataType: "JSON",
-				data: $("#create-measure").serialize()  + '&_method=' + "PUT",
-				success: function(res){
-					console.log(res);
-					if (res.status) {
-						Swal.fire({
-						  position: 'top-end',
-						  icon: 'success',
-						  title: 'Medida actualizada',
-						  showConfirmButton: false,
-						  timer: 900
-						});
-
-						$('#mdl-saveMeasure').modal('hide');
-						$('#tbl-measure').DataTable().ajax.reload();
-					}
-				},
-				error: function(xhr) {
-			        var errors = JSON.parse(xhr.responseText);
-			        console.log(errors)
-			    }
-			});	
+			ajaxUpdate('measure', 'medida', 'Medida actualizada');
 		}
 	});
 
 	$("#tbl-measure").delegate('.btn-editMeasure', 'click', function(){
-		$("#titleModalMeasure").text('Editar medida');
-		$("#btn-saveMeasure").text('Actualizar');
-		$("#btn-saveMeasure").attr('data-submit', 'update');
+		openModalUpdate('measure', 'medida');
 
-		var id = $(this).attr('data-measureId');
-		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id-measure');
+		var element = $(this).attr('data-name');
 
-		$("#inp-numberMeasure").val(name);
-		$("#btn-saveMeasure").attr('data-id', id);
+		$("#inp-number-measure").val(element);
+		$("#btn-save-measure").attr('data-id', id);
 	});
 
 	$("#tbl-measure").delegate('.btn-deleteMeasure', 'click', function(){
-		var id = $(this).attr('data-measureId');
-		var name = $(this).attr('data-name');
+		var id = $(this).attr('data-id-measure');
+		var itemName = $(this).attr('data-name');
+
+		deleteItem(id, itemName, 'medida', 'Medida eliminada', '#tbl-measure');
 		
-		Swal.fire({
-			title: '¿Estas seguro?',
-			text: "Eliminar " + name,
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar'
-		}).then((result) => {
-		  	if (result.isConfirmed) {
+	});
+//-------------------end Measure-------------------------------
+
+
+function ajaxSave(name, url, swalTitle){
+	$(".content-loading").css('display', 'block');
+
+	$.ajax({
+		url: url,
+		method:"POST",
+		data: $("#create-"+name).serialize(),
+		success: function(res){
+			if (res.status) {
+				$(".content-loading").css('display', 'none');
+
+				Swal.fire({
+				  position: 'center',
+				  icon: 'success',
+				  title: swalTitle,
+				  showConfirmButton: false,
+				  timer: 900
+				});
+
+				$('#mdl-save-'+name).modal('hide');
+				$('#tbl-'+name).DataTable().ajax.reload();
+				$("#create-"+name).trigger("reset");
+			}
+		}
+	});	
+}
+
+function ajaxUpdate(name, url, swalTitle){
+	var id = $("#btn-save-"+name).attr("data-id");
+	$(".content-loading").css('display', 'block');
+
+	$.ajax({
+		url: "/"+url+"/"+id,
+		type: 'PUT', 
+		dataType: "JSON",
+		data: $("#create-"+name).serialize()  + '&_method=' + "PUT",
+		success: function(res){
+			console.log(res);
+			if (res.status) {
+				$(".content-loading").css('display', 'none');
+				
+				Swal.fire({
+				  position: 'center',
+				  icon: 'success',
+				  title: swalTitle,
+				  showConfirmButton: false,
+				  timer: 900
+				});
+
+				$('#mdl-save-'+name).modal('hide');
+				$('#tbl-'+name).DataTable().ajax.reload();
+				$("#create-"+name).trigger("reset");
+
+			}
+		},
+		error: function(xhr) {
+	        var errors = JSON.parse(xhr.responseText);
+	        console.log(errors)
+	    }
+	});	
+}
+
+function deleteItem(id, itemName, url, swalTitle, table){
+	Swal.fire({
+		title: '¿Estas seguro?',
+		text: "Eliminar " + itemName,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Sí, eliminar',
+		cancelButtonText: 'Cancelar'
+	}).then((result) => {
+	  	if (result.isConfirmed) {
+			Swal.fire({
+			  title: 'Eliminando...',
+			  timerProgressBar: true,
+			  showConfirmButton: false,
+			  allowOutsideClick: false,
+			  allowEscapeKey: false,
+			  didOpen: () => {
+			    Swal.showLoading()
+				
 				$.ajax({
-					url: "medida/"+id,
+					url: url+"/"+id,
 					type: 'DELETE', 
 					dataType: "JSON",
 					headers: {
@@ -757,22 +530,48 @@ $(document).ready( function () {
 					},
 					success: function(res){
 						if (res.status) {
+							Swal.close();
+
 							Swal.fire({
 								position: 'center',
 								icon: 'success',
-								title: 'Medida eliminada',
+								title: swalTitle,
 								showConfirmButton: false,
 								timer: 900
 							});
-							$('#tbl-measure').DataTable().ajax.reload();
+
+							$(table).DataTable().ajax.reload();
 						}
 					}
 				});	
-		  	}
-		});
-	});
-//-------------------end brand-------------------------------
+			    
+			  }
+			}).then((result) => {
+			  if (result.dismiss === Swal.DismissReason.timer) {
+			    console.log('I was closed by the timer')
+			  }
+			});
 
+
+	  	}
+	});
+}
+
+function openModalSave(name, message){
+	$("#title-modal-"+name).text('Agregar '+message);
+	$("#btn-save-"+name).text('Guardar');
+	$("#btn-save-"+name).attr('data-submit', 'create');
+	$(".content-loading").css('display', 'none');
+
+	$("#create-"+name).trigger("reset");
+	$("#create-"+name).validate().resetForm();
+}
+
+function openModalUpdate(name, nameTranslate){
+	$("#title-modal-" + name).text('Editar ' + nameTranslate);
+	$("#btn-save-" + name).text('Actualizar');
+	$("#btn-save-" + name).attr('data-submit', 'update');
+}
 
 $(document).on('show.bs.modal', '.modal', function (event) {
     var zIndex = 1040 + (10 * $('.modal:visible').length);

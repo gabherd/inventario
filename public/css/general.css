@@ -50,9 +50,47 @@ body{
 	color: #EBE2DE;
 }
 
+.container-request{
+	position: absolute;
+	transform: translate(-50%, -50%); 
+	left: 50%; 
+	top: 50%;
+	width: 100%;
+	height: 100%;
+	z-index: 12;
+	background: rgba(0,0,0,.4);
+}
+
+.content-request{
+	transform: translate(-50%, -50%); 
+	left: 50%; 
+	top: 50%;
+	position: absolute;
+	background: #fff;
+	height: 50%;
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+}
+
+.status-request{
+	display: flex;
+	flex-direction: column;
+}
+
 
 
 /*------------  LOADER ------------*/
+.content-loading{
+	transform: translate(-50%, -50%); 
+	position: absolute; 
+	left: 50%; 
+	top: 50%;
+	display: none;
+}
+
 
 .lds-ring {
 	display: inline-block;

@@ -20,11 +20,19 @@
 					<img src="img/box.svg" alt="" height="80">
 				</div>
 			</div>
-			<div class="col-md-4 col-sm-13 ">
+			<div class="col-md-4 col-sm-13" style="">
+				<div class="content-total-sales">
+					<img id="btn-conf-total-sales" class="cursor img-gear" src="img/settings.svg" width="17"/>
+					<div id="option-total-sales" class="container-period shadow">
+						<div class="option-period-title">Mostrar por</div>
+						<div class="option-period period-sales-total cursor" data-period="week">Semana</div>
+						<div class="option-period period-sales-total cursor" data-period="month">Mes</div>
+					</div>
+				</div>
 				<div style="background: #00C0EF; " class="box-header">
 					<div style="">
-						<div id="product-sales" class="qty-product">{{ $productsSale }}</div>
-						<div class="qty-description">Productos vendidos</div>
+						<div id="product-sales" class="qty-product">...</div>
+						<div class="qty-description">Productos vendidos <div class="description-sales">por <span id="qty-description-date">...</span></div></div>
 					</div>
 					<img src="img/bolsa-de-la-compra.svg" height="80">
 				</div>
@@ -45,9 +53,14 @@
 			<div class="col">
 				<div style="border-radius: 5px; padding: 10px; background: #fff">
 					<div style="display: flex; justify-content: space-between;">
-						<div class="title-box">Productos mas vendidos</div>
-						<div style="display: none">
-							<img src="img/settings.svg" alt="" width="17" style="opacity: .7">
+						<div class="title-box">Productos mas vendidos por <span id="txt-dete-sale">...</span></div>
+						<div style="display: block">
+							<img id="btn-conf-char-sales" class="cursor img-gear" src="img/settings.svg" width="17" >
+							<div id="option-chart-sales" class="container-period shadow">
+								<div class="option-period-title">Mostrar por</div>
+								<div class="option-period period-sales-top cursor" data-period="week">Semana</div>
+								<div class="option-period period-sales-top cursor" data-period="month">Mes</div>
+							</div>
 						</div>
 					</div>
 					<div id="piechart" style="width: 100%; height: 200px;"></div>
@@ -80,7 +93,13 @@
 		<div class="row">
 			<div class="col">
 				<div style="border-radius: 5px; padding: 10px; background: #fff">
-					<div class="title-box">Ventas por dia</div>
+					<div class="title-box">Ventas por <span id="txt-summary-sale">dia</span></div>
+					<img id="btn-conf-summary-sales" class="cursor img-gear" src="img/settings.svg" width="17"/>
+					<div id="option-summary-sales" class="shadow container-period">
+						<div class="option-period-title">Mostrar por</div>
+						<div class="option-period period-sales-summary cursor" data-period="week">Semana</div>
+						<div class="option-period period-sales-summary cursor" data-period="month">Mes</div>
+					</div>
 					<div id="chart_div" style="width: 100%; height: 500px;"></div>
 				</div>
 			</div>
