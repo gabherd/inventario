@@ -56,6 +56,8 @@ Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getP
 Route::get('inventario/measure', '\App\Http\Controllers\ProductController@getMeasure')
 	->name('measure')->middleware('auth');
 
+Route::put('sale/{id}', '\App\Http\Controllers\ProductController@saleProduct')
+	->name('sale')->middleware('auth');
 
 //--------------DASHBOARD--------------
 

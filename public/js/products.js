@@ -58,6 +58,18 @@ $(document).ready( function () {
 		}
 	});//validation
 
+	$("#create-sale").validate({
+		rules: {
+			'sale': { required: true}
+		},
+		messages: {
+      		'sale': { required:"La cantidad es requerida"}
+      	},
+		submitHandler: function(form, event){ 
+		    event.preventDefault();
+		}
+	});//validation
+
 	$('#tbl-product').DataTable({
 	    language: {
 	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
@@ -73,12 +85,20 @@ $(document).ready( function () {
 		    {data: 'Brand'},
 		    {data: 'Model'},
 		    {data: 'Stock'},
-		    {data: 'Sale'},
-		    {data: 'Price'},
+		    //{data: 'Sale'},
+		    //{data: 'Price'},
 		    {data: null,
                 render: function (data, type, row) {
                 	return "<div class='d-flex justify-content-around'>" +
 		                   		"<button "+
+		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-measure-product='"+data.Measure+"' "+
+			                   		"data-brand-product='"+data.Brand+"' "+
+			                   		"data-stock-product='"+data.Stock+"' "+
+			                   		"data-target='#mdl-sale'>Venta</button>" +
+			                   	"<button "+
 		                   			"class='btn btn-info btn-editProduct' "+
 			                   		"data-toggle='modal' "+
 			                   		"data-id-product='"+data.id+"' "+
@@ -89,7 +109,6 @@ $(document).ready( function () {
 						   			"data-id-product='"+data.id+"' "+
 						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
 						   	"</div>";
-					;
                 }
             }
 		]
@@ -432,6 +451,72 @@ $(document).ready( function () {
 		
 	});
 //-------------------end Measure-------------------------------
+
+//------------------- Sale-------------------------------
+	$("#tbl-product").delegate('.btn-saleProduct', 'click', function(){
+		var id      = $(this).attr('data-id-product');
+		var measure = $(this).attr('data-measure-product');
+		var brand   = $(this).attr('data-brand-product');
+		var stock   = $(this).attr('data-stock-product');
+
+		//add id button to save
+		$("#btn-save-sale").attr('data-id-product', id);
+
+		$("#inp-sale-measure").val(measure);
+		$("#inp-sale-brand").val(brand);
+		$("#inp-sale-stock").val(stock);
+
+		$("#create-sale").validate().resetForm();
+		$('#mdl-sale').modal('hide');
+	});
+
+	$("#inp-number-sale").on('keyup', function(){
+		var stock = $("#inp-sale-stock").val();
+		var qtySale = $("#inp-number-sale").val();
+
+		if (parseInt(qtySale) > parseInt(stock)) {
+			$("#inp-number-sale-error").css('display', 'block');
+		}else{
+			$("#inp-number-sale-error").css('display', 'none');
+		}
+	});
+
+	$("#btn-save-sale").on('click', function(){
+		var qtySale = $("#inp-number-sale").val();
+		var id = $(this).attr('data-id-product');
+
+		$("#submit-sale").click();
+
+		$.ajax({
+			url: "/sale/"+id,
+			type: 'PUT', 
+			dataType: "JSON",
+			data: $("#create-sale").serialize()  + '&_method=' + "PUT",
+			success: function(res){
+				console.log(res);
+				if (res.status) {
+					$(".content-loading").css('display', 'none');
+					
+					Swal.fire({
+					  position: 'center',
+					  icon: 'success',
+					  title: 'Venta realizada',
+					  showConfirmButton: false,
+					  timer: 900
+					});
+
+					$('#mdl-sale').modal('hide');
+					$("#create-sale").trigger("reset");
+					$('#tbl-product').DataTable().ajax.reload();
+				}
+			},
+			error: function(xhr) {
+		        var errors = JSON.parse(xhr.responseText);
+		        console.log(errors)
+		    }
+		});	
+	});
+//-------------------end Sale-------------------------------
 
 
 function ajaxSave(name, url, swalTitle){

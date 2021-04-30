@@ -41,8 +41,7 @@
 					<th>Marca</th>
 					<th>Modelo</th>
 					<th>Existencia</th>
-					<th>Vendidas</th>
-					<th>Disponibles</th>
+					<!--th>Vendidas</th-->
 					<th>Acciones</th>
 				</tr>
 			</thead>
@@ -88,10 +87,10 @@
 					        	<option  value="0" selected>Selecciona una opcion...</option>
 					        </select>
 				      	</div>
-				      	<div class="form-group">
+				      	<!--div class="form-group">
 					        <label for="price">Precio</label>
 					        <input id="inp-price" name="price" class="form-control" type="number">
-				      	</div>
+				      	</div-->
 				      	<div class="form-group">
 					        <label for="stock">Existencia</label>
 					        <input id="inp-stock" name="stock" class="form-control" type="number">
@@ -304,6 +303,49 @@
 		  </div>
 	</div>
 
+	<!----------------- Sale ----------------->
+	<!--Modal sale-->
+	<div class="modal fade" id="mdl-sale"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Venta</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form id="create-sale">
+					@csrf
+			      	<div class="p-30">
+				      	<div class="form-group">
+					        <label for="measure">Medida</label>
+					        <input id="inp-sale-measure" name="measure" class="form-control" type="text" readonly>
+				      	</div>
+				      	<div class="form-group">
+					        <label for="brand">Marca</label>
+					        <input id="inp-sale-brand" name="brand" class="form-control" type="text" readonly>
+				      	</div>
+				      	<div class="form-group">
+					        <label for="stock">Existencia</label>
+					        <input id="inp-sale-stock" name="stock" class="form-control" type="number" readonly>
+				      	</div>
+				      	<div class="form-group">
+					        <label for="sale">Cantidad a vender</label>
+					        <input id="inp-number-sale" name="sale" class="form-control" type="number">
+					        <div id="inp-number-sale-error" class="error">La cantidad es superior a la existencia</div>
+				      	</div>
+				    </div>
+				    <button id="submit-sale" class="d-none"></button>
+		      	</form>
+		      </div>
+		      <div class="modal-footer d-flex justify-content-around">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		        <button id="btn-save-sale" data-submit="create"  data-id-product="" class="btn btn-primary">Guardar</button>
+		      </div>
+		    </div>
+		  </div>
+	</div>
 @endsection
 
 @section('scripts')

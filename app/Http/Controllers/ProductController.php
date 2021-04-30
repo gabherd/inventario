@@ -42,7 +42,7 @@ class ProductController extends Controller
                     ->insert([
                         'id_model' => $values['model'],
                         'id_measure' => $values['measure'],
-                        'price' => $values['price'],
+                        //'price' => $values['price'],
                         'stock' => $values['stock']
                     ]);
 
@@ -55,6 +55,40 @@ class ProductController extends Controller
         return Response()->json($response);  
     }
 
+    public function saleProduct(Request $request, $id){
+        $stockForm = 0;
+        $stockDB = 0;
+
+        $validatedData = $request->validate([
+          'sale' => ['required', 'integer']
+        ]);
+
+
+        //otiene la cantidad de stock
+        $result = Product::select('stock')->where('id_products', (int)$id)->get();
+
+        $stockForm = (int)$validatedData['sale'];
+        $stockDB = $result[0]->stock;
+
+        //compara el stock de la base de datos con el del formulario
+        if ($stockForm > $stockDB) {
+            return array('status'=>0, 'msg'=> 'Value is greater than stock');
+        }
+
+        //actualiza el valor en la base de datos
+        $request = Product::where('id_products', (int)$id)
+                    ->update(['stock'     => $stockDB - $stockForm]);
+
+        $request = DB::table('sale_detail')
+                    ->insert(['id_products' => $id,
+                              'quantity'    => $stockForm]);
+
+        if($request){
+            return array('status'=>1, 'msg'=>'Created updated');
+        }else{
+            return array('status'=>0, 'msg'=> 'Data not updated');
+        }
+    }
 
     public function update(ProductRequest $request, $id)
     {
@@ -64,7 +98,7 @@ class ProductController extends Controller
                     ->update([
                             'id_model'     => $values['model'],
                             'id_measure'     => $values['measure'],
-                            'price'     => $values['price'],
+                            //'price'     => $values['price'],
                             'stock'     => $values['stock'],
                     ]);
         

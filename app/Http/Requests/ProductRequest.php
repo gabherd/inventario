@@ -19,7 +19,7 @@ class ProductRequest extends FormRequest
             'measure' => 'required',
             'model'   => 'required',
             'brand'   => 'required',
-            'price'   => 'required',
+           // 'price'   => 'required',
             'stock'   => 'required'
         ];
     }
@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
             'measure.required' => 'Ingresa la medida',
             'model.required'   => 'Ingresa el modelo',
             'brand.required'   => 'Ingresa la marca',
-            'price.required'   => 'Ingresa el precio',
+           // 'price.required'   => 'Ingresa el precio',
             'stock.required'   => 'Ingresa la cantidad',
         ];
     }
