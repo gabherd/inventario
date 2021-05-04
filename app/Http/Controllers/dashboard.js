@@ -1,10 +1,10 @@
+google.charts.load('current', {'packages':['corechart']});
+totalSales(getCookie("salesTotal"));
+google.charts.setOnLoadCallback(chartMoreSales(getCookie("salesTop")));
+google.charts.setOnLoadCallback(chartSalesSummary(getCookie("salesSummary")));
+
 //table of stock
 $(document).ready( function () {
-    google.charts.load('visualization', '1.0', {'packages':['corechart']});
-
-    totalSales(getCookie("salesTotal"));
-    google.charts.setOnLoadCallback(drawChart(getCookie("salesTop"), getCookie("salesSummary")));
-
     $('#tbl-emty-stock').DataTable({
       language: {
           url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
@@ -91,8 +91,9 @@ $(document).ready( function () {
 
 
 //----->Start charts
-  function drawChart(period, summary){
-    //chart of product top sales
+  //chart of product top sales
+  function chartMoreSales(period){
+    
     $.get( "dashboard/sales/"+period, function( data ) {
       
       var sales = [['Modelo', 'Venta']];
@@ -107,9 +108,11 @@ $(document).ready( function () {
 
       chart.draw(data);
     });
-    
-    //chart summary sales
-    $.get( "dashboard/sales-summary/"+summary, function( res ) {
+  }
+
+  //chart of sales per day
+  function chartSalesSummary(period) {
+    $.get( "dashboard/sales-summary/"+period, function( res ) {
       var sales = [['Dia', 'Ventas']];
       var days = [];
 
@@ -128,7 +131,6 @@ $(document).ready( function () {
       chart.draw(data, options);
     });
   }
-
 
   //get total sales
   function totalSales(period){

@@ -3,8 +3,11 @@
 @section('title') Dashboard @endsection
 
 @section('resources-page')
+	<!--Datatable-->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<!--google charts-->
+	<!--script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script-->
+	 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<link rel="stylesheet" href="css/dashboard.css">
 @endsection
 
@@ -108,9 +111,8 @@
 @endsection
 
 @section('scripts')
-
-	<script type="text/javascript" src="js/dashboard.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="js/dashboard.js"></script>
 
 @endsection
