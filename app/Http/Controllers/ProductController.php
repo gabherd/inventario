@@ -10,13 +10,28 @@ use App\Http\Requests\ProductRequest;
 class ProductController extends Controller
 {
     
-    public function index()
+    public function index(){}
+
+
+    public function zone()
     {
-        return view('products');
+        return view('products/products-zone');
+    }
+
+    public function over()
+    {
+        return view('products/products-over');
     }
 
     public function getProducts(){
         $query = 'SELECT products.id_products AS id, measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand';
+
+        $product = DB::select($query);
+        return $product;
+    }
+
+    public function getProductsOver(){
+        $query = 'SELECT products.id_products AS id, code_product AS code, separate, price_distribuitor, price_distribuitorTop, promotion,  measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand';
 
         $product = DB::select($query);
         return $product;
@@ -39,7 +54,7 @@ class ProductController extends Controller
                     ->insert([
                         'id_model' => $values['model'],
                         'id_measure' => $values['measure'],
-                        //'price' => $values['price'],
+                        'price' => $values['price'],
                         'stock' => $values['stock']
                     ]);
 
@@ -95,7 +110,7 @@ class ProductController extends Controller
                     ->update([
                             'id_model'     => $values['model'],
                             'id_measure'     => $values['measure'],
-                            //'price'     => $values['price'],
+                            'price'     => $values['price'],
                             'stock'     => $values['stock'],
                     ]);
         

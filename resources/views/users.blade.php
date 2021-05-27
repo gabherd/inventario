@@ -30,6 +30,7 @@
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>Correo</th>
+					<th>Administrador</th>
 					<th>Opciones</th>
 				</tr>
 			</thead>
@@ -63,6 +64,13 @@
 						        <label for="inp-email">Correo</label>
 						        <input id="inp-email" name="email" class="form-control" type="text">
 					      	</div>
+					      	<div class="form-group">
+						        <label for="inp-email">Permiso de administrador</label>
+						        <select name="userAccess" id="userAccess" class="form-control">
+						        	<option value="0" selected>No</option>
+						        	<option value="1">Si</option>
+						        </select>
+					      	</div>
 					    </div>
 					    <button id="submit-createUser" class="d-none"></button>
 			      	</form>
@@ -74,6 +82,7 @@
 			    </div>
 			  </div>
 		</div>
+		
 
 	</div>
 @endsection

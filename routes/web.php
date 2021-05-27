@@ -7,6 +7,13 @@ Route::get('/', '\App\Http\Controllers\DashboardController@index')
 
 Route::view("proveedores", 'providers')
 	->name('providers')->middleware('auth');
+	
+
+Route::get('/zone', '\App\Http\Controllers\ProductController@zone')
+	->name('zone')->middleware('auth');
+
+Route::get('/over', '\App\Http\Controllers\ProductController@over')
+	->name('over')->middleware('auth');
 
 
 # Usuarios registrados
@@ -77,6 +84,9 @@ Route::get('dashboard/sales-products/{period}', '\App\Http\Controllers\Dashboard
 Route::get('dashboard/sales-summary/{period}', '\App\Http\Controllers\DashboardController@salesSummary')
 	->name('sales-summary')->middleware('auth');
 
+// obtiene nombre de sucursal registrado
+	Route::get('branch', '\App\Http\Controllers\UserController@branchRegistered')
+	->name('branch')->middleware('auth');
 
 
 

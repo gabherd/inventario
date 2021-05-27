@@ -70,7 +70,7 @@ $(document).ready( function () {
 		}
 	});//validation
 
-	$('#tbl-product').DataTable({
+	$('#tbl-product-zone').DataTable({
 	    language: {
 	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 	    },
@@ -80,13 +80,78 @@ $(document).ready( function () {
                 url: '/inventario/productos',
                 dataSrc: '',
         },
+        initComplete: function(settings){
+            var api = new $.fn.dataTable.Api( settings );
+         	//get branch esta en script.js
+            if (branch == 'zone') {
+            	api.columns([5]).visible(true);
+            }else{
+            	api.columns([5]).visible(false);
+            }
+        },
 		columns: [
 			{data: 'Measure'},
 		    {data: 'Brand'},
 		    {data: 'Model'},
 		    {data: 'Stock'},
-		    //{data: 'Sale'},
-		    //{data: 'Price'},
+		    {data: 'Price'},
+		    {data: null,
+                render: function (data, type, row) {
+                	return "<div class='d-flex justify-content-around'>" +
+		                   		"<button "+
+		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-measure-product='"+data.Measure+"' "+
+			                   		"data-brand-product='"+data.Brand+"' "+
+			                   		"data-stock-product='"+data.Stock+"' "+
+			                   		"data-target='#mdl-sale'>Venta</button>" +
+			                   	"<button "+
+		                   			"class='btn btn-info btn-editProduct' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-target='#mdl-user'>Editar</button>" + 
+						   		"<button type='submit' id='"+data.id+"' "+
+						   			"class='btn btn-danger btn-deleteProduct' "+
+						   			"data-token='{{ csrf_token() }}' "+
+						   			"data-id-product='"+data.id+"' "+
+						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
+						   	"</div>";
+                }
+            }
+		]
+	}); //dataTable
+
+		$('#tbl-product-over').DataTable({
+	    language: {
+	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+	    },
+	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+	    responsive: true,
+		ajax: {
+                url: '/inventario/productos',
+                dataSrc: '',
+        },
+        initComplete: function(settings){
+            var api = new $.fn.dataTable.Api( settings );
+         	//get branch esta en script.js
+            if (branch == 'over') {
+            	api.columns([10]).visible(true);
+            }else{
+            	api.columns([10]).visible(false);
+            }
+        },
+		columns: [
+			{data: 'Measure'},
+		    {data: 'Brand'},
+		    {data: 'Model'},
+		    {data: 'Stock'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
 		    {data: null,
                 render: function (data, type, row) {
                 	return "<div class='d-flex justify-content-around'>" +

@@ -16,22 +16,24 @@ class UsersRequest extends FormRequest
         return true;
     }
 
-   
+  
     public function rules()
     {
         return [
             'name' => ['required', 'regex:/^[\pL\s\-]+$/u'],
             'last_name' => ['required', 'regex:/^[\pL\s\-]+$/u'],
-            'email' => ['required', 'email']
+            'email' => ['required', 'email'],
+            'userAccess' => ['required', 'regex:(0|1)']
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'El nombre es requerido no seas p...',
-            'last_name.required' => 'El apellido tambien',
-            'email.required' => 'Eres o te haces',
+            'name.required' => 'Nombre requerido',
+            'last_name.required' => 'El apellido es requerido',
+            'email.required' => 'Correo requerido',
+            'userAccess' => 'Permido requerido'
         ];
     }
 }

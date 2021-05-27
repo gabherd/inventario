@@ -2,6 +2,9 @@
 	<div class="full-width navLateral" style="display: table-cell;">
 		<div style="position: absolute; width: 230px; top: 10;">
 			<div class="full-width navLateral-body" style="position: relative;">
+				<div class="full-width tittles navLateral-body-tittle-menu">
+				 Administrador</span>
+			</div>
 				<nav class="full-width">
 					<ul class="full-width list-unstyle menu-principal" style="">
 						<li class="full-width">
@@ -15,12 +18,22 @@
 							</a>
 						</li>
 						<li class="full-width">
-							<a href="{{ route('products.index') }}" class="full-width">
+							<a href="{{ route('zone') }}" class="full-width">
 								<div class="navLateral-body-cl">
 									<i class="zmdi zmdi-assignment"></i>
 								</div>
 								<div class="navLateral-body-cr hide-on-tablet">
-									Inventario
+									Zone of tires
+								</div>
+							</a>
+						</li>
+						<li class="full-width">
+							<a href="{{ route('over') }}" class="full-width">
+								<div class="navLateral-body-cl">
+									<i class="zmdi zmdi-assignment"></i>
+								</div>
+								<div class="navLateral-body-cr hide-on-tablet">
+									Over
 								</div>
 							</a>
 						</li>

@@ -15,6 +15,7 @@ $(document).ready(function() {
             { data: "name", 	 className: "name" },
             { data: "last_name", className: "last_name" },
             { data: "email", 	 className: "email" },
+            { data: "userAccess", 	 className: "userAccess" },
             { data: null,
                 render: function (data, type, row) {
                 	return "<div class='d-flex justify-content-around'>" +
@@ -89,12 +90,15 @@ $("#tbl-users").delegate('.btn-delete', "click", function(){
 });
 
 $("#tbl-users").delegate('.btn-edit', "click", function(){
+
 	clearValidationError('#create-user');
 
 	var id = $(this).attr('data-edtId');
+
 	var name = $(".tr-"+id).find('.name').text();
 	var last_name = $(".tr-"+id).find('.last_name').text();
 	var email = $(".tr-"+id).find('.email').text();
+	
 
 	$("#txt-save").text('Actualizar');	
 	$("#txt-titleModal").text('Editar usuario');	
@@ -127,12 +131,9 @@ $("#btn-save").on('click', function(){
 				console.log(res);
 				if (res.status) {
 					Swal.fire({
-					  position: 'top-end',
-					  icon: 'success',
-					  title: 'Usuario registrado',
-					  showConfirmButton: false,
-					  timer: 900
-					});
+					  title: 'Usuario regitrado!',
+					  text: res.msg,
+					})
 
 					$('#tbl-users').DataTable().ajax.reload();
 					$('#mdl-user').modal('hide');
@@ -179,5 +180,6 @@ $("#btn-save").on('click', function(){
 
 function clearValidationError(idForm){
 	$(idForm).data('validator').resetForm();
+	$(idForm).trigger("reset");
 	$(idForm).find('.form-control').removeClass('error');
 }

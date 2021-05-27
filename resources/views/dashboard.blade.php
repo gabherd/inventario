@@ -6,8 +6,13 @@
 	<!--Datatable-->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 	<!--google charts-->
-	<!--script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script-->
-	 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+  // Load the Visualization API library and the piechart library.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+</script>
 	<link rel="stylesheet" href="css/dashboard.css">
 @endsection
 

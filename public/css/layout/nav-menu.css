@@ -115,8 +115,10 @@
 	height: 70px;
 	line-height: 70px; 
 	font-size:20px; 
-	background-color: #F5F5F5;
+	background-color: #374850;
+	color: #b8c7ce;
 	text-align: center;
+	margin:0 -2px;
 }
 .menu-principal li,
 .menu-principal li a{

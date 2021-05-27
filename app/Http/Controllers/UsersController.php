@@ -7,6 +7,7 @@ use App\Models\Users;
 use App\Http\Requests\UsersRequest;
 use Auth;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 //use Illuminate\Support\Facades\DB;
 
@@ -19,22 +20,26 @@ class UsersController extends Controller
     }
 
     public function getUsers(){
-        $users = Users::where('id', '!=',  Auth::user()->id)
-                ->orWhereNull('id')
-                ->orderBy('name')
-                ->get();
+        $query = "SELECT id, name, last_name, email, case isAdmin when 0 then 'No' WHEN 1 then 'Sí' end as userAccess from users where id !=".Auth::user()->id." and id_branch = ".Auth::user()->id_branch;
 
-        return $users;
+        return DB::select($query);
     }
 
     public function store(UsersRequest $request)
     {
         $data = $request->validated();
 
-        $request = Users::create($data);
-    
+        $request = DB::table('users')
+            ->insert([
+                'name' => $data['name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'isAdmin' => $data['userAccess'],
+                'password' => bcrypt('0123456789'),
+            ]);
+
         if($request){
-            $response = array('status'=>1, 'msg'=>'Created successfully');
+            $response = array('status'=>1, 'msg'=>'Contraseña: 0123456789');
         }else{
             $response = array('status'=>0, 'msg'=>'Data not creacted');
         }
@@ -46,7 +51,12 @@ class UsersController extends Controller
         
         $data = $request->validated();
 
-        $request = Users::where('id', (int)$id)->update($data);
+        $request = Users::where('id', (int)$id)->update([
+                            'name' => $data['name'],
+                            'last_name' => $data['last_name'],
+                            'email' => $data['email'],
+                            'isAdmin' => $data['userAccess'],
+                        ]);
         
         if($request){
             $response = array('status'=>1, 'msg'=>'Created successfully');

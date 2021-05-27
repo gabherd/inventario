@@ -1,9 +1,10 @@
 //table of stock
 $(document).ready( function () {
-    google.charts.load('visualization', '1.0', {'packages':['corechart']});
-
+   // Load Charts and the corechart package.
     totalSales(getCookie("salesTotal"));
-    google.charts.setOnLoadCallback(drawChart(getCookie("salesTop"), getCookie("salesSummary")));
+    
+    google.charts.setOnLoadCallback(chartMoreSales(getCookie("salesTop")));
+    google.charts.setOnLoadCallback(chartSalesSummary(getCookie("salesSummary")));
 
     $('#tbl-emty-stock').DataTable({
       language: {
@@ -91,10 +92,9 @@ $(document).ready( function () {
 
 
 //----->Start charts
-  function drawChart(period, summary){
+  function chartMoreSales(period){
     //chart of product top sales
     $.get( "dashboard/sales/"+period, function( data ) {
-      
       var sales = [['Modelo', 'Venta']];
 
       var r = data.map(function(a){
@@ -108,14 +108,18 @@ $(document).ready( function () {
       chart.draw(data);
     });
     
+  }
+
+  function chartSalesSummary(summary){
     //chart summary sales
     $.get( "dashboard/sales-summary/"+summary, function( res ) {
       var sales = [['Dia', 'Ventas']];
       var days = [];
 
-      for(index in res){
-        sales.push([dayName(res[index].day), parseInt(res[index].sales)]);
-      }
+      for (var i = 0; i < res.length; i++) {
+        sales.push([dayName(res[i].day), parseInt(res[i].sales)]);
+        
+      };
 
       var data = google.visualization.arrayToDataTable(sales);
 
@@ -136,7 +140,6 @@ $(document).ready( function () {
     console.log(1)
       if (res) {
         var value = JSON.parse(res);
-
         $('#product-sales').text(value.total);
       }
     });
@@ -177,7 +180,7 @@ $('.period-sales-total').on('click', function(){
     $('#product-sales').text('...');
 
     document.cookie = "salesTotal="+period; 
-    
+    console.log(222)
     titleTotalSales();
     totalSales(period);
 });
@@ -189,7 +192,6 @@ $('.period-sales-top').on('click', function(){
     titleTopSales();
     chartMoreSales(period);
 
-    console.log($(this).parent().attr('id'));
 });
 
 $('.period-sales-summary').on('click', function(){

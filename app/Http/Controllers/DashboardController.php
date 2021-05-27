@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
     public function getSales($period){
         $date  = $this->getDays();
-
+        
         if ($period == 'week') {
             $query = "SELECT model.name, SUM(quantity) as sales FROM sale_detail JOIN products on sale_detail.id_products = products.id_products join model on products.id_model = model.id_model
                 WHERE date_exit  between '".$date['first_day']."' AND '".$date['last_day']."' 

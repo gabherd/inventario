@@ -93,4 +93,13 @@ class UserController extends Controller
             return  Response()->json($response);
         }
     }
+
+    public function branchRegistered(){
+        $branch = User::join('branch', 'users.id_branch', '=', 'branch.id_branch')
+                                      ->where('id', '=', Auth::user()->id)
+                                      ->select('branch.name')
+                                      ->get();
+
+        return $branch;
+    }
 }
