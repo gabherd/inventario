@@ -71,7 +71,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="piechart" style="width: 100%; height: 200px;"></div>
+					<div id="piechart" style="width: 90%; height: 200px;"></div>
 				</div>
 			</div>
 			<div class="col">
