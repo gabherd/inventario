@@ -15,7 +15,7 @@
 @endsection
 
 @section('table-products')
-	<table id="tbl-product-over" class="table table-bordered">
+	<table id="tbl-product-over" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
 		<thead class="thead-light">
 			<tr>
 				<th>Codigo</th>

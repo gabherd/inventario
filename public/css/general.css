@@ -3,9 +3,35 @@
 	--main-color-txt: #F1FC70;
 }
 
+html {
+  height: 100%;
+}
+
 body{
 	background: #DDDDDD;
-	font-family: arial;
+	font-family: "Public Sans", sans-serif;
+	font-size: 1.2rem;
+	min-height: 100%;
+}
+
+.main{
+	display: grid;
+	grid-template: "navbar navbar" 50px
+				   "sidebar page-container" auto /
+				   200px calc(100% - 200px);
+}
+
+.navbar{
+	grid-area: navbar;
+}
+
+.page-container{
+	grid-area: page-container;
+}
+
+
+.sidebar{
+	grid-area: sidebar;
 }
 
 .cursor{

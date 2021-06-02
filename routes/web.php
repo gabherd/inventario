@@ -2,45 +2,44 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', '\App\Http\Controllers\DashboardController@index')
-	->name('dashboard')->middleware('auth');
+#-------- inicio -vistas
+	Route::get('/', '\App\Http\Controllers\DashboardController@index')
+		->name('dashboard')->middleware('auth');
 
-Route::view("proveedores", 'providers')
-	->name('providers')->middleware('auth');
-	
+	Route::get('/zone', '\App\Http\Controllers\ProductController@zone')
+		->name('zone')->middleware('auth');
 
-Route::get('/zone', '\App\Http\Controllers\ProductController@zone')
-	->name('zone')->middleware('auth');
+	Route::get('/over', '\App\Http\Controllers\ProductController@over')
+		->name('over')->middleware('auth');
 
-Route::get('/over', '\App\Http\Controllers\ProductController@over')
-	->name('over')->middleware('auth');
+	Route::resource("usuarios", '\App\Http\Controllers\UsersController')
+		->names('users')->middleware('auth');
+
+#-------- fin -vistas
 
 
-# Usuarios registrados
-Route::resource("usuarios", '\App\Http\Controllers\UsersController')
-	->names('users')->middleware('auth');
+#-------- inicio -recursos
 
-# Productos de inventario
-Route::resource("productos", '\App\Http\Controllers\ProductController')
-	->names('products')->middleware('auth');
+	# Marcas
+	Route::resource('marca', '\App\Http\Controllers\BrandController')
+		->names('brands')->middleware('auth');
 
-# Marcas
-Route::resource('marca', '\App\Http\Controllers\BrandController')
-	->names('brands')->middleware('auth');
+	# Modelos
+	Route::resource('modelo', '\App\Http\Controllers\ModelController')
+		->names('models')->middleware('auth');
 
-# Modelos
-Route::resource('modelo', '\App\Http\Controllers\ModelController')
-	->names('models')->middleware('auth');
+	# Medidas
+	Route::resource('medida', '\App\Http\Controllers\MeasureController')
+		->names('measures')->middleware('auth');	
 
-# Medidas
-Route::resource('medida', '\App\Http\Controllers\MeasureController')
-	->names('measures')->middleware('auth');	
+	# Cuenta de usuario 
+	Route::resource('cuenta', '\App\Http\Controllers\UserController')
+		->names('account-settings')->middleware('auth');
 
-# Cuenta de usuario 
-Route::resource('cuenta', '\App\Http\Controllers\UserController')
-	->names('account-settings')->middleware('auth');
+#-------- fin -recursos
 
-#-----------------------------------consulta individuales---------------------------------------------------------------#
+
+#--------------- consulta individuales ---------------#
 // obtine lista de usuarios
 Route::get('registros/usuarios', '\App\Http\Controllers\UsersController@getUsers')
 	->name('user-list')->middleware('auth');
@@ -54,10 +53,6 @@ Route::put('password', '\App\Http\Controllers\UserController@changePassword')
 // obtine lista de productos
 Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getProducts')
 	->name('products')->middleware('auth');
-
-//obtiene lista de modelos por marca
-//Route::get('inventario/model/{marca}', '\App\Http\Controllers\ProductController@getModel')
-//	->name('model')->middleware('auth');
 
 //obtiene lista de medidas
 Route::get('inventario/measure', '\App\Http\Controllers\ProductController@getMeasure')
@@ -91,3 +86,6 @@ Route::get('dashboard/sales-summary/{period}', '\App\Http\Controllers\DashboardC
 
 
 
+
+#Route::view("proveedores", 'providers')
+#	->name('providers')->middleware('auth');

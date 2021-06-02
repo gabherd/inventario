@@ -8,7 +8,7 @@
 
 @section('buttons-actions')
 	<div style="margin: 25px 0">
-		@if(strtolower(getBranchName()) == 'zone')
+		@if(strtolower(getBranchName()) == 'zone of tires')
 			@include('products.partials.buttons')
 		@endif
 	</div>

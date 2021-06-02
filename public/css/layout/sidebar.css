@@ -1,0 +1,51 @@
+.sidebar{
+	grid-area: sidebar;
+	background: #222d32;
+	width: 200px;
+}
+
+.sidebar-content{
+	width: 100%;
+	position: relative;
+}
+
+.user-access{
+	color: #b8c7ce;
+	background: rgba(255, 255, 255, 0.1);
+	text-align: center;
+	padding: 10px;
+	margin: 5px 0;
+}
+
+.sidebar-menu{
+	display: flex;
+	color: #b8c7ce;
+	height: 50px;
+	position: relative;
+	align-items: center;
+	padding: 20px;
+}
+
+.url-active{
+	background: #303F9F;
+	width: 5px;
+	position: absolute; height: 100%
+}
+
+.menu-icon{
+	position: absolute;
+}
+
+.menu-title{
+	padding-left: 20px;
+}
+
+.sidebar-menu:hover{
+	text-decoration: none;
+	color: #E1E1E1;
+}
+
+.sidebar-menu:hover{
+	background: rgba(255, 255, 255, 0.1);
+}
+

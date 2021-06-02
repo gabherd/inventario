@@ -13,6 +13,9 @@
 	<!--Token-->
 	<meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}"> 
 	<link rel="stylesheet" href="css/products.css">
+	<!--Ratatable responsive-->
+	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
+	<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
 @endsection
 
 @section('content')

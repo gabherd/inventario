@@ -17,23 +17,20 @@
 		<!--Estilos personales-->
 		<link rel="stylesheet" href="css/general.css">
 		<link rel="stylesheet" href="css/layout/header.css">
-		<link rel="stylesheet" href="css/layout/nav-menu.css">
+		<link rel="stylesheet" href="css/layout/sidebar.css">
 		@yield('resources-page')
 	</head>
-	<body>
-		<!------------ header ------------>
-		@include('public.header')
+	<body class="main">
+			<!------------ header ------------>
+			@include('public.header')
 
-		<div style="display:table; position: relative; width: 100%; height: 100vh">
-			
 			<!------------ menu lateral ------------>
 			@include('public.sidebar')			
 
 			<!------------ contenido ------------>
-			<div class="page-container" style="padding: 5px; display: table-cell; position: relative;">
+			<div class="page-container" style="margin: 5px;">
 				@yield('content')	
 			</div>
-		</div>
 
 		<script type="text/javascript" src="js/layout/script.js"></script>
 		@yield('scripts')

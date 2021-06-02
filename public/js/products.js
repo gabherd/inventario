@@ -83,7 +83,7 @@ $(document).ready( function () {
         initComplete: function(settings){
             var api = new $.fn.dataTable.Api( settings );
          	//get branch esta en script.js
-            if (branch == 'zone') {
+            if (branch == 'zone of tires') {
             	api.columns([5]).visible(true);
             }else{
             	api.columns([5]).visible(false);
@@ -122,7 +122,7 @@ $(document).ready( function () {
 		]
 	}); //dataTable
 
-		$('#tbl-product-over').DataTable({
+	$('#tbl-product-over').DataTable({
 	    language: {
 	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 	    },

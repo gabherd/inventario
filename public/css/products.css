@@ -1,3 +1,6 @@
 #inp-number-sale-error{
 	display: none;
 }
+.btn-saleProduct, .btn-editProduct, .btn-deleteProduct{
+	margin: 5px;
+}
