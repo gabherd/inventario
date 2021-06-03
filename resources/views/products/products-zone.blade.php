@@ -24,7 +24,7 @@
 				<th>Modelo</th>
 				<th>Existencia</th>
 				<th>Precio</th>
-				@if(strtolower(getBranchName()) == 'zone')
+				@if(strtolower(getBranchName()) == 'zone of tires')
 					<th>Acciones</th>
 				@else
 					<th> </th>
@@ -37,7 +37,7 @@
 @endsection
 
 @section('modals')
-	@if(strtolower(getBranchName()) == 'zone')
+	@if(strtolower(getBranchName()) == 'zone of tires')
 		@include('products.partials.modals')
 	@endif
 @endsection
