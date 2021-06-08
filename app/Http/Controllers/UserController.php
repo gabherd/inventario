@@ -76,17 +76,17 @@ class UserController extends Controller
         ]);
 
         if(!Hash::check($request->current_password, Auth::user()->password)){
-            $response = array('status'=>0, 'msg'=>'Current password not match');
+            $response = array('status'=>'current_error', 'msg'=>'Current password not match');
             return  Response()->json($response);
         }
 
-        if (!Hash::check($request->new_password, $request->new_confirm_password)) {
-            $response = array('status'=>0, 'msg'=>'New passwods not match');
+        if (Hash::check($request->new_password, $request->new_confirm_password)) {
+            $response = array('status'=>'match_error', 'msg'=>'New passwods not match');
             return  Response()->json($response);
         }else{
             $user_id = Auth::User()->id;                       
             $obj_user = User::find($user_id);
-            $obj_user->password = Hash::make($request_data['password']);
+            $obj_user->password = Hash::make($request->current_password);
             $obj_user->save();
 
             $response = array('status'=>1, 'msg'=>'Password changed');

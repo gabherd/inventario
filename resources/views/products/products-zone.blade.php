@@ -42,8 +42,3 @@
 	@endif
 @endsection
 
-@section('script-branch')
-	@if(strtolower(getBranchName()) == 'zone of tires')
-		<script type="text/javascript" src="js/products-zone.js"></script>
-	@endif
-@endsection

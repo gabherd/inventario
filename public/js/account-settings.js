@@ -91,8 +91,8 @@ $("#btn-changePassword").on('click', function(){
 			dataType: "JSON",
 			data: $("#change-password").serialize()  + '&_method=' + "PUT",
 			success: function(res){
-				console.log(res);
-				if (res.status) {
+				if (res.status == 1) {
+				console.log(res.status);
 					Swal.fire({
 					  position: 'top-end',
 					  icon: 'success',
@@ -100,7 +100,22 @@ $("#btn-changePassword").on('click', function(){
 					  showConfirmButton: false,
 					  timer: 900
 					});
+
+					$('#mdl-user').modal('hide');
+					$("#change-password").trigger("reset");
+
+				}else if(res.status == 'current_error'){
+					Swal.fire({
+					  icon: 'warning',
+					  title: 'La contraseña actual no coincide',
+					});
+				}else if(res.status == 'match_error'){
+					Swal.fire({
+					  icon: 'warning',
+					  title: 'La contraseñas nuevas no coinciden',
+					});
 				}
+
 			},
 			error: function(xhr) {
 		        var errors = JSON.parse(xhr.responseText);
