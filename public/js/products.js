@@ -70,115 +70,6 @@ $(document).ready( function () {
 		}
 	});//validation
 
-	$('#tbl-product-zone').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: '/inventario/productos',
-                dataSrc: '',
-        },
-        initComplete: function(settings){
-            var api = new $.fn.dataTable.Api( settings );
-         	//get branch esta en script.js
-            if (branch == 'zone of tires') {
-            	api.columns([5]).visible(true);
-            }else{
-            	api.columns([5]).visible(false);
-            }
-        },
-		columns: [
-			{data: 'Measure'},
-		    {data: 'Brand'},
-		    {data: 'Model'},
-		    {data: 'Stock'},
-		    {data: 'Price'},
-		    {data: null,
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button "+
-		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-measure-product='"+data.Measure+"' "+
-			                   		"data-brand-product='"+data.Brand+"' "+
-			                   		"data-stock-product='"+data.Stock+"' "+
-			                   		"data-target='#mdl-sale'>Venta</button>" +
-			                   	"<button "+
-		                   			"class='btn btn-info btn-editProduct' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-target='#mdl-user'>Editar</button>" + 
-						   		"<button type='submit' id='"+data.id+"' "+
-						   			"class='btn btn-danger btn-deleteProduct' "+
-						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-id-product='"+data.id+"' "+
-						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
-						   	"</div>";
-                }
-            }
-		]
-	}); //dataTable
-
-	$('#tbl-product-over').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: '/inventario/productos',
-                dataSrc: '',
-        },
-        initComplete: function(settings){
-            var api = new $.fn.dataTable.Api( settings );
-         	//get branch esta en script.js
-            if (branch == 'over') {
-            	api.columns([10]).visible(true);
-            }else{
-            	api.columns([10]).visible(false);
-            }
-        },
-		columns: [
-			{data: 'Measure'},
-		    {data: 'Brand'},
-		    {data: 'Model'},
-		    {data: 'Stock'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: null,
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button "+
-		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-measure-product='"+data.Measure+"' "+
-			                   		"data-brand-product='"+data.Brand+"' "+
-			                   		"data-stock-product='"+data.Stock+"' "+
-			                   		"data-target='#mdl-sale'>Venta</button>" +
-			                   	"<button "+
-		                   			"class='btn btn-info btn-editProduct' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-target='#mdl-user'>Editar</button>" + 
-						   		"<button type='submit' id='"+data.id+"' "+
-						   			"class='btn btn-danger btn-deleteProduct' "+
-						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-id-product='"+data.id+"' "+
-						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
-						   	"</div>";
-                }
-            }
-		]
-	}); //dataTable
-
 	$('#tbl-brand').DataTable({
 	    language: {
 	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
@@ -274,7 +165,7 @@ $(document).ready( function () {
 		]
 	}); //dataTable
 
-
+  
 	$.ajax({
 		url: "marca",
 		success: function(res){
@@ -300,6 +191,115 @@ $(document).ready( function () {
 	});	
 });//documentReady
 
+$('#tbl-product-zone').DataTable({
+	    language: {
+	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+	    },
+	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+	    responsive: true,
+		ajax: {
+                url: '/inventario/productos-zone',
+                dataSrc: '',
+        },
+        initComplete: function(settings){
+            var api = new $.fn.dataTable.Api( settings );
+         	//get branch esta en script.js
+            if (branch == 'zone of tires') {
+            	api.columns([5]).visible(true);
+            }else{
+            	api.columns([5]).visible(false);
+            }
+        },
+		columns: [
+			{data: 'Measure'},
+		    {data: 'Brand'},
+		    {data: 'Model'},
+		    {data: 'Stock'},
+		    {data: 'Price'},
+		    {data: null,
+                render: function (data, type, row) {
+                	return "<div class='d-flex justify-content-around'>" +
+		                   		"<button "+
+		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-measure-product='"+data.Measure+"' "+
+			                   		"data-brand-product='"+data.Brand+"' "+
+			                   		"data-stock-product='"+data.Stock+"' "+
+			                   		"data-target='#mdl-sale'>Venta</button>" +
+			                   	"<button "+
+		                   			"class='btn btn-info btn-editProduct' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-target='#mdl-user'>Editar</button>" + 
+						   		"<button type='submit' id='"+data.id+"' "+
+						   			"class='btn btn-danger btn-deleteProduct' "+
+						   			"data-token='{{ csrf_token() }}' "+
+						   			"data-id-product='"+data.id+"' "+
+						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
+						   	"</div>";
+                }
+            }
+		]
+}); //dataTable
+
+$('#tbl-product-over').DataTable({
+	    language: {
+	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+	    },
+	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+	    responsive: true,
+		ajax: {
+                url: '/inventario/productos-over',
+                dataSrc: '',
+        },
+        initComplete: function(settings){
+            var api = new $.fn.dataTable.Api( settings );
+         	//get branch esta en script.js
+            if (branch == 'over') {
+            	api.columns([10]).visible(true);
+            }else{
+            	api.columns([10]).visible(false);
+            }
+        },
+		columns: [
+			{data: 'Measure'},
+		    {data: 'Brand'},
+		    {data: 'Model'},
+		    {data: 'Stock'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: 'Price'},
+		    {data: null,
+                render: function (data, type, row) {
+                	return "<div class='d-flex justify-content-around'>" +
+		                   		"<button "+
+		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-measure-product='"+data.Measure+"' "+
+			                   		"data-brand-product='"+data.Brand+"' "+
+			                   		"data-stock-product='"+data.Stock+"' "+
+			                   		"data-target='#mdl-sale'>Venta</button>" +
+			                   	"<button "+
+		                   			"class='btn btn-info btn-editProduct' "+
+			                   		"data-toggle='modal' "+
+			                   		"data-id-product='"+data.id+"' "+
+			                   		"data-target='#mdl-user'>Editar</button>" + 
+						   		"<button type='submit' id='"+data.id+"' "+
+						   			"class='btn btn-danger btn-deleteProduct' "+
+						   			"data-token='{{ csrf_token() }}' "+
+						   			"data-id-product='"+data.id+"' "+
+						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
+						   	"</div>";
+                }
+            }
+		]
+}); //dataTable
+
 
 //------------------- Product -------------------------------
 	$("#btn-save-product").on('click', function(){
@@ -324,60 +324,8 @@ $(document).ready( function () {
 	});
 
 
-	$("#tbl-product").delegate('.btn-deleteProduct', 'click', function(){
-		var id = $(this).attr('data-id-product');
-		var itemName = $(this).attr('data-name');
-		console.log(itemName)
-		deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product');
-		
-	});
 
-	$("#tbl-product").delegate('.btn-editProduct', 'click', function(){
-		openModalUpdate('product', 'producto');
-		
-		var id = $(this).attr('data-id-product');
-		$(".content-loading").css('display', 'block');
-		$("#mdl-save-product").modal('show');
-		$("#btn-save-product").attr('data-id', id);
 
-		$.ajax({
-			url: "productos/"+id,
-			success: function(res){
-				var res = res[0];
-				console.log(res)
-				$("#create-product").trigger("reset");
-				
-				$("option:selected").removeAttr("selected");
-
-				$("#inp-brand option[value='"+res.idBrand+"']").attr('selected', true);
-				$("#inp-measure option[value='"+res.idMeasure+"']").attr('selected', true);
-
-				$.ajax({
-					url: "modelo/"+res.idBrand,
-					success: function(response){
-						var selected = "";
-						
-
-						for(item in response){
-							console.log(response[item].id + " - " + res.idModel);
-							if (response[item].id == res.idModel) {
-								selected = 'selected';
-							}else{
-								selected = '';
-							}
-
-							$("#inp-model").append('<option value="'+response[item].id+'" id="inp-Measure" '+ selected +'>'+response[item].name+'</option>');
-						}
-
-						$(".content-loading").css('display', 'none');
-					}
-				});
-
-				$("#inp-price").val(res.price);
-				$("#inp-stock").val(res.stock);
-			}
-		});
-	});
 
 	$('#inp-brand').on('change', function(e){
 		var model = this.value;
@@ -518,22 +466,7 @@ $(document).ready( function () {
 //-------------------end Measure-------------------------------
 
 //------------------- Sale-------------------------------
-	$("#tbl-product").delegate('.btn-saleProduct', 'click', function(){
-		var id      = $(this).attr('data-id-product');
-		var measure = $(this).attr('data-measure-product');
-		var brand   = $(this).attr('data-brand-product');
-		var stock   = $(this).attr('data-stock-product');
 
-		//add id button to save
-		$("#btn-save-sale").attr('data-id-product', id);
-
-		$("#inp-sale-measure").val(measure);
-		$("#inp-sale-brand").val(brand);
-		$("#inp-sale-stock").val(stock);
-
-		$("#create-sale").validate().resetForm();
-		$('#mdl-sale').modal('hide');
-	});
 
 	$("#inp-number-sale").on('keyup', function(){
 		var stock = $("#inp-sale-stock").val();
@@ -546,41 +479,7 @@ $(document).ready( function () {
 		}
 	});
 
-	$("#btn-save-sale").on('click', function(){
-		var qtySale = $("#inp-number-sale").val();
-		var id = $(this).attr('data-id-product');
 
-		$("#submit-sale").click();
-
-		$.ajax({
-			url: "/sale/"+id,
-			type: 'PUT', 
-			dataType: "JSON",
-			data: $("#create-sale").serialize()  + '&_method=' + "PUT",
-			success: function(res){
-				console.log(res);
-				if (res.status) {
-					$(".content-loading").css('display', 'none');
-					
-					Swal.fire({
-					  position: 'center',
-					  icon: 'success',
-					  title: 'Venta realizada',
-					  showConfirmButton: false,
-					  timer: 900
-					});
-
-					$('#mdl-sale').modal('hide');
-					$("#create-sale").trigger("reset");
-					$('#tbl-product').DataTable().ajax.reload();
-				}
-			},
-			error: function(xhr) {
-		        var errors = JSON.parse(xhr.responseText);
-		        console.log(errors)
-		    }
-		});	
-	});
 //-------------------end Sale-------------------------------
 
 

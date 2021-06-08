@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Route;
 	Route::get('/', '\App\Http\Controllers\DashboardController@index')
 		->name('dashboard')->middleware('auth');
 
-	Route::get('/zone', '\App\Http\Controllers\ProductController@zone')
+	Route::get('/zone', '\App\Http\Controllers\ProductController@index')
 		->name('zone')->middleware('auth');
 
-	Route::get('/over', '\App\Http\Controllers\ProductController@over')
+	Route::get('/over', '\App\Http\Controllers\ProductOverController@index')
 		->name('over')->middleware('auth');
 
 	Route::resource("usuarios", '\App\Http\Controllers\UsersController')
@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 
 #-------- inicio -recursos
+	# Productos
+	Route::resource("productos", '\App\Http\Controllers\ProductController')
+		->names('products')->middleware('auth');
 
 	# Marcas
 	Route::resource('marca', '\App\Http\Controllers\BrandController')
@@ -51,7 +54,11 @@ Route::put('password', '\App\Http\Controllers\UserController@changePassword')
 //--------------PRODUCTS--------------
 
 // obtine lista de productos
-Route::get('inventario/productos', '\App\Http\Controllers\ProductController@getProducts')
+Route::get('inventario/productos-zone', '\App\Http\Controllers\ProductController@getProducts')
+	->name('products')->middleware('auth');
+
+// obtine lista de productos
+Route::get('inventario/productos-over', '\App\Http\Controllers\ProductOverController@getProducts')
 	->name('products')->middleware('auth');
 
 //obtiene lista de medidas

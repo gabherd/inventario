@@ -35,5 +35,11 @@
 
 @section('scripts')
 	<script type="text/javascript" src="js/products.js"></script>
+	
+	@yield('script-branch')
+
 @endsection
+	
+
+
 																														

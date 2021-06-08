@@ -7,16 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 
-class ProductController extends Controller
+class ProductOverController extends Controller
 {
-    
     public function index(){
-        return view('products/products-zone');
+        return view('products/products-over');
     }
 
     public function getProducts(){
-        $query = 'SELECT products.id_products AS id, measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price, branch.id_branch FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand JOIN branch ON branch.id_branch = products.id_branch WHERE branch.id_branch = 1';
-            
+        $query = 'SELECT products.id_products AS id, measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price, branch.id_branch FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand JOIN branch ON branch.id_branch = products.id_branch WHERE branch.id_branch = 2';
+
         $product = DB::select($query);
         return $product;
     }

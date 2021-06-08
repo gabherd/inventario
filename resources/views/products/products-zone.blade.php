@@ -16,7 +16,7 @@
 
 
 @section('table-products')
-	<table id="tbl-product-zone" class="table table-bordered">
+	<table id="tbl-product-zone" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
 		<thead class="thead-light">
 			<tr>
 				<th>Medida</th>
@@ -39,5 +39,11 @@
 @section('modals')
 	@if(strtolower(getBranchName()) == 'zone of tires')
 		@include('products.partials.modals')
+	@endif
+@endsection
+
+@section('script-branch')
+	@if(strtolower(getBranchName()) == 'zone of tires')
+		<script type="text/javascript" src="js/products-zone.js"></script>
 	@endif
 @endsection

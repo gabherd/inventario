@@ -45,3 +45,11 @@
 		@include('products.partials.modals')
 	@endif
 @endsection
+
+@section('script-branch')
+	@if(strtolower(getBranchName()) == 'over')
+		<script type="text/javascript" src="js/products-over.js"></script>
+	@endif
+@endsection
+
+
