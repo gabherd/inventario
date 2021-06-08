@@ -1,5 +1,5 @@
 $(document).ready( function () {
-	$("#create-product").validate({
+	$("#create-product-zone").validate({
 		rules: {
 			'measure':{ required: true },
 			'model':  { required: true },
@@ -244,50 +244,17 @@ $('#tbl-product-over').DataTable({
                 url: '/inventario/productos-over',
                 dataSrc: '',
         },
-        initComplete: function(settings){
-            var api = new $.fn.dataTable.Api( settings );
-         	//get branch esta en script.js
-            if (branch == 'over') {
-            	api.columns([10]).visible(true);
-            }else{
-            	api.columns([10]).visible(false);
-            }
-        },
 		columns: [
-			{data: 'Measure'},
-		    {data: 'Brand'},
-		    {data: 'Model'},
-		    {data: 'Stock'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: 'Price'},
-		    {data: null,
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button "+
-		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-measure-product='"+data.Measure+"' "+
-			                   		"data-brand-product='"+data.Brand+"' "+
-			                   		"data-stock-product='"+data.Stock+"' "+
-			                   		"data-target='#mdl-sale'>Venta</button>" +
-			                   	"<button "+
-		                   			"class='btn btn-info btn-editProduct' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-target='#mdl-user'>Editar</button>" + 
-						   		"<button type='submit' id='"+data.id+"' "+
-						   			"class='btn btn-danger btn-deleteProduct' "+
-						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-id-product='"+data.id+"' "+
-						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
-						   	"</div>";
-                }
-            }
+			{data: 'code'},
+			{data: 'measure'},
+		    {data: 'brand'},
+		    {data: 'model'},
+		    {data: 'separate'},
+		    {data: 'stock'},
+		    {data: 'price'},
+		    {data: 'price_distribuitor'},
+		    {data: 'price_top'},
+		    {data: 'promotion'},
 		]
 }); //dataTable
 
@@ -329,8 +296,21 @@ $('#tbl-product-over').DataTable({
 	$("#tbl-product-zone").delegate('.btn-deleteProduct', 'click', function(){
 		var id = $(this).attr('data-id-product');
 		var itemName = $(this).attr('data-name');
-		console.log(itemName)
-		deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product-zone');
+
+		Swal.fire({
+			title: '¿Continuar?',
+			text: "Si eliminas este producto esliminaras tambien las ventas realizadas",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  	if (result.isConfirmed) {
+				deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product-zone');
+		  	}
+		});
 	});
 
 	$("#tbl-product-zone").delegate('.btn-editProduct', 'click', function(){
@@ -345,7 +325,7 @@ $('#tbl-product-over').DataTable({
 			url: "productos/"+id,
 			success: function(res){
 				var res = res[0];
-				$("#create-product").trigger("reset");
+				$("#create-product-zone").trigger("reset");
 				
 				$("option:selected").removeAttr("selected");
 
@@ -404,13 +384,13 @@ $('#tbl-product-over').DataTable({
 		if ($(this).attr("data-submit") == "create"){
 			ajaxSave('product-zone', 'productos', 'Producto guardado');
 		}else{
-			ajaxUpdate('product', 'productos', 'Producto actualizado');
+			ajaxUpdate('product-zone', 'productos', 'Producto actualizado');
 
 		}
 	});
 
 	$("#open-modal-saveProduct").on('click', function(){
-		openModalSave('product', 'producto');
+		openModalSave('product-zone', 'producto');
 
 		$("option:selected").removeAttr("selected");
 
@@ -696,8 +676,6 @@ function deleteItem(id, itemName, url, swalTitle, table){
 			    console.log('I was closed by the timer')
 			  }
 			});
-
-
 	  	}
 	});
 }

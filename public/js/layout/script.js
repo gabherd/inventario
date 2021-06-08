@@ -1,21 +1,5 @@
 var branch = '';
 
-$(document).ready(function(){
-	getBranch();
-});
-
-function getBranch(){
-	$.ajax({
-		url: "/branch",
-		success: function(res){
-			let name =  res[0].name;
-			branch = name.toLowerCase();
-		}
-	});
-}
-
-
-
 $('body').click(function(e){
 	if ($(e.target).is('#img-user')) {
 		$('.box-conf_account').toggle();

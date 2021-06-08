@@ -137,10 +137,13 @@ $(document).ready( function () {
   //get total sales
   function totalSales(period){
     $.get( "dashboard/sales-products/"+period, function( res ) {
-    console.log(1)
       if (res) {
         var value = JSON.parse(res);
-        $('#product-sales').text(value.total);
+        if (value.total != undefined) {
+          $('#product-sales').text(value.total);
+        }else{
+          $('#product-sales').text(0);
+        };
       }
     });
   }

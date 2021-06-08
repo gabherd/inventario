@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 	Route::get('/zone', '\App\Http\Controllers\ProductController@index')
 		->name('zone')->middleware('auth');
 
-	Route::get('/over', '\App\Http\Controllers\ProductOverController@index')
+	Route::get('/over', '\App\Http\Controllers\ProductController@ProductsOver')
 		->name('over')->middleware('auth');
 
 	Route::resource("usuarios", '\App\Http\Controllers\UsersController')
@@ -58,7 +58,7 @@ Route::get('inventario/productos-zone', '\App\Http\Controllers\ProductController
 	->name('products')->middleware('auth');
 
 // obtine lista de productos
-Route::get('inventario/productos-over', '\App\Http\Controllers\ProductOverController@getProducts')
+Route::get('inventario/productos-over', '\App\Http\Controllers\ProductController@getProductsOver')
 	->name('products')->middleware('auth');
 
 //obtiene lista de medidas
@@ -85,13 +85,6 @@ Route::get('dashboard/sales-products/{period}', '\App\Http\Controllers\Dashboard
 // obtiene un resumen de ventas
 Route::get('dashboard/sales-summary/{period}', '\App\Http\Controllers\DashboardController@salesSummary')
 	->name('sales-summary')->middleware('auth');
-
-// obtiene nombre de sucursal registrado
-	Route::get('branch', '\App\Http\Controllers\UserController@branchRegistered')
-	->name('branch')->middleware('auth');
-
-
-
 
 
 #Route::view("proveedores", 'providers')

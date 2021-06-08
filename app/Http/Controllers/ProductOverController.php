@@ -14,7 +14,7 @@ class ProductOverController extends Controller
     }
 
     public function getProducts(){
-        $query = 'SELECT products.id_products AS id, measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price, branch.id_branch FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand JOIN branch ON branch.id_branch = products.id_branch WHERE branch.id_branch = 2';
+        $query = 'SELECT products.id_products AS id, measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand';
 
         $product = DB::select($query);
         return $product;
