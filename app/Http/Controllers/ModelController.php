@@ -68,13 +68,26 @@ class ModelController extends Controller
 
     public function destroy($id)
     {
-        $query = DB::table('model')->where('id_model', $id)->delete(); 
+        $product = DB::table('products')
+                    ->join('model', 'model.id_model', '=', 'products.id_model')
+                    ->select('products.id_products AS idProduct') 
+                    ->where('products.id_model', '=', $id)
+                    ->get();
 
-        if($query){
-            $response = array('status' => 1, 'msg'=>'Deleted');
+        if(count($product) == 0){
+            $query = DB::table('model')->where('id_model', $id)->delete(); 
+
+            if($query){
+                $response = array('status' => 1, 'msg'=>'Deleted');
+            }else{
+                $response = array('status' => 0, 'msg'=>'Data not deleted');
+            }
         }else{
-            $response = array('status' => 0, 'msg'=>'Data not deleted');
+            $response = array('status' => 409, 'msg'=>'Fail, foreign key reference');
         }
+
+
+
         
         return Response()->json($response);  
     }

@@ -23,8 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
-        //
+        RateLimiter::for("login", function () {
+            Limit::perMinute(5);
+        });
     }
 }

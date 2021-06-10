@@ -52,12 +52,23 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        $query = DB::table('brand')->where('id_brand', $id)->delete(); 
 
-        if($query){
-            $response = array('status' => 1, 'msg'=>'Deleted');
+        $product = DB::table('model')
+                    ->join('brand', 'model.id_brand', '=', 'brand.id_brand')
+                    ->select('model.id_brand AS idBrand') 
+                    ->where('model.id_brand', '=', $id)
+                    ->get();
+
+        if(count($product) == 0){
+            $query = DB::table('brand')->where('id_brand', $id)->delete(); 
+
+            if($query){
+                $response = array('status' => 1, 'msg'=>'Deleted');
+            }else{
+                $response = array('status' => 0, 'msg'=>'Fail');
+            }
         }else{
-            $response = array('status' => 0, 'msg'=>'Fail');
+            $response = array('status' => 409, 'msg'=>'Fail, foreign key reference');
         }
         
         return Response()->json($response);  

@@ -165,30 +165,6 @@ $(document).ready( function () {
 		]
 	}); //dataTable
 
-  
-	$.ajax({
-		url: "marca",
-		success: function(res){
-			//lista agregar producto
-			for(item in res){
-				$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
-			}
-			
-			//lista agregar modelo
-			for(item in res){
-				$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-			}
-		}
-	});	
-		
-	$.ajax({
-		url: "inventario/measure",
-		success: function(res){
-			for(item in res){
-				$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
-			}
-		}
-	});	
 });//documentReady
 
 $('#tbl-product-zone').DataTable({
@@ -258,6 +234,22 @@ $('#tbl-product-over').DataTable({
 		]
 }); //dataTable
 
+$('#btn-model').on('click', function(){
+	$("#model-name-brand").append('<option value="0">Cargando...</option>');
+
+	$.ajax({
+		url: "marca",
+		success: function(res){
+			$("#model-name-brand").empty();
+
+			//lista agregar modelo
+			for(item in res){
+				$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+			}
+		}
+	});	
+});
+
 	$("#btn-save-sale").on('click', function(){
 		var qtySale = $("#inp-number-sale").val();
 		var id = $(this).attr('data-id-product');
@@ -308,7 +300,7 @@ $('#tbl-product-over').DataTable({
 			cancelButtonText: 'Cancelar'
 		}).then((result) => {
 		  	if (result.isConfirmed) {
-				deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product-zone');
+				deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product-zone', '');
 		  	}
 		});
 	});
@@ -390,6 +382,31 @@ $('#tbl-product-over').DataTable({
 	});
 
 	$("#open-modal-saveProduct").on('click', function(){
+		$("#inp-brand").append('<option>Cargando</option>');
+
+		$.ajax({
+			url: "marca",
+			success: function(res){
+				$("#inp-brand").empty();
+				//lista agregar producto
+				for(item in res){
+					$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
+				}
+			}
+		});	
+
+		$("#inp-measure").append('<option>Cargando...</option>');
+			
+		$.ajax({
+			url: "inventario/measure",
+			success: function(res){
+				$("#inp-measure").empty();
+				for(item in res){
+					$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
+				}
+			}
+		});	
+
 		openModalSave('product-zone', 'producto');
 
 		$("option:selected").removeAttr("selected");
@@ -452,7 +469,7 @@ $('#tbl-product-over').DataTable({
 		var id = $(this).attr('data-id-brand');
 		var itemName = $(this).attr('data-name');
 		
-		deleteItem(id, itemName, 'marca', 'Marca eliminada', '#tbl-brand');
+		deleteItem(id, itemName, 'marca', 'Marca eliminada', '#tbl-brand', 'No se puede eliminar esta marca, primero elimina el modelo que usa esta marca');
 
 	});
 //-------------------end brand-------------------------------
@@ -500,7 +517,7 @@ $('#tbl-product-over').DataTable({
 		var id = $(this).attr('data-id-model');
 		var itemName = $(this).attr('data-name');
 		
-		deleteItem(id, itemName, 'modelo', 'Modelo eliminado', '#tbl-model');
+		deleteItem(id, itemName, 'modelo', 'Modelo eliminado', '#tbl-model', 'No se puede eliminar este modelo, primero elimina el producto que usa este modelo');
 
 	});
 //-------------------end model-------------------------------
@@ -535,7 +552,7 @@ $('#tbl-product-over').DataTable({
 		var id = $(this).attr('data-id-measure');
 		var itemName = $(this).attr('data-name');
 
-		deleteItem(id, itemName, 'medida', 'Medida eliminada', '#tbl-measure');
+		deleteItem(id, itemName, 'medida', 'Medida eliminada', '#tbl-measure', 'No se puede eliminar esta medida, primero elimina el producto que usa esta medida');
 		
 	});
 //-------------------end Measure-------------------------------
@@ -621,7 +638,7 @@ function ajaxUpdate(name, url, swalTitle){
 	});	
 }
 
-function deleteItem(id, itemName, url, swalTitle, table){
+function deleteItem(id, itemName, url, swalTitle, table, erorrMessage){
 	Swal.fire({
 		title: '¿Estas seguro?',
 		text: "Eliminar " + itemName,
@@ -654,7 +671,7 @@ function deleteItem(id, itemName, url, swalTitle, table){
 					 		"_method": 'DELETE', 
 					},
 					success: function(res){
-						if (res.status) {
+						if (res.status == 1) {
 							Swal.close();
 
 							Swal.fire({
@@ -666,6 +683,20 @@ function deleteItem(id, itemName, url, swalTitle, table){
 							});
 
 							$(table).DataTable().ajax.reload();
+						}else if (res.status == 409){
+							Swal.fire({
+								position: 'center',
+								icon: 'warning',
+								title: 'Error',
+								text: erorrMessage
+							});
+						}else{
+							Swal.fire({
+								position: 'center',
+								icon: 'warning',
+								title: 'Error',
+								text: 'Ocurrio un problema, recarga la pagina'
+							});
 						}
 					}
 				});	
