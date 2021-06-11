@@ -55,7 +55,7 @@ Route::put('password', '\App\Http\Controllers\UserController@changePassword')
 
 // obtine lista de productos
 Route::get('inventario/productos-zone', '\App\Http\Controllers\ProductController@getProducts')
-	->name('products')->middleware('auth');
+	->name('products')->middleware('cors');
 
 // obtine lista de productos
 Route::get('inventario/productos-over', '\App\Http\Controllers\ProductController@getProductsOver')
