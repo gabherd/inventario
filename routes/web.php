@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 		->name('zone')->middleware('auth');
 
 	Route::get('/over', function(){
-        return view('products/products-zone');
+        return view('products/products-over');
 	})->name('over')->middleware('auth');
 
 	Route::resource("usuarios", '\App\Http\Controllers\UsersController')

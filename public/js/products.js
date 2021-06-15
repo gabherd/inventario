@@ -174,7 +174,7 @@ $('#tbl-product-zone').DataTable({
 	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 	    responsive: true,
 		ajax: {
-                url: '/inventario/productos-zone',
+                url: '/inventario/productos',
                 dataSrc: '',
         },
 		columns: [
