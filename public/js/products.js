@@ -165,9 +165,7 @@ $(document).ready( function () {
 		]
 	}); //dataTable
 
-});//documentReady
-
-$('#tbl-product-zone').DataTable({
+	$('#tbl-product-zone').DataTable({
 	    language: {
 	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 	    },
@@ -205,50 +203,52 @@ $('#tbl-product-zone').DataTable({
 						   			"data-id-product='"+data.id+"' "+
 						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
 						   	"</div>";
-                }
-            }
-		]
-}); //dataTable
+	                }
+	            }
+			]
+	}); //dataTable
 
-$('#tbl-product-over').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: 'http://inventario-oversa.ml/inventario/productos',
-                dataSrc: '',
-        },
-		columns: [
-			{data: 'code'},
-			{data: 'measure'},
-		    {data: 'brand'},
-		    {data: 'model'},
-		    {data: 'separate'},
-		    {data: 'stock'},
-		    {data: 'price'},
-		    {data: 'price_distribuitor'},
-		    {data: 'price_top'},
-		    {data: 'promotion'},
-		]
-}); //dataTable
+	$('#tbl-product-over').DataTable({
+		    language: {
+		        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+		    },
+		    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+		    responsive: true,
+			ajax: {
+	                url: 'http://inventario-oversa.ml/inventario/productos',
+	                dataSrc: '',
+	        },
+			columns: [
+				{data: 'code'},
+				{data: 'measure'},
+			    {data: 'brand'},
+			    {data: 'model'},
+			    {data: 'separate'},
+			    {data: 'stock'},
+			    {data: 'price'},
+			    {data: 'price_distribuitor'},
+			    {data: 'price_top'},
+			    {data: 'promotion'},
+			]
+	}); //dataTable
 
-$('#btn-model').on('click', function(){
-	$("#model-name-brand").append('<option value="0">Cargando...</option>');
+});//documentReady
 
-	$.ajax({
-		url: "marca",
-		success: function(res){
-			$("#model-name-brand").empty();
+	$('#btn-model').on('click', function(){
+		$("#model-name-brand").append('<option value="0">Cargando...</option>');
 
-			//lista agregar modelo
-			for(item in res){
-				$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+		$.ajax({
+			url: "marca",
+			success: function(res){
+				$("#model-name-brand").empty();
+
+				//lista agregar modelo
+				for(item in res){
+					$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+				}
 			}
-		}
-	});	
-});
+		});	
+	});
 
 	$("#btn-save-sale").on('click', function(){
 		var qtySale = $("#inp-number-sale").val();
@@ -310,7 +310,7 @@ $('#btn-model').on('click', function(){
 		
 		var id = $(this).attr('data-id-product');
 		$(".content-loading").css('display', 'block');
-		$("#mdl-save-product").modal('show');
+		$("#mdl-save-product-zone").modal('show');
 		$("#btn-save-product").attr('data-id', id);
 
 		$.ajax({
@@ -320,7 +320,7 @@ $('#btn-model').on('click', function(){
 				$("#create-product-zone").trigger("reset");
 				
 				$("option:selected").removeAttr("selected");
-
+				console.log(res)
 				$("#inp-brand option[value='"+res.idBrand+"']").attr('selected', true);
 				$("#inp-measure option[value='"+res.idMeasure+"']").attr('selected', true);
 
@@ -382,12 +382,12 @@ $('#btn-model').on('click', function(){
 	});
 
 	$("#open-modal-saveProduct").on('click', function(){
-		$("#inp-brand").append('<option>Cargando</option>');
 
 		$.ajax({
 			url: "marca",
 			success: function(res){
 				$("#inp-brand").empty();
+				$("#inp-brand").append('<option selected...>Selecciona una opcion...</option>');
 				//lista agregar producto
 				for(item in res){
 					$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
@@ -395,12 +395,12 @@ $('#btn-model').on('click', function(){
 			}
 		});	
 
-		$("#inp-measure").append('<option>Cargando...</option>');
 			
 		$.ajax({
 			url: "inventario/measure",
 			success: function(res){
 				$("#inp-measure").empty();
+				$("#inp-measure").append('<option selected...>Selecciona una opcion...</option>');
 				for(item in res){
 					$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
 				}
@@ -414,10 +414,6 @@ $('#btn-model').on('click', function(){
 		$("#inp-model").empty();
 		$("#inp-model").append('<option value="0">Selecciona una opcion...</option>');
 	});
-
-
-
-
 
 	$('#inp-brand').on('change', function(e){
 		var model = this.value;
@@ -558,7 +554,6 @@ $('#btn-model').on('click', function(){
 //-------------------end Measure-------------------------------
 
 //------------------- Sale-------------------------------
-
 
 	$("#inp-number-sale").on('keyup', function(){
 		var stock = $("#inp-sale-stock").val();
