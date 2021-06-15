@@ -14,24 +14,12 @@ class ProductController extends Controller
         return view('products/products-zone');
     }
 
-    public function ProductsOver(){
-        return view('products/products-over');
-    }
-
     public function getProducts(){
         $query = 'SELECT products.id_products AS id, measure.number AS Measure, brand.name AS Brand, model.name AS Model, Stock, Sale, Price FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand';
             
         $product = DB::select($query);
         return $product;
     }
-
-    public function getProductsOver(){
-        $query = 'SELECT products.id_products AS id, products.code_product AS code, products.separate AS separate, products.availability AS availability, products.price AS price, products.price_distribuitor AS price_distribuitor, products.price_distribuitorTop AS price_top, products.promotion AS promotion, measure.number AS measure, brand.name AS brand, model.name AS model, stock, sale, price FROM products JOIN measure on measure.id_measure = products.id_measure JOIN model ON model.id_model = products.id_model JOIN brand ON brand.id_brand = model.id_brand';
-            
-        $product = DB::select($query);
-        return $product;
-    }
-
 
     public function getMeasure(){
         $measure = DB::table('measure')

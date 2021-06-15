@@ -217,7 +217,7 @@ $('#tbl-product-over').DataTable({
 	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 	    responsive: true,
 		ajax: {
-                url: '/inventario/productos-over',
+                url: 'http://inventario-oversa.ml/inventario/productos',
                 dataSrc: '',
         },
 		columns: [
