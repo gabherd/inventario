@@ -184,30 +184,7 @@ $(document).ready( function () {
 			    {data: 'Model'},
 			    {data: 'Stock'},
 			    {data: 'Price'},
-			    {data: null,
-	                render: function (data, type, row) {
-	                	return "<div class='d-flex justify-content-around'>" +
-			                   		"<button "+
-			                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
-				                   		"data-toggle='modal' "+
-				                   		"data-id-product='"+data.id+"' "+
-				                   		"data-measure-product='"+data.Measure+"' "+
-				                   		"data-brand-product='"+data.Brand+"' "+
-				                   		"data-stock-product='"+data.Stock+"' "+
-				                   		"data-target='#mdl-sale'>Venta</button>" +
-				                   	"<button "+
-			                   			"class='btn btn-info btn-editProduct' "+
-				                   		"data-toggle='modal' "+
-				                   		"data-id-product='"+data.id+"' "+
-				                   		"data-target='#mdl-user'>Editar</button>" + 
-							   		"<button type='submit' id='"+data.id+"' "+
-							   			"class='btn btn-danger btn-deleteProduct' "+
-							   			"data-token='{{ csrf_token() }}' "+
-							   			"data-id-product='"+data.id+"' "+
-							   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
-							   	"</div>";
-		                }
-		            }
+
 				]
 		}); //dataTable
 
@@ -232,6 +209,30 @@ $(document).ready( function () {
 				    {data: 'price_distribuitor'},
 				    {data: 'price_top'},
 				    {data: 'promotion'},
+				    {data: null,
+	                	render: function (data, type, row) {
+	                		return "<div class='d-flex justify-content-around'>" +
+			                   		"<button "+
+			                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
+				                   		"data-toggle='modal' "+
+				                   		"data-id-product='"+data.id+"' "+
+				                   		"data-measure-product='"+data.Measure+"' "+
+				                   		"data-brand-product='"+data.Brand+"' "+
+				                   		"data-stock-product='"+data.Stock+"' "+
+				                   		"data-target='#mdl-sale'>Venta</button>" +
+				                   	"<button "+
+			                   			"class='btn btn-info btn-editProduct' "+
+				                   		"data-toggle='modal' "+
+				                   		"data-id-product='"+data.id+"' "+
+				                   		"data-target='#mdl-user'>Editar</button>" + 
+							   		"<button type='submit' id='"+data.id+"' "+
+							   			"class='btn btn-danger btn-deleteProduct' "+
+							   			"data-token='{{ csrf_token() }}' "+
+							   			"data-id-product='"+data.id+"' "+
+							   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
+							   	"</div>";
+		                }
+		            }
 				]
 		}); //dataTable
 	//end Datatables

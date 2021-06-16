@@ -24,7 +24,14 @@
 		<div style="color: #A1A1A1"> 
 			Productos en inventario <b>Oversa</b>
 		</div>
-		<div style="margin: 25px 0"></div>
+		<div style="margin: 25px 0">
+			<button id="open-modal-save-product" type="button" data-toggle="modal" data-target="#mdl-save-product-zone" class="btn btn-add">
+				<i class="zmdi zmdi-plus"></i>Agregar producto 
+			</button>
+			<button class="btn btn-secondary float-right" data-toggle="modal" data-target="#mdl-measure"> Medidas </button>
+			<button id="btn-model" class="btn btn-secondary float-right mx-1" data-toggle="modal" data-target="#mdl-model"> Modelos </button>
+			<button class="btn btn-secondary float-right" data-toggle="modal" data-target="#mdl-brand"> Marcas </button>
+		</div>
 
 		<table id="tbl-product-over" class="table table-bordered display responsive nowrap" cellspacing="0" width="100%">
 			<thead class="thead-light">
@@ -39,6 +46,7 @@
 					<th>Precio distribuidor</th>
 					<th>Precio distribuidor top</th>
 					<th>Promocion</th>
+					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>

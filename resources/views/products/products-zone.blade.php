@@ -36,7 +36,6 @@
 					<th>Modelo</th>
 					<th>Existencia</th>
 					<th>Precio</th>
-					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
