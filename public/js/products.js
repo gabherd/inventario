@@ -343,9 +343,7 @@ $(document).ready( function () {
 		var id = $(this).attr('data-id-product');
 		$(".content-loading").css('display', 'block');
 		$("#mdl-save-product-zone").modal('show');
-		$("#btn-save-product").attr('data-id', id);
-
-
+		$("#btn-save-product-zone").attr('data-id', id);
 
 		$.ajax({
 			url: "productos/"+id,
@@ -401,14 +399,13 @@ $(document).ready( function () {
 		$('#mdl-sale').modal('hide');
 	});
 
-	$("#btn-save-product").on('click', function(){
+	$("#btn-save-product-zone").on('click', function(){
 		$("#submit-product").click();
 
 		if ($(this).attr("data-submit") == "create"){
 			ajaxSave('product-zone', 'productos', 'Producto guardado');
 		}else{
 			ajaxUpdate('product-zone', 'productos', 'Producto actualizado');
-
 		}
 	});
 
@@ -629,8 +626,7 @@ function ajaxSave(name, url, swalTitle){
 function ajaxUpdate(name, url, swalTitle){
 	var id = $("#btn-save-"+name).attr("data-id");
 	$(".content-loading").css('display', 'block');
-		console.log(000000);
-
+	console.log(111+ "-" +id)
 	$.ajax({
 		url: "/"+url+"/"+id,
 		type: 'PUT', 

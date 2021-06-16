@@ -102,7 +102,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-around">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		        <button id="btn-save-product" data-submit="create" class="btn btn-primary">Guardar</button>
+		        <button id="btn-save-product-zone" data-submit="create" class="btn btn-primary">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
