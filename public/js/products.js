@@ -218,7 +218,7 @@ $(document).ready( function () {
 			    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 			    responsive: true,
 				ajax: {
-		                url: '/inventarios/productos',
+		                url: '/inventario/productos',
 		                dataSrc: '',
 		        },
 				columns: [
