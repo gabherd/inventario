@@ -20,7 +20,7 @@ class UsersController extends Controller
     }
 
     public function getUsers(){
-        $query = "SELECT id, name, last_name, email, case isAdmin when 0 then 'No' WHEN 1 then 'Sí' end as userAccess from users where id !=".Auth::user()->id." and id_branch = ".Auth::user()->id_branch;
+        $query = "SELECT id, name, last_name, email, case isAdmin when 0 then 'No' WHEN 1 then 'Sí' end as userAccess from users where id !=".Auth::user()->id;
 
         return DB::select($query);
     }
