@@ -25,7 +25,7 @@
 			Productos en inventario <b>Zone</b>
 		</div>
 		<div style="margin: 25px 0">
-			<button id="open-modal-saveProduct" type="button" data-toggle="modal" data-target="#mdl-save-product-zone" class="btn btn-add">
+			<button id="open-modal-save-product" type="button" data-toggle="modal" data-target="#mdl-save-product-zone" class="btn btn-add">
 				<i class="zmdi zmdi-plus"></i>Agregar producto 
 			</button>
 			<button class="btn btn-secondary float-right" data-toggle="modal" data-target="#mdl-measure"> Medidas </button>

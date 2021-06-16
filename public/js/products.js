@@ -1,288 +1,298 @@
 $(document).ready( function () {
-	$("#create-product-zone").validate({
-		rules: {
-			'measure':{ required: true },
-			'model':  { required: true },
-			'brand':  { required: true },
-			'price':  { required: true },
-			'stock':  { required: true },
-		},
-		messages : {
-      		'measure': "La marca es requerida",
-      		'model': "El modelo es requerido",
-      		'brand': "La medida es requerida",
-      		'price': "El precio es requerido",
-      		'stock': "La cantidad es requerida"
-      	},
-		submitHandler: function(form, event){ 
-		    event.preventDefault();
-		}
-	});//validation
+	//Validations
+		$("#create-product-zone").validate({
+			rules: {
+				'measure':{ required: true },
+				'model':  { required: true },
+				'brand':  { required: true },
+				'price':  { required: true },
+				'stock':  { required: true },
+			},
+			messages : {
+	      		'measure': "La marca es requerida",
+	      		'model': "El modelo es requerido",
+	      		'brand': "La medida es requerida",
+	      		'price': "El precio es requerido",
+	      		'stock': "La cantidad es requerida"
+	      	},
+			submitHandler: function(form, event){ 
+			    event.preventDefault();
+			}
+		});//validation
 
-	$("#create-brand").validate({
-		rules: {
-			'brand': { required: true, lettersonly: true }
-		},
-		messages: {
-      		'brand': { required:"La marca es requerida", lettersonly: 'Introduce solamente letras'}
-      	},
-		submitHandler: function(form, event){ 
-		    event.preventDefault();
-		}
-	});//validation
+		$("#create-brand").validate({
+			rules: {
+				'brand': { required: true, lettersonly: true }
+			},
+			messages: {
+	      		'brand': { required:"La marca es requerida", lettersonly: 'Introduce solamente letras'}
+	      	},
+			submitHandler: function(form, event){ 
+			    event.preventDefault();
+			}
+		});//validation
 
-	$("#create-model").validate({
-		rules: {
-			'nameModel': { required: true },
-			'id_Brand' : { required: true }
+		$("#create-model").validate({
+			rules: {
+				'nameModel': { required: true },
+				'id_Brand' : { required: true }
 
-		},
-		messages: {
-      		'nameModel': { required: "El nombre del modelo es requerido" },
-			'id_Brand' : { required: "Selecciona una marca" }
-      	},
-		submitHandler: function(form, event){ 
-		    event.preventDefault();
-		}
-	});//validation
+			},
+			messages: {
+	      		'nameModel': { required: "El nombre del modelo es requerido" },
+				'id_Brand' : { required: "Selecciona una marca" }
+	      	},
+			submitHandler: function(form, event){ 
+			    event.preventDefault();
+			}
+		});//validation
 
-	$("#create-measure").validate({
-		rules: {
-			'measure': { required: true}
-		},
-		messages: {
-      		'measure': { required:"La medida es requerida"}
-      	},
-		submitHandler: function(form, event){ 
-		    event.preventDefault();
-		}
-	});//validation
+		$("#create-measure").validate({
+			rules: {
+				'measure': { required: true}
+			},
+			messages: {
+	      		'measure': { required:"La medida es requerida"}
+	      	},
+			submitHandler: function(form, event){ 
+			    event.preventDefault();
+			}
+		});//validation
 
-	$("#create-sale").validate({
-		rules: {
-			'sale': { required: true}
-		},
-		messages: {
-      		'sale': { required:"La cantidad es requerida"}
-      	},
-		submitHandler: function(form, event){ 
-		    event.preventDefault();
-		}
-	});//validation
+		$("#create-sale").validate({
+			rules: {
+				'sale': { required: true}
+			},
+			messages: {
+	      		'sale': { required:"La cantidad es requerida"}
+	      	},
+			submitHandler: function(form, event){ 
+			    event.preventDefault();
+			}
+		});//validation
+	//end Validations
 
-	$('#tbl-brand').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: '/marca',
-                dataSrc: '',
-        },
-		columns: [
-			{ data: 'name', "width": "70%" },
-			{ data: null,   "width": "30%",
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button class='btn btn-info btn-editBrand'" +
-		                   		"data-toggle='modal'"+
-		                   		"data-target='#mdl-save-brand'" +
-		                   		"data-id-brand='"+data.id+"'" + 
-		                   		"data-name='"+data.name+"'>Editar</button>" + 
-						   		"<button class='btn btn-danger btn-deleteBrand' data-id-brand='"+data.id+"' data-token='{{ csrf_token() }}' data-name='"+data.name+"'>Borrar</button>"+
-						   	"</div>";
-					;
-                }
-            }
-		]
-	}); //dataTable
-
-	$('#tbl-model').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: '/modelo',
-                dataSrc: '',
-        },
-        createdRow: function( row, data, dataIndex ) {
-		    	$(row).addClass("trModel-"+data.id);
-		},
-		columns: [
-			{ data: 'model', "width": "35%" },
-			{ data: 'brand', "width": "35%" },
-			{ data: null,   "width": "30%",
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button class='btn btn-info btn-editModel' " + 
-		                   			"data-id-model='"+data.idModel+"' " +
-		                   			"data-toggle='modal' "+
-		                   			"data-target='#mdl-save-model' " + 
-		                   			"data-nameModel='"+data.model+"'"+
-		                   			"data-idBrand='"+data.idBrand+"'> Editar </button>" + 
-						   		"<button class='btn btn-danger btn-deleteModel' "+
-						   			"data-id-model='"+data.idModel+"' "+
-						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-name='"+data.model+"'>Borrar</button>"+
-						   	"</div>";
-					;
-                }
-            }
-		]
-	}); //dataTable
-
-	$('#tbl-measure').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: '/medida',
-                dataSrc: '',
-        },
-		columns: [
-			{ data: 'number', "width": "70%" },
-			{ data: null,   "width": "30%",
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button class='btn btn-info btn-editMeasure'" +
-			                   		"data-toggle='modal'"+
-			                   		"data-target='#mdl-save-measure'" +
-			                   		"data-id-measure='"+data.id+"'" + 
-			                   		"data-name='"+data.number+"'>Editar</button>" + 
-						   		"<button class='btn btn-danger btn-deleteMeasure' "+
-						   			"data-id-measure='"+data.id+"' " + 
-						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-name='"+data.number+"'>Borrar</button>"+
-						   	"</div>";
-					;
-                }
-            }
-		]
-	}); //dataTable
-
-	$('#tbl-product-zone').DataTable({
-	    language: {
-	        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-	    },
-	    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
-	    responsive: true,
-		ajax: {
-                url: '/inventario/productos',
-                dataSrc: '',
-        },
-		columns: [
-			{data: 'Measure'},
-		    {data: 'Brand'},
-		    {data: 'Model'},
-		    {data: 'Stock'},
-		    {data: 'Price'},
-		    {data: null,
-                render: function (data, type, row) {
-                	return "<div class='d-flex justify-content-around'>" +
-		                   		"<button "+
-		                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-measure-product='"+data.Measure+"' "+
-			                   		"data-brand-product='"+data.Brand+"' "+
-			                   		"data-stock-product='"+data.Stock+"' "+
-			                   		"data-target='#mdl-sale'>Venta</button>" +
-			                   	"<button "+
-		                   			"class='btn btn-info btn-editProduct' "+
-			                   		"data-toggle='modal' "+
-			                   		"data-id-product='"+data.id+"' "+
-			                   		"data-target='#mdl-user'>Editar</button>" + 
-						   		"<button type='submit' id='"+data.id+"' "+
-						   			"class='btn btn-danger btn-deleteProduct' "+
-						   			"data-token='{{ csrf_token() }}' "+
-						   			"data-id-product='"+data.id+"' "+
-						   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
-						   	"</div>";
-	                }
-	            }
-			]
-	}); //dataTable
-
-	$('#tbl-product-over').DataTable({
+	//datatables
+		$('#tbl-brand').DataTable({
 		    language: {
 		        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 		    },
 		    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 		    responsive: true,
 			ajax: {
-	                url: 'http://inventario-oversa.ml/inventario/productos',
+	                url: '/marca',
 	                dataSrc: '',
 	        },
 			columns: [
-				{data: 'code'},
-				{data: 'measure'},
-			    {data: 'brand'},
-			    {data: 'model'},
-			    {data: 'separate'},
-			    {data: 'stock'},
-			    {data: 'price'},
-			    {data: 'price_distribuitor'},
-			    {data: 'price_top'},
-			    {data: 'promotion'},
+				{ data: 'name', "width": "70%" },
+				{ data: null,   "width": "30%",
+	                render: function (data, type, row) {
+	                	return "<div class='d-flex justify-content-around'>" +
+			                   		"<button class='btn btn-info btn-editBrand'" +
+			                   		"data-toggle='modal'"+
+			                   		"data-target='#mdl-save-brand'" +
+			                   		"data-id-brand='"+data.id+"'" + 
+			                   		"data-name='"+data.name+"'>Editar</button>" + 
+							   		"<button class='btn btn-danger btn-deleteBrand' data-id-brand='"+data.id+"' data-token='{{ csrf_token() }}' data-name='"+data.name+"'>Borrar</button>"+
+							   	"</div>";
+						;
+	                }
+	            }
 			]
-	}); //dataTable
+		}); //dataTable
 
-});//documentReady
+		$('#tbl-model').DataTable({
+		    language: {
+		        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+		    },
+		    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+		    responsive: true,
+			ajax: {
+	                url: '/modelo',
+	                dataSrc: '',
+	        },
+	        createdRow: function( row, data, dataIndex ) {
+			    	$(row).addClass("trModel-"+data.id);
+			},
+			columns: [
+				{ data: 'model', "width": "35%" },
+				{ data: 'brand', "width": "35%" },
+				{ data: null,   "width": "30%",
+	                render: function (data, type, row) {
+	                	return "<div class='d-flex justify-content-around'>" +
+			                   		"<button class='btn btn-info btn-editModel' " + 
+			                   			"data-id-model='"+data.idModel+"' " +
+			                   			"data-toggle='modal' "+
+			                   			"data-target='#mdl-save-model' " + 
+			                   			"data-nameModel='"+data.model+"'"+
+			                   			"data-idBrand='"+data.idBrand+"'> Editar </button>" + 
+							   		"<button class='btn btn-danger btn-deleteModel' "+
+							   			"data-id-model='"+data.idModel+"' "+
+							   			"data-token='{{ csrf_token() }}' "+
+							   			"data-name='"+data.model+"'>Borrar</button>"+
+							   	"</div>";
+						;
+	                }
+	            }
+			]
+		}); //dataTable
 
-	$('#btn-model').on('click', function(){
-		$("#model-name-brand").append('<option value="0">Cargando...</option>');
+		$('#tbl-measure').DataTable({
+		    language: {
+		        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+		    },
+		    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+		    responsive: true,
+			ajax: {
+	                url: '/medida',
+	                dataSrc: '',
+	        },
+			columns: [
+				{ data: 'number', "width": "70%" },
+				{ data: null,   "width": "30%",
+	                render: function (data, type, row) {
+	                	return "<div class='d-flex justify-content-around'>" +
+			                   		"<button class='btn btn-info btn-editMeasure'" +
+				                   		"data-toggle='modal'"+
+				                   		"data-target='#mdl-save-measure'" +
+				                   		"data-id-measure='"+data.id+"'" + 
+				                   		"data-name='"+data.number+"'>Editar</button>" + 
+							   		"<button class='btn btn-danger btn-deleteMeasure' "+
+							   			"data-id-measure='"+data.id+"' " + 
+							   			"data-token='{{ csrf_token() }}' "+
+							   			"data-name='"+data.number+"'>Borrar</button>"+
+							   	"</div>";
+						;
+	                }
+	            }
+			]
+		}); //dataTable
 
+		$('#tbl-product-zone').DataTable({
+		    language: {
+		        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+		    },
+		    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+		    responsive: true,
+			ajax: {
+	                url: '/inventario/productos',
+	                dataSrc: '',
+	        },
+			columns: [
+				{data: 'Measure'},
+			    {data: 'Brand'},
+			    {data: 'Model'},
+			    {data: 'Stock'},
+			    {data: 'Price'},
+			    {data: null,
+	                render: function (data, type, row) {
+	                	return "<div class='d-flex justify-content-around'>" +
+			                   		"<button "+
+			                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
+				                   		"data-toggle='modal' "+
+				                   		"data-id-product='"+data.id+"' "+
+				                   		"data-measure-product='"+data.Measure+"' "+
+				                   		"data-brand-product='"+data.Brand+"' "+
+				                   		"data-stock-product='"+data.Stock+"' "+
+				                   		"data-target='#mdl-sale'>Venta</button>" +
+				                   	"<button "+
+			                   			"class='btn btn-info btn-editProduct' "+
+				                   		"data-toggle='modal' "+
+				                   		"data-id-product='"+data.id+"' "+
+				                   		"data-target='#mdl-user'>Editar</button>" + 
+							   		"<button type='submit' id='"+data.id+"' "+
+							   			"class='btn btn-danger btn-deleteProduct' "+
+							   			"data-token='{{ csrf_token() }}' "+
+							   			"data-id-product='"+data.id+"' "+
+							   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
+							   	"</div>";
+		                }
+		            }
+				]
+		}); //dataTable
+
+		$('#tbl-product-over').DataTable({
+			    language: {
+			        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+			    },
+			    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
+			    responsive: true,
+				ajax: {
+		                url: 'http://inventario-oversa.ml/inventario/productos',
+		                dataSrc: '',
+		        },
+				columns: [
+					{data: 'code'},
+					{data: 'measure'},
+				    {data: 'brand'},
+				    {data: 'model'},
+				    {data: 'separate'},
+				    {data: 'stock'},
+				    {data: 'price'},
+				    {data: 'price_distribuitor'},
+				    {data: 'price_top'},
+				    {data: 'promotion'},
+				]
+		}); //dataTable
+	//end Datatables
+
+});
+
+
+
+//------------------- Product -------------------------------
+	$("#open-modal-save-product").on('click', function(){
+		//actializa datos de modal
+		openModalSave('product-zone', 'producto');
+
+		//actualiza la lista de marcas
 		$.ajax({
 			url: "marca",
 			success: function(res){
-				$("#model-name-brand").empty();
-
-				//lista agregar modelo
+				$("#inp-brand").empty();
+				$("#inp-brand").append('<option selected...>Selecciona una opcion...</option>');
+				//lista agregar producto
 				for(item in res){
-					$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+					$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
 				}
 			}
 		});	
-	});
 
-	$("#btn-save-sale").on('click', function(){
-		var qtySale = $("#inp-number-sale").val();
-		var id = $(this).attr('data-id-product');
-		$("#submit-sale").click();
-
+		//actualiza la lista de medidas
 		$.ajax({
-			url: "/sale/"+id,
-			type: 'PUT', 
-			dataType: "JSON",
-			data: $("#create-sale").serialize()  + '&_method=' + "PUT",
+			url: "inventario/measure",
 			success: function(res){
-				console.log(res);
-				if (res.status) {
-					$(".content-loading").css('display', 'none');
-					
-					Swal.fire({
-					  position: 'center',
-					  icon: 'success',
-					  title: 'Venta realizada',
-					  showConfirmButton: false,
-					  timer: 900
-					});
-
-					$('#mdl-sale').modal('hide');
-					$("#create-sale").trigger("reset");
-					$('#tbl-product-zone').DataTable().ajax.reload();
+				$("#inp-measure").empty();
+				$("#inp-measure").append('<option selected>Selecciona una opcion...</option>');
+				for(item in res){
+					$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
 				}
-			},
-			error: function(xhr) {
-		        var errors = JSON.parse(xhr.responseText);
-		        console.log(errors)
-		    }
+			}
 		});	
+
+		$('#inp-brand').on('change', function(e){
+			var model = this.value;
+			
+			$("#inp-model").empty();
+			$("#inp-model").append('<option value="0" id="inp-Measure">Cargando...</option>');
+
+			if (model != 0) {
+				$.ajax({
+					url: "modelo/"+model,
+					success: function(res){
+						$("#inp-model").empty();
+						for(item in res){
+							$("#inp-model").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+						}
+					}
+				});
+			}
+		});
+
+		$("option:selected").removeAttr("selected");
+
+		$("#inp-model").empty();
+		$("#inp-model").append('<option value="0">Selecciona una opcion...</option>');
 	});
 
 	$("#tbl-product-zone").delegate('.btn-deleteProduct', 'click', function(){
@@ -307,11 +317,35 @@ $(document).ready( function () {
 
 	$("#tbl-product-zone").delegate('.btn-editProduct', 'click', function(){
 		openModalUpdate('product', 'producto');
-		
+		//actualiza la lista de marcas
+		$.ajax({
+			url: "marca",
+			success: function(res){
+				$("#inp-brand").empty();
+				//lista agregar producto
+				for(item in res){
+					$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
+				}
+			}
+		});	
+
+		//actualiza la lista de medidas
+		$.ajax({
+			url: "inventario/measure",
+			success: function(res){
+				$("#inp-measure").empty();
+				for(item in res){
+					$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
+				}
+			}
+		});	
+
 		var id = $(this).attr('data-id-product');
 		$(".content-loading").css('display', 'block');
 		$("#mdl-save-product-zone").modal('show');
 		$("#btn-save-product").attr('data-id', id);
+
+
 
 		$.ajax({
 			url: "productos/"+id,
@@ -320,7 +354,6 @@ $(document).ready( function () {
 				$("#create-product-zone").trigger("reset");
 				
 				$("option:selected").removeAttr("selected");
-				console.log(res)
 				$("#inp-brand option[value='"+res.idBrand+"']").attr('selected', true);
 				$("#inp-measure option[value='"+res.idMeasure+"']").attr('selected', true);
 
@@ -368,10 +401,8 @@ $(document).ready( function () {
 		$('#mdl-sale').modal('hide');
 	});
 
-//------------------- Product -------------------------------
 	$("#btn-save-product").on('click', function(){
 		$("#submit-product").click();
-
 
 		if ($(this).attr("data-submit") == "create"){
 			ajaxSave('product-zone', 'productos', 'Producto guardado');
@@ -381,64 +412,16 @@ $(document).ready( function () {
 		}
 	});
 
-	$("#open-modal-saveProduct").on('click', function(){
 
-		$.ajax({
-			url: "marca",
-			success: function(res){
-				$("#inp-brand").empty();
-				$("#inp-brand").append('<option selected...>Selecciona una opcion...</option>');
-				//lista agregar producto
-				for(item in res){
-					$("#inp-brand").append('<option value="'+res[item].id+'">'+res[item].name+'</option>');
-				}
-			}
-		});	
 
-			
-		$.ajax({
-			url: "inventario/measure",
-			success: function(res){
-				$("#inp-measure").empty();
-				$("#inp-measure").append('<option selected...>Selecciona una opcion...</option>');
-				for(item in res){
-					$("#inp-measure").append('<option value="'+res[item].id+'" >'+res[item].number+'</option>');
-				}
-			}
-		});	
-
-		openModalSave('product-zone', 'producto');
-
-		$("option:selected").removeAttr("selected");
-
-		$("#inp-model").empty();
-		$("#inp-model").append('<option value="0">Selecciona una opcion...</option>');
-	});
-
-	$('#inp-brand').on('change', function(e){
-		var model = this.value;
-		
-		$("#inp-model").empty();
-		$("#inp-model").append('<option value="0" id="inp-Measure">Cargando...</option>');
-
-		if (model != 0) {
-			$.ajax({
-				url: "modelo/"+model,
-				success: function(res){
-					$("#inp-model").empty();
-					for(item in res){
-						$("#inp-model").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
-					}
-				}
-			});
-		}
-	});
+	
 //------------------- end Product -------------------------------
 
 //------------------- Brand-------------------------------
 	$("#open-modal-saveBrand").on('click', function(){
 		openModalSave('brand', 'marca');
 	});
+
 
 	$("#btn-save-brand").on('click', function(){
 		$("#submit-brand").click();
@@ -471,7 +454,21 @@ $(document).ready( function () {
 //-------------------end brand-------------------------------
 
 //------------------- Model-------------------------------
+	$('#btn-model').on('click', function(){
+		$("#model-name-brand").append('<option value="0">Cargando...</option>');
 
+		$.ajax({
+			url: "marca",
+			success: function(res){
+				$("#model-name-brand").empty();
+
+				//lista agregar modelo
+				for(item in res){
+					$("#model-name-brand").append('<option value="'+res[item].id+'" id="inp-Measure">'+res[item].name+'</option>');
+				}
+			}
+		});	
+	});
 	$("#open-modal-SaveModel").on('click', function(){
 		openModalSave('model', 'modelo');
 
@@ -554,7 +551,6 @@ $(document).ready( function () {
 //-------------------end Measure-------------------------------
 
 //------------------- Sale-------------------------------
-
 	$("#inp-number-sale").on('keyup', function(){
 		var stock = $("#inp-sale-stock").val();
 		var qtySale = $("#inp-number-sale").val();
@@ -566,7 +562,40 @@ $(document).ready( function () {
 		}
 	});
 
+	$("#btn-save-sale").on('click', function(){
+		var qtySale = $("#inp-number-sale").val();
+		var id = $(this).attr('data-id-product');
+		$("#submit-sale").click();
 
+		$.ajax({
+			url: "/sale/"+id,
+			type: 'PUT', 
+			dataType: "JSON",
+			data: $("#create-sale").serialize()  + '&_method=' + "PUT",
+			success: function(res){
+				console.log(res);
+				if (res.status) {
+					$(".content-loading").css('display', 'none');
+					
+					Swal.fire({
+					  position: 'center',
+					  icon: 'success',
+					  title: 'Venta realizada',
+					  showConfirmButton: false,
+					  timer: 900
+					});
+
+					$('#mdl-sale').modal('hide');
+					$("#create-sale").trigger("reset");
+					$('#tbl-product-zone').DataTable().ajax.reload();
+				}
+			},
+			error: function(xhr) {
+		        var errors = JSON.parse(xhr.responseText);
+		        console.log(errors)
+		    }
+		});	
+	});
 //-------------------end Sale-------------------------------
 
 
