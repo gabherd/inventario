@@ -1,6 +1,6 @@
 $(document).ready( function () {
 	//Validations
-		$("#create-product-zone").validate({
+		$("#create-product-over").validate({
 			rules: {
 				'measure':{ required: true },
 				'model':  { required: true },
@@ -175,7 +175,7 @@ $(document).ready( function () {
 		    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 		    responsive: true,
 			ajax: {
-	                url: '/inventario/productos',
+	                url: 'http://inventario-zone.ml/inventario/productos',
 	                dataSrc: '',
 	        },
 			columns: [
@@ -218,7 +218,7 @@ $(document).ready( function () {
 			    lengthMenu: [20, 40, 80, 160, 400, 500, 1000],
 			    responsive: true,
 				ajax: {
-		                url: 'http://inventario-oversa.ml/inventario/productos',
+		                url: '/inventarios/productos',
 		                dataSrc: '',
 		        },
 				columns: [
@@ -295,7 +295,7 @@ $(document).ready( function () {
 		$("#inp-model").append('<option value="0">Selecciona una opcion...</option>');
 	});
 
-	$("#tbl-product-zone").delegate('.btn-deleteProduct', 'click', function(){
+	$("#tbl-product-over").delegate('.btn-deleteProduct', 'click', function(){
 		var id = $(this).attr('data-id-product');
 		var itemName = $(this).attr('data-name');
 
@@ -310,12 +310,12 @@ $(document).ready( function () {
 			cancelButtonText: 'Cancelar'
 		}).then((result) => {
 		  	if (result.isConfirmed) {
-				deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product-zone', '');
+				deleteItem(id, itemName, 'productos', 'Producto eliminado', '#tbl-product-over', '');
 		  	}
 		});
 	});
 
-	$("#tbl-product-zone").delegate('.btn-editProduct', 'click', function(){
+	$("#tbl-product-over").delegate('.btn-editProduct', 'click', function(){
 		openModalUpdate('product', 'producto');
 		//actualiza la lista de marcas
 		$.ajax({
@@ -342,14 +342,14 @@ $(document).ready( function () {
 
 		var id = $(this).attr('data-id-product');
 		$(".content-loading").css('display', 'block');
-		$("#mdl-save-product-zone").modal('show');
+		$("#mdl-save-product-over").modal('show');
 		$("#btn-save-product-zone").attr('data-id', id);
 
 		$.ajax({
 			url: "productos/"+id,
 			success: function(res){
 				var res = res[0];
-				$("#create-product-zone").trigger("reset");
+				$("#create-product-over").trigger("reset");
 				
 				$("option:selected").removeAttr("selected");
 				$("#inp-brand option[value='"+res.idBrand+"']").attr('selected', true);
@@ -372,7 +372,7 @@ $(document).ready( function () {
 						}
 
 						$(".content-loading").css('display', 'none');
-						$('#tbl-product-zone').DataTable().ajax.reload();
+						$('#tbl-product-over').DataTable().ajax.reload();
 					}
 				});
 
@@ -382,7 +382,7 @@ $(document).ready( function () {
 		});
 	});
 
-	$("#tbl-product-zone").delegate('.btn-saleProduct', 'click', function(){
+	$("#tbl-product-over").delegate('.btn-saleProduct', 'click', function(){
 		var id      = $(this).attr('data-id-product');
 		var measure = $(this).attr('data-measure-product');
 		var brand   = $(this).attr('data-brand-product');
@@ -584,7 +584,7 @@ $(document).ready( function () {
 
 					$('#mdl-sale').modal('hide');
 					$("#create-sale").trigger("reset");
-					$('#tbl-product-zone').DataTable().ajax.reload();
+					$('#tbl-product-over').DataTable().ajax.reload();
 				}
 			},
 			error: function(xhr) {

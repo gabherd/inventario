@@ -1,7 +1,7 @@
 	<nav class="navbar navbar-light ">
 			<div class="center-y" href="#">
 		  		<!--img id="btnMenu" src="img/menu.svg" alt="menu" width="20"-->
-		  		<a class="navbar-brand pl-2" href="/" id="branch-name">Zone of tires</a>
+		  		<a class="navbar-brand pl-2" href="/" id="branch-name">Oversa</a>
 			</div>
 			<div class="center-y">
 				<div id="main-nameUser" class="name-user pr-2">

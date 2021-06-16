@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     
     public function index(){
-        return view('products/products-zone');
+        return view('products/products-over');
     }
 
     public function getProducts(){

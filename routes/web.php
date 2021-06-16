@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Route;
 	Route::get('/', '\App\Http\Controllers\DashboardController@index')
 		->name('dashboard')->middleware('auth');
 
-	Route::get('/zone', '\App\Http\Controllers\ProductController@index')
-		->name('zone')->middleware('auth');
+	Route::get('/zone', function(){
+        return view('products/products-zone');
+	})->name('zone')->middleware('auth');;
 
 	Route::get('/over', function(){
         return view('products/products-over');
-	})->name('over')->middleware('auth');
+	})->name('over')->middleware('auth');;
+
 
 	Route::resource("usuarios", '\App\Http\Controllers\UsersController')
 		->names('users')->middleware('auth');
