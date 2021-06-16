@@ -216,9 +216,9 @@ $(document).ready( function () {
 			                   			"class='btn btn-info btn-saleProduct' style='background: #8BC34A' "+
 				                   		"data-toggle='modal' "+
 				                   		"data-id-product='"+data.id+"' "+
-				                   		"data-measure-product='"+data.Measure+"' "+
-				                   		"data-brand-product='"+data.Brand+"' "+
-				                   		"data-stock-product='"+data.Stock+"' "+
+				                   		"data-measure-product='"+data.measure+"' "+
+				                   		"data-brand-product='"+data.brand+"' "+
+				                   		"data-stock-product='"+data.stock+"' "+
 				                   		"data-target='#mdl-sale'>Venta</button>" +
 				                   	"<button "+
 			                   			"class='btn btn-info btn-editProduct' "+
@@ -229,7 +229,7 @@ $(document).ready( function () {
 							   			"class='btn btn-danger btn-deleteProduct' "+
 							   			"data-token='{{ csrf_token() }}' "+
 							   			"data-id-product='"+data.id+"' "+
-							   			"data-name='"+data.Measure+" - "+data.Brand+"'>Borrar</button>"+
+							   			"data-name='"+data.measure+" - "+data.brand+"'>Borrar</button>"+
 							   	"</div>";
 		                }
 		            }
